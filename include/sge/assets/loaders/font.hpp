@@ -15,7 +15,7 @@ namespace sge
             FontDescriptor(std::string const &assetname, int font_size);
 
             virtual size_t get_hash() const;
-            virtual bool compare(const AssetDescriptor &other) const;
+            virtual bool compare(AssetDescriptor const &other) const;
 
             int fontSize() const;
 

@@ -12,9 +12,9 @@ namespace sge
         return AssetDescriptor::get_hash() ^ hashfn(font_size);
     }
 
-    bool FontDescriptor::compare(const AssetDescriptor &other) const
+    bool FontDescriptor::compare(AssetDescriptor const &other) const
     {
-        auto descriptor = static_cast<FontDescriptor &>(other);
+        auto descriptor = static_cast<FontDescriptor const &>(other);
         return AssetDescriptor::compare(other) && (font_size == descriptor.fontSize());
     }
 

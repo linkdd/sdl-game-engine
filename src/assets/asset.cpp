@@ -13,7 +13,7 @@ namespace sge
         return hashfn(assetname);
     }
 
-    bool AssetDescriptor::compare(const AssetDescriptor &other) const
+    bool AssetDescriptor::compare(AssetDescriptor const &other) const
     {
         return (assetname == other.name());
     }

@@ -12,7 +12,7 @@ namespace sge
             AssetDescriptor(std::string const &assetname);
 
             virtual size_t get_hash() const;
-            virtual bool compare(const AssetDescriptor &other) const;
+            virtual bool compare(AssetDescriptor const &other) const;
 
             std::string name() const;
             std::string extension() const;
