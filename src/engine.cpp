@@ -14,7 +14,7 @@ namespace sge
         return ss.str();
     }
 
-    string &SGEConfiguration::gets(string const &param, string const &_default = "") const
+    string SGEConfiguration::gets(string const &param, string const &_default) const
     {
         string result;
 
@@ -30,17 +30,17 @@ namespace sge
         return result;
     }
 
-    int SGEConfiguration::geti(string const &param, int _default = 0) const
+    int SGEConfiguration::geti(string const &param, int _default) const
     {
         return stoi(gets(param, to_string<int>(_default)));
     }
 
-    bool SGEConfiguration::getb(string const &param, bool _default = false) const
+    bool SGEConfiguration::getb(string const &param, bool _default) const
     {
-        return bool(geti(param, to_string<int>(int(_default))));
+        return bool(geti(param, int(_default)));
     }
 
-    float SGEConfiguraton::getf(string const &param, float _default = 0.0) const
+    float SGEConfiguration::getf(string const &param, float _default) const
     {
         return stof(gets(param, to_string<float>(_default)));
     }
@@ -74,8 +74,8 @@ namespace sge
               configuration.getb("display/fullscreen", false),
               configuration.getb("display/resizable", false)
           ),
-          mainloop(configuration.geti("fps", 60)),
-          _scmgr(*this),
+          _mloop(configuration.geti("fps", 60)),
+          _scmgr(this),
           _asset_file_locator(configuration.gets("assets/file/location", ""))
     {
         _startup.add_initializer(&_sdl_init);
@@ -93,22 +93,24 @@ namespace sge
             throw e;
         }
 
-        _asset.register_locator(&_asset_file_locator);
+        _assets.register_locator(&_asset_file_locator);
         _assets.register_loader(
             &_asset_image_loader,
-            "png",
-            "bmp",
-            "jpg", "jpeg",
-            "tga",
-            "pnm", "pbm", "pgm", "ppm",
-            "xpm",
-            "xcf",
-            "pcx",
-            "gif",
-            "tif", "tiff",
-            "lbm", "iff"
+            {
+                "png",
+                "bmp",
+                "jpg", "jpeg",
+                "tga",
+                "pnm", "pbm", "pgm", "ppm",
+                "xpm",
+                "xcf",
+                "pcx",
+                "gif",
+                "tif", "tiff",
+                "lbm", "iff"
+            }
         );
-        _assets.register_loader(&_asset_font_loader, "ttf");
+        _assets.register_loader(&_asset_font_loader, {"ttf"});
 
         _mloop.queue_event_handler(
             SDL_QUIT,
@@ -117,13 +119,37 @@ namespace sge
                 mloop->quit();
                 return true;
             },
-            NULL
+            nullptr
         );
 
-        _mloop.add_event_watcher(_amgr.event_handler, NULL);
-        _mloop.add_event_watcher(_scmgr.event_handler, this);
-        _mloop.add_process_handler(_scmgr.process_handler, this);
-        _mloop.add_draw_handler(_scmgr.draw_handler, this);
+        _mloop.add_event_watcher(
+            [&](SGEMainLoop *mloop, SDL_Event *evt, void *udata)
+            {
+                return _amgr.event_handler(mloop, evt, udata);
+            },
+            nullptr
+        );
+        _mloop.add_event_watcher(
+            [&](SGEMainLoop *mloop, SDL_Event *evt, void *udata)
+            {
+                return _scmgr.event_handler(mloop, evt, udata);
+            },
+            this
+        );
+        _mloop.queue_process_handler(
+            [&](SGEMainLoop *mloop, Uint32 delta, void *udata)
+            {
+                _scmgr.process_handler(mloop, delta, udata);
+            },
+            this
+        );
+        _mloop.queue_draw_handler(
+            [&](SGEMainLoop *mloop, void *udata)
+            {
+                _scmgr.draw_handler(mloop, udata);
+            },
+            this
+        );
     }
 
     SGEngine::~SGEngine()
@@ -131,32 +157,32 @@ namespace sge
         _startup.shutdown();
     }
 
-    SGEConfiguration &configuration() const
+    SGEConfiguration &SGEngine::configuration()
     {
         return _configuration;
     }
 
-    SGEStartup &startup() const
+    SGEStartup &SGEngine::startup()
     {
         return _startup;
     }
 
-    SGEMainLoop &mainloop() const
+    SGEMainLoop &SGEngine::mainloop()
     {
         return _mloop;
     }
 
-    SGEActionManager &actions() const
+    SGEActionManager &SGEngine::actions()
     {
         return _amgr;
     }
 
-    SGEAssetManager &assets() const
+    SGEAssetManager &SGEngine::assets()
     {
         return _assets;
     }
 
-    SGESceneManager &scenes() const
+    SGESceneManager &SGEngine::scenes()
     {
         return _scmgr;
     }

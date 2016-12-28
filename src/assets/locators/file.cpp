@@ -1,36 +1,49 @@
 #include <sge/assets/locators/file.hpp>
 #include <algorithm>
+#include <SDL/SDL.h>
 
 using namespace std;
 
 namespace sge
 {
 #ifdef _WIN32
-    const char *SEPARATOR = "\\";
-    const char *REPLACE = "/";
+    const char SEPARATOR = '\\';
+    const char REPLACE = '/';
 #else
-    const char *SEPARATOR = "/";
-    const char *REPLACE = "\\";
+    const char SEPARATOR = '/';
+    const char REPLACE = '\\';
 #endif
 
-    SGEFileLocator::SGEFileLocator(string const &location)
+    SGEFileLocator::SGEFileLocator(string const &location) : SGEAssetLocator()
     {
-        if (location == "")
+        if (location.empty())
         {
-            location = get_current_working_dir();
-        }
+            char *tmp = SDL_GetBasePath();
 
-        location = _location;
+            if (tmp == nullptr)
+            {
+                _location = ".";
+            }
+            else
+            {
+                _location = tmp;
+                _location = location.substr(0, location.length() - 1);
+            }
+        }
+        else
+        {
+            _location = location;
+        }
     }
 
-    virtual SDL_RWops *SGEFileLocator::locate(string const &assetname)
+    SDL_RWops *SGEFileLocator::locate(string const &assetname)
     {
         string fullpath = _location + SEPARATOR + assetname;
         replace(fullpath.begin(), fullpath.end(), REPLACE, SEPARATOR);
 
-        SDL_RWops *input = SDL_RWFromFile (fullpath.c_str(), "rb");
+        SDL_RWops *input = SDL_RWFromFile(fullpath.c_str(), "rb");
 
-        if (input == NULL)
+        if (input == nullptr)
         {
             throw SGEAssetLocatorError("SDL", SDL_GetError());
         }
@@ -38,5 +51,3 @@ namespace sge
         return input;
     }
 }
-
-#endif /* __SGE_FILE_LOCATOR_HPP */

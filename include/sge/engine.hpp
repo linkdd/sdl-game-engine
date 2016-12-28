@@ -9,15 +9,15 @@
 
 #include <sge/mainloop.hpp>
 #include <sge/actionmgr.hpp>
-#include <sge/scenemgr-forward.hpp>
+#include <sge/scenemgr.hpp>
 
 #include <sge/assets/manager.hpp>
 #include <sge/assets/locators/file.hpp>
 #include <sge/assets/loaders/image.hpp>
 #include <sge/assets/loaders/font.hpp>
 
+#include <unordered_map>
 #include <string>
-#include <map>
 
 namespace sge
 {
@@ -26,7 +26,7 @@ namespace sge
         public:
             SGEConfiguration();
 
-            std::string &gets(std::string const &param, std::string const &_default = "") const;
+            std::string gets(std::string const &param, std::string const &_default = std::string()) const;
             int geti(std::string const &param, int _default = 0) const;
             bool getb(std::string const &param, bool _default = false) const;
             float getf(std::string const &param, float _default = 0.0) const;
@@ -37,7 +37,7 @@ namespace sge
             SGEConfiguration &set(std::string const &param, float value);
 
         private:
-            std::map<std::string, std::string> kvdb;
+            std::unordered_map<std::string, std::string> kvdb;
     };
 
     class SGEngine
@@ -46,12 +46,12 @@ namespace sge
             SGEngine(SGEConfiguration &configuration);
             ~SGEngine();
 
-            SGEConfiguration &configuration() const;
-            SGEStartup &startup() const;
-            SGEMainLoop &mainloop() const;
-            SGEActionManager &actions() const;
-            SGEAssetManager &assets() const;
-            SGESceneManager &scenes() const;
+            SGEConfiguration &configuration();
+            SGEStartup &startup();
+            SGEMainLoop &mainloop();
+            SGEActionManager &actions();
+            SGEAssetManager &assets();
+            SGESceneManager &scenes();
 
         private:
             SGEConfiguration _configuration;

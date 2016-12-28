@@ -3,7 +3,7 @@
 namespace sge
 {
     SDLWindowInitializer::SDLWindowInitializer(int width, int height, bool fullscreen, bool resizable)
-        : width(width), height(height), fullscreen(fullscreen), resizable(resizable), _window(NULL), _renderer(NULL)
+        : width(width), height(height), fullscreen(fullscreen), resizable(resizable), _window(nullptr), _renderer(nullptr)
     {}
 
     void SDLWindowInitializer::do_initialize()
@@ -21,12 +21,12 @@ namespace sge
 
     void SDLWindowInitializer::do_shutdown()
     {
-        if (_renderer != NULL)
+        if (_renderer != nullptr)
         {
             SDL_DestroyRenderer(_renderer);
         }
 
-        if (_window != NULL)
+        if (_window != nullptr)
         {
             SDL_DestroyWindow(_window);
         }

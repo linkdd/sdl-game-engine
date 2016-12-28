@@ -8,7 +8,10 @@
 
 namespace sge
 {
-    class SGEAssetLocatorError : public SGEException {};
+    class SGEAssetLocatorError : public SGEException
+    {
+        using SGEException::SGEException;
+    };
 
     class SGEAssetLocator
     {

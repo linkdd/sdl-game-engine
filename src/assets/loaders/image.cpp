@@ -2,22 +2,23 @@
 
 namespace sge
 {
-    virtual void SGEImageLoader::load(SGEImage *asset, SDL_RWops *input)
+    void SGEImageLoader::load(SGEBaseAsset *asset, SDL_RWops *input)
     {
-        auto descriptor = dynamic_cast<SGEImageDescriptor *>(asset->descriptor());
+        SGEImage *img = static_cast<SGEImage *>(asset);
 
         SDL_Surface *content = IMG_Load_RW(input, 1);
 
-        if (content == NULL)
+        if (content == nullptr)
         {
             throw SGEAssetLoaderError("IMG", IMG_GetError());
         }
 
-        asset << content;
+        img->setAsset(content);
     }
 
-    virtual void SGEImageLoader::unload(SGEImage *asset)
+    void SGEImageLoader::unload(SGEBaseAsset *asset)
     {
-        SDL_FreeSurface(asset->asset());
+        SGEImage *img = static_cast<SGEImage *>(asset);
+        SDL_FreeSurface(img->asset());
     }
 }

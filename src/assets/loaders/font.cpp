@@ -6,34 +6,40 @@ namespace sge
 {
     SGEFontDescriptor::SGEFontDescriptor(string const &assetname, int font_size) : SGEAssetDescriptor(assetname), font_size(font_size) {}
 
-    virtual size_t SGEFontDescriptor::hash() const
+    size_t SGEFontDescriptor::get_hash() const
     {
-        return SGEAssetDescriptor::hash() ^ std::hash(font_size);
+        hash<int> hashfn;
+        return SGEAssetDescriptor::get_hash() ^ hashfn(font_size);
     }
 
-    virtual bool SGEFontDescriptor::compare(const SGEAssetDescriptor *other) const
+    bool SGEFontDescriptor::compare(const SGEFontDescriptor &other) const
     {
-        return SGEAssetDescriptor::compare(other) && (font_size == other->fontSize());
+        return SGEAssetDescriptor::compare(other) && (font_size == other.fontSize());
     }
 
-    int SGEFontDescriptor::fontSize() const;
-
-    virtual void SGEFontLoader::load(SGEFont *asset, SDL_RWops *input)
+    int SGEFontDescriptor::fontSize() const
     {
-        auto descriptor = dynamic_cast<SGEFontDescriptor *>(asset->descriptor());
+        return font_size;
+    }
 
-        TTF_Font *content = TTF_OpenFontRW(input, 1, descriptor->fontSize());
+    void SGEFontLoader::load(SGEBaseAsset *asset, SDL_RWops *input)
+    {
+        SGEFont *font = static_cast<SGEFont *>(asset);
+        auto descriptor = static_cast<SGEFontDescriptor &>(font->descriptor());
 
-        if (content == NULL)
+        TTF_Font *content = TTF_OpenFontRW(input, 1, descriptor.fontSize());
+
+        if (content == nullptr)
         {
             throw SGEAssetLoaderError("TTF", TTF_GetError());
         }
 
-        asset << content;
+        font->setAsset(content);
     }
 
-    virtual void SGEFontLoader::unload(SGEFont *asset)
+    void SGEFontLoader::unload(SGEBaseAsset *asset)
     {
-        TTF_CloseFont(asset->asset());
+        SGEFont *font = static_cast<SGEFont *>(asset);
+        TTF_CloseFont(font->asset());
     }
 }

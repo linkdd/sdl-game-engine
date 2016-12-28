@@ -25,7 +25,10 @@ namespace sge
             bool freed;
     };
 
-    class SGEInitError : public SGEException {};
+    class SGEInitError : public SGEException
+    {
+        using SGEException::SGEException;
+    };
 
     class SGEStartup
     {

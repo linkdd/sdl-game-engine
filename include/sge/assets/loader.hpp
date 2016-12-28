@@ -7,7 +7,10 @@
 
 namespace sge
 {
-    class SGEAssetLoaderError : public SGEException {};
+    class SGEAssetLoaderError : public SGEException
+    {
+        using SGEException::SGEException;
+    };
 
     class SGEAssetLoader
     {

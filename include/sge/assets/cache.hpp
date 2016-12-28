@@ -4,19 +4,19 @@
 #include <sge/assets/asset.hpp>
 #include <sge/assets/cache.hpp>
 
-#include <map>
+#include <unordered_map>
 
 namespace sge
 {
     struct SGEAssetHasher
     {
-        size_t operator()(const SGEAssetDescriptor *&key)
+        size_t operator()(const SGEAssetDescriptor &key) const
         {
-            return key->hash();
+            return key.get_hash();
         }
     };
 
-    class SGEAssetCache : public unordered_map<SGEAssetDescriptor *, SGEBaseAsset *, SGEAssetHasher> {};
+    class SGEAssetCache : public std::unordered_map<SGEAssetDescriptor, SGEBaseAsset *, SGEAssetHasher> {};
 }
 
 #endif /* __SGE_ASSET_CACHE_HPP */

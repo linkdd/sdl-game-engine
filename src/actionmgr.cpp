@@ -21,12 +21,12 @@ namespace sge
 
     bool SGEActionManager::is_action_pressed(string const &name) const
     {
-        return a_active[name];
+        return a_active.at(name);
     }
 
     bool SGEActionManager::is_action_released(string const &name) const
     {
-        return !a_active[name];
+        return !a_active.at(name);
     }
 
     bool SGEActionManager::event_handler(SGEMainLoop *mainloop, SDL_Event *event, void *unused)
@@ -37,11 +37,15 @@ namespace sge
                 for (auto it = a_joystick.begin(); it != a_joystick.end(); it++)
                 {
                     string action = it->first;
-                    Uint8 button = it->second;
+                    list<Uint8> button = it->second;
 
-                    if (button == event->button)
+                    for (auto it = button.begin(); it != button.end(); it++)
                     {
-                        a_active[action] = true;
+                        if (*it == event->cbutton.button)
+                        {
+                            a_active[action] = true;
+                            break;
+                        }
                     }
                 }
 
@@ -51,11 +55,15 @@ namespace sge
                 for (auto it = a_joystick.begin(); it != a_joystick.end(); it++)
                 {
                     string action = it->first;
-                    Uint8 button = it->second;
+                    list<Uint8> button = it->second;
 
-                    if (button == event->button)
+                    for (auto it = button.begin(); it != button.end(); it++)
                     {
-                        a_active[action] = false;
+                        if (*it == event->cbutton.button)
+                        {
+                            a_active[action] = false;
+                            break;
+                        }
                     }
                 }
 
@@ -65,11 +73,15 @@ namespace sge
                 for (auto it = a_keyboard.begin(); it != a_keyboard.end(); it++)
                 {
                     string action = it->first;
-                    SDL_Keycode key = it->second;
+                    list<SDL_Keycode> key = it->second;
 
-                    if (key == event->keysym.sym)
+                    for (auto it = key.begin(); it != key.end(); it++)
                     {
-                        a_active[action] = true;
+                        if (*it == event->key.keysym.sym)
+                        {
+                            a_active[action] = true;
+                            break;
+                        }
                     }
                 }
 
@@ -79,11 +91,15 @@ namespace sge
                 for (auto it = a_keyboard.begin(); it != a_keyboard.end(); it++)
                 {
                     string action = it->first;
-                    SDL_Keycode key = it->second;
+                    list<SDL_Keycode> key = it->second;
 
-                    if (key == event->keysym.sym)
+                    for (auto it = key.begin(); it != key.end(); it++)
                     {
-                        a_active[action] = false;
+                        if (*it == event->key.keysym.sym)
+                        {
+                            a_active[action] = false;
+                            break;
+                        }
                     }
                 }
 
@@ -93,11 +109,15 @@ namespace sge
                 for (auto it = a_mouse.begin(); it != a_mouse.end(); it++)
                 {
                     string action = it->first;
-                    Uint8 button = it->second;
+                    list<Uint8> button = it->second;
 
-                    if (button == event->button)
+                    for (auto it = button.begin(); it != button.end(); it++)
                     {
-                        a_active[action] = true;
+                        if (*it == event->button.button)
+                        {
+                            a_active[action] = true;
+                            break;
+                        }
                     }
                 }
 
@@ -108,11 +128,15 @@ namespace sge
                 for (auto it = a_mouse.begin(); it != a_mouse.end(); it++)
                 {
                     string action = it->first;
-                    Uint8 button = it->second;
+                    list<Uint8> button = it->second;
 
-                    if (button == event->button)
+                    for (auto it = button.begin(); it != button.end(); it++)
                     {
-                        a_active[action] = false;
+                        if (*it == event->button.button)
+                        {
+                            a_active[action] = false;
+                            break;
+                        }
                     }
                 }
 

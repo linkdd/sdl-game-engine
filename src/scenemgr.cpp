@@ -4,10 +4,10 @@ using namespace std;
 
 namespace sge
 {
-    SGEScene::SGEScene() : root_node(NULL) {}
+    SGEScene::SGEScene() : root_node(nullptr) {}
     SGEScene::~SGEScene()
     {
-        if (root_node != NULL)
+        if (root_node != nullptr)
         {
             delete root_node;
         }
@@ -18,11 +18,11 @@ namespace sge
         return root_node;
     }
 
-    SGESceneManager::SGESceneManager(SGEngine &engine) : current_scene(NULL), engine(engine) {}
+    SGESceneManager::SGESceneManager(SGEngine *engine) : current_scene(nullptr), engine(engine) {}
 
     SGESceneManager::~SGESceneManager()
     {
-        if (current_scene != NULL)
+        if (current_scene != nullptr)
         {
             current_scene->unload(engine);
         }
@@ -35,9 +35,9 @@ namespace sge
 
     void SGESceneManager::switch_to_scene(string const &name)
     {
-        if (current_scene != NULL)
+        if (current_scene != nullptr)
         {
-            if (current_scene->get_root_node() != NULL)
+            if (current_scene->get_root_node() != nullptr)
             {
                 current_scene->get_root_node()->send_exit_tree(engine);
             }
@@ -45,10 +45,10 @@ namespace sge
             current_scene->unload(engine);
         }
 
-        current_scene = scenes[name]
+        current_scene = scenes[name];
         current_scene->load(engine);
 
-        if (current_scene->get_root_node() != NULL)
+        if (current_scene->get_root_node() != nullptr)
         {
             current_scene->get_root_node()->send_enter_tree(engine);
         }
@@ -56,7 +56,7 @@ namespace sge
 
     bool SGESceneManager::event_handler(SGEMainLoop *mainloop, SDL_Event *event, void *unused)
     {
-        if (current_scene != NULL && current_scene->get_root_node() != NULL)
+        if (current_scene != nullptr && current_scene->get_root_node() != nullptr)
         {
             return current_scene->get_root_node()->send_input(engine, event);
         }
@@ -66,7 +66,7 @@ namespace sge
 
     void SGESceneManager::process_handler(SGEMainLoop *mainloop, Uint32 delta, void *unused)
     {
-        if (current_scene != NULL && current_scene->get_root_node() != NULL)
+        if (current_scene != nullptr && current_scene->get_root_node() != nullptr)
         {
             current_scene->get_root_node()->send_process(engine, delta);
         }
@@ -74,7 +74,7 @@ namespace sge
 
     void SGESceneManager::draw_handler(SGEMainLoop *mainloop, void *unused)
     {
-        if (current_scene != NULL && current_scene->get_root_node() != NULL)
+        if (current_scene != nullptr && current_scene->get_root_node() != nullptr)
         {
             current_scene->get_root_node()->send_draw(engine);
         }

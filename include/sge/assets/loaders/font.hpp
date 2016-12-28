@@ -13,8 +13,8 @@ namespace sge
         public:
             SGEFontDescriptor(std::string const &assetname, int font_size);
 
-            virtual size_t hash() const;
-            virtual bool compare(const SGEAssetDescriptor *other) const;
+            virtual size_t get_hash() const;
+            virtual bool compare(const SGEFontDescriptor &other) const;
 
             int fontSize() const;
 
@@ -25,8 +25,8 @@ namespace sge
     class SGEFontLoader : public SGEAssetLoader
     {
         public:
-            virtual void load(SGEFont *asset, SDL_RWops *input);
-            virtual void unload(SGEFont *asset);
+            virtual void load(SGEBaseAsset *asset, SDL_RWops *input);
+            virtual void unload(SGEBaseAsset *asset);
     };
 }
 

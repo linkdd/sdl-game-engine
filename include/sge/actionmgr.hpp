@@ -3,9 +3,10 @@
 
 #include <sge/mainloop.hpp>
 #include <SDL/SDL.h>
+
+#include <unordered_map>
 #include <string>
 #include <list>
-#include <map>
 
 namespace sge
 {
@@ -22,11 +23,11 @@ namespace sge
             bool event_handler(SGEMainLoop *mainloop, SDL_Event *event, void *unused);
 
         private:
-            std::map<std::string, std::list<SDL_Keycode>> a_keyboard;
-            std::map<std::string, std::list<Uint8>> a_mouse;
-            std::map<std::string, std::list<Uint8>> a_joystick;
+            std::unordered_map<std::string, std::list<SDL_Keycode>> a_keyboard;
+            std::unordered_map<std::string, std::list<Uint8>> a_mouse;
+            std::unordered_map<std::string, std::list<Uint8>> a_joystick;
 
-            std::map<std::string, bool> a_active;
+            std::unordered_map<std::string, bool> a_active;
     };
 }
 

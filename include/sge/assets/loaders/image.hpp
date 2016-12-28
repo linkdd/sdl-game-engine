@@ -13,8 +13,8 @@ namespace sge
     class SGEImageLoader : public SGEAssetLoader
     {
         public:
-            virtual void load(SGEImage *asset, SDL_RWops *input);
-            virtual void unload(SGEImage *asset);
+            virtual void load(SGEBaseAsset *asset, SDL_RWops *input);
+            virtual void unload(SGEBaseAsset *asset);
     };
 }
 

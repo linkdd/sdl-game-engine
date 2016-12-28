@@ -3,17 +3,19 @@
 
 #include <sge/timer.hpp>
 #include <SDL/SDL.h>
-#include <function>
+
+#include <unordered_map>
+#include <functional>
 #include <tuple>
-#include <map>
+#include <list>
 
 namespace sge
 {
     class SGEMainLoop;
 
-    typedef std::function<bool, SGEMainLoop *, SDL_Event *, void *> EventHandler;
-    typedef std::function<void, SGEMainLoop *, int, void *> ProcessHandler;
-    typedef std::function<void, SGEMainLoop *, void *> DrawHandler;
+    typedef std::function<bool(SGEMainLoop *, SDL_Event *, void *)> EventHandler;
+    typedef std::function<void(SGEMainLoop *, int, void *)> ProcessHandler;
+    typedef std::function<void(SGEMainLoop *, void *)> DrawHandler;
 
     typedef std::tuple<EventHandler, void *> EventEntry;
     typedef std::tuple<ProcessHandler, SGETimer, void *> ProcessEntry;
@@ -37,6 +39,7 @@ namespace sge
             void dequeue_draw_handler(DrawHandler handler);
 
             void run();
+            void quit();
 
         private:
             int fps;
@@ -44,7 +47,7 @@ namespace sge
             SGETimer fps_timer;
 
             std::list<EventEntry> evtwatchers;
-            std::map<Uint32, std::list<EventEntry>> events;
+            std::unordered_map<Uint32, std::list<EventEntry>> events;
             std::list<ProcessEntry> processing;
             std::list<DrawEntry> drawing;
     };

@@ -1,11 +1,12 @@
 #ifndef __SGE_SCENE_MANAGER_HPP
 #define __SGE_SCENE_MANAGER_HPP
 
-#include <sge/engine.hpp>
+#include <sge/engine-forward.hpp>
 #include <sge/mainloop.hpp>
-#include <sge/node-forward.hpp>
+#include <sge/node.hpp>
+
+#include <unordered_map>
 #include <string>
-#include <map>
 
 namespace sge
 {
@@ -15,8 +16,8 @@ namespace sge
             SGEScene();
             ~SGEScene();
 
-            virtual void load(SGEngine &engine) = 0;
-            virtual void unload(SGEngine &engine) = 0;
+            virtual void load(SGEngine *engine) = 0;
+            virtual void unload(SGEngine *engine) = 0;
 
             SGENode *get_root_node() const;
 
@@ -27,7 +28,8 @@ namespace sge
     class SGESceneManager
     {
         public:
-            SGESceneManager(SGEngine &engine);
+            SGESceneManager(SGEngine *engine);
+            ~SGESceneManager();
 
             void add_scene(std::string const &name, SGEScene *scene);
             void switch_to_scene(std::string const &name);
@@ -37,10 +39,10 @@ namespace sge
             void draw_handler(SGEMainLoop *mainloop, void *unused);
 
         private:
-            SGEngine &engine;
+            SGEngine *engine;
             SGEScene *current_scene;
 
-            std::map<std::string, SGEScene *> scenes;
+            std::unordered_map<std::string, SGEScene *> scenes;
     };
 }
 

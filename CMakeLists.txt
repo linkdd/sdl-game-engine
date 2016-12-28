@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 2.8)
 project(sge)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_CXX_STANDARD_REQUIRED On)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${sge_SOURCE_DIR}/cmake)
 
@@ -24,13 +24,12 @@ set(
     ${sge_SOURCE_DIR}/include/sge/initializers/sdl-image.hpp
     ${sge_SOURCE_DIR}/include/sge/initializers/sdl-window.hpp
     ${sge_SOURCE_DIR}/include/sge/actionmgr.hpp
+    ${sge_SOURCE_DIR}/include/sge/engine-forward.hpp
     ${sge_SOURCE_DIR}/include/sge/engine.hpp
     ${sge_SOURCE_DIR}/include/sge/error.hpp
     ${sge_SOURCE_DIR}/include/sge/init.hpp
     ${sge_SOURCE_DIR}/include/sge/mainloop.hpp
-    ${sge_SOURCE_DIR}/include/sge/node-forward.hpp
     ${sge_SOURCE_DIR}/include/sge/node.hpp
-    ${sge_SOURCE_DIR}/include/sge/scenemgr-forward.hpp
     ${sge_SOURCE_DIR}/include/sge/scenemgr.hpp
     ${sge_SOURCE_DIR}/include/sge/sge.hpp
     ${sge_SOURCE_DIR}/include/sge/timer.hpp

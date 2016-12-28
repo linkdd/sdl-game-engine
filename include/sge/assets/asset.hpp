@@ -1,6 +1,7 @@
 #ifndef __SGE_ASSET_HPP
 #define __SGE_ASSET_HPP
 
+#include <functional>
 #include <string>
 
 namespace sge
@@ -10,8 +11,8 @@ namespace sge
         public:
             SGEAssetDescriptor(std::string const &assetname);
 
-            virtual size_t hash() const;
-            virtual bool compare(const SGEAssetDescriptor *other) const;
+            virtual size_t get_hash() const;
+            virtual bool compare(const SGEAssetDescriptor &other) const;
 
             std::string name() const;
             std::string extension() const;
@@ -23,30 +24,40 @@ namespace sge
     class SGEBaseAsset
     {
         public:
-            SGEBaseAsset(SGEAssetDescriptor *assetdesc);
+            SGEBaseAsset(SGEAssetDescriptor &assetdesc);
 
-            SGEAssetDescriptor *descriptor() const;
+            SGEAssetDescriptor &descriptor() const;
 
             void acquire();
             bool dispose();
 
         private:
             int refcount;
-            SGEAssetDescriptor *desc;
+            SGEAssetDescriptor &desc;
     };
 
     template <typename T>
-    class SGEAsset
+    class SGEAsset : public SGEBaseAsset
     {
         public:
-            void operator<<(T content);
-            T &asset() const;
+            void setAsset(T content)
+            {
+                _asset = content;
+            }
+
+            T asset() const
+            {
+                return _asset;
+            }
 
         private:
             T _asset;
     };
 }
 
-inline bool operator==(const sge::SGEAssetDescriptor *&lhs, const sge::SGEAssetDescriptor *&rhs);
+namespace std
+{
+    bool operator==(const sge::SGEAssetDescriptor &lhs, const sge::SGEAssetDescriptor &rhs);
+}
 
 #endif /* __SGE_ASSET_HPP */

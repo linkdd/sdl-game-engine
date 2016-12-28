@@ -1,7 +1,19 @@
 #include <sge/mainloop.hpp>
 
+using namespace std;
+
 namespace sge
 {
+    template<typename T, typename... U>
+    static bool functions_equal(function<T(U...)> a, function<T(U...)> b)
+    {
+        typedef T(*fptr)(U...);
+        fptr **pa = a.template target<fptr*>();
+        fptr **pb = b.template target<fptr*>();
+
+        return (*pa) == (*pb);
+    }
+
     SGEMainLoop::SGEMainLoop(int fps) : running(false), fps(fps)
     {}
 
@@ -14,7 +26,7 @@ namespace sge
     {
         for (auto it = evtwatchers.begin(); it != evtwatchers.end(); it++)
         {
-            if (it->get<0>() == handler)
+            if (functions_equal(get<0>(*it), handler))
             {
                 evtwatchers.erase(it);
                 break;
@@ -35,7 +47,7 @@ namespace sge
 
             for (auto it = handlers.begin(); it != handlers.end(); it++)
             {
-                if (it->get<0>() == handler)
+                if (functions_equal(get<0>(*it), handler))
                 {
                     handlers.erase(it);
                     break;
@@ -52,11 +64,11 @@ namespace sge
         processing.push_back(ProcessEntry(handler, timer, user_data));
     }
 
-    void SGEMainLoop::dequeue_process_handler(EventHandler handler)
+    void SGEMainLoop::dequeue_process_handler(ProcessHandler handler)
     {
         for (auto it = processing.begin(); it != processing.end(); it++)
         {
-            if (it->get<0>() == handler)
+            if (functions_equal(get<0>(*it), handler))
             {
                 processing.erase(it);
                 break;
@@ -64,16 +76,16 @@ namespace sge
         }
     }
 
-    void SGEMainLoop::queue_draw_handler(DrawHandler, void *user_data)
+    void SGEMainLoop::queue_draw_handler(DrawHandler handler, void *user_data)
     {
-        drawing.push_back(DrawEntry(handler, user_data))
+        drawing.push_back(DrawEntry(handler, user_data));
     }
 
-    void SGEMainLoop::dequeue_draw_handler(EventHandler handler)
+    void SGEMainLoop::dequeue_draw_handler(DrawHandler handler)
     {
         for (auto it = drawing.begin(); it != drawing.end(); it++)
         {
-            if (it->get<0>() == handler)
+            if (functions_equal(get<0>(*it), handler))
             {
                 drawing.erase(it);
                 break;
@@ -96,8 +108,8 @@ namespace sge
 
                 for (auto it = evtwatchers.begin(); it != evtwatchers.end(); it++)
                 {
-                    auto handler = it->get<0>();
-                    auto user_data = it->get<1>();
+                    auto handler = get<0>(*it);
+                    auto user_data = get<1>(*it);
 
                     if(!handler(this, &event, user_data))
                     {
@@ -112,8 +124,8 @@ namespace sge
 
                     for (auto it = handlers.begin(); it != handlers.end(); it++)
                     {
-                        auto handler = it->get<0>();
-                        auto user_data = it->get<1>();
+                        auto handler = get<0>(*it);
+                        auto user_data = get<1>(*it);
 
                         if (!handler(this, &event, user_data))
                         {
@@ -125,9 +137,9 @@ namespace sge
 
             for (auto it = processing.begin(); it != processing.end(); it++)
             {
-                auto handler = it->get<0>();
-                auto timer = it->get<1>();
-                auto user_data = it->get<2>();
+                auto handler = get<0>(*it);
+                auto timer = get<1>(*it);
+                auto user_data = get<2>(*it);
 
                 handler(this, timer.get_ticks(), user_data);
                 timer.start();
@@ -135,8 +147,8 @@ namespace sge
 
             for (auto it = drawing.begin(); it != drawing.end(); it++)
             {
-                auto handler = it->get<0>();
-                auto user_data = it->get<1>();
+                auto handler = get<0>(*it);
+                auto user_data = get<1>(*it);
 
                 handler(this, user_data);
             }
