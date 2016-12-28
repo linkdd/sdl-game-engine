@@ -54,7 +54,7 @@ namespace sge
         }
     }
 
-    bool SGESceneManager::event_handler(SGEMainLoop *mainloop, SDL_Event *event, void *unused)
+    bool SGESceneManager::event_handler(SGEMainLoop *mainloop, SDL_Event *event)
     {
         if (current_scene != nullptr && current_scene->get_root_node() != nullptr)
         {
@@ -64,7 +64,7 @@ namespace sge
         return true;
     }
 
-    void SGESceneManager::process_handler(SGEMainLoop *mainloop, Uint32 delta, void *unused)
+    void SGESceneManager::process_handler(SGEMainLoop *mainloop, Uint32 delta)
     {
         if (current_scene != nullptr && current_scene->get_root_node() != nullptr)
         {
@@ -72,7 +72,7 @@ namespace sge
         }
     }
 
-    void SGESceneManager::draw_handler(SGEMainLoop *mainloop, void *unused)
+    void SGESceneManager::draw_handler(SGEMainLoop *mainloop)
     {
         if (current_scene != nullptr && current_scene->get_root_node() != nullptr)
         {

@@ -20,7 +20,7 @@ namespace sge
             bool is_action_pressed(std::string const &name) const;
             bool is_action_released(std::string const &name) const;
 
-            bool event_handler(SGEMainLoop *mainloop, SDL_Event *event, void *unused);
+            bool event_handler(SGEMainLoop *mainloop, SDL_Event *event);
 
         private:
             std::unordered_map<std::string, std::list<SDL_Keycode>> a_keyboard;

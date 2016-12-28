@@ -114,41 +114,36 @@ namespace sge
 
         _mloop.queue_event_handler(
             SDL_QUIT,
-            [](SGEMainLoop *mloop, SDL_Event *evt, void *udata)
+            [](SGEMainLoop *mloop, SDL_Event *evt)
             {
                 mloop->quit();
                 return true;
-            },
-            nullptr
+            }
         );
 
         _mloop.add_event_watcher(
-            [&](SGEMainLoop *mloop, SDL_Event *evt, void *udata)
+            [&](SGEMainLoop *mloop, SDL_Event *evt)
             {
-                return _amgr.event_handler(mloop, evt, udata);
-            },
-            nullptr
+                return _amgr.event_handler(mloop, evt);
+            }
         );
         _mloop.add_event_watcher(
-            [&](SGEMainLoop *mloop, SDL_Event *evt, void *udata)
+            [&](SGEMainLoop *mloop, SDL_Event *evt)
             {
-                return _scmgr.event_handler(mloop, evt, udata);
-            },
-            this
+                return _scmgr.event_handler(mloop, evt);
+            }
         );
         _mloop.queue_process_handler(
-            [&](SGEMainLoop *mloop, Uint32 delta, void *udata)
+            [&](SGEMainLoop *mloop, Uint32 delta)
             {
-                _scmgr.process_handler(mloop, delta, udata);
-            },
-            this
+                _scmgr.process_handler(mloop, delta);
+            }
         );
         _mloop.queue_draw_handler(
-            [&](SGEMainLoop *mloop, void *udata)
+            [&](SGEMainLoop *mloop)
             {
-                _scmgr.draw_handler(mloop, udata);
-            },
-            this
+                _scmgr.draw_handler(mloop);
+            }
         );
     }
 

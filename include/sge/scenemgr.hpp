@@ -34,9 +34,9 @@ namespace sge
             void add_scene(std::string const &name, SGEScene *scene);
             void switch_to_scene(std::string const &name);
 
-            bool event_handler(SGEMainLoop *mainloop, SDL_Event *event, void *unused);
-            void process_handler(SGEMainLoop *mainloop, Uint32 delta, void *unused);
-            void draw_handler(SGEMainLoop *mainloop, void *unused);
+            bool event_handler(SGEMainLoop *mainloop, SDL_Event *event);
+            void process_handler(SGEMainLoop *mainloop, Uint32 delta);
+            void draw_handler(SGEMainLoop *mainloop);
 
         private:
             SGEngine *engine;

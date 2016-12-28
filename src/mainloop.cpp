@@ -17,9 +17,9 @@ namespace sge
     SGEMainLoop::SGEMainLoop(int fps) : running(false), fps(fps)
     {}
 
-    void SGEMainLoop::add_event_watcher(EventHandler handler, void *user_data)
+    void SGEMainLoop::add_event_watcher(EventHandler handler)
     {
-        evtwatchers.push_back(EventEntry(handler, user_data));
+        evtwatchers.push_back(std::move(handler));
     }
 
     void SGEMainLoop::remove_event_watcher(EventHandler handler)
@@ -34,9 +34,9 @@ namespace sge
         }
     }
 
-    void SGEMainLoop::queue_event_handler(Uint32 evtype, EventHandler handler, void *user_data)
+    void SGEMainLoop::queue_event_handler(Uint32 evtype, EventHandler handler)
     {
-        events[evtype].push_back(EventEntry(handler, user_data));
+        events[evtype].push_back(std::move(handler));
     }
 
     void SGEMainLoop::dequeue_event_handler(Uint32 evtype, EventHandler handler)
@@ -56,12 +56,12 @@ namespace sge
         }
     }
 
-    void SGEMainLoop::queue_process_handler(ProcessHandler handler, void *user_data)
+    void SGEMainLoop::queue_process_handler(ProcessHandler handler)
     {
         SGETimer timer;
         timer.start();
 
-        processing.push_back(ProcessEntry(handler, timer, user_data));
+        processing.push_back(std::make_tuple(std::move(handler), std::move(timer)));
     }
 
     void SGEMainLoop::dequeue_process_handler(ProcessHandler handler)
@@ -76,9 +76,9 @@ namespace sge
         }
     }
 
-    void SGEMainLoop::queue_draw_handler(DrawHandler handler, void *user_data)
+    void SGEMainLoop::queue_draw_handler(DrawHandler handler)
     {
-        drawing.push_back(DrawEntry(handler, user_data));
+        drawing.push_back(DrawEntry(handler));
     }
 
     void SGEMainLoop::dequeue_draw_handler(DrawHandler handler)
@@ -109,9 +109,8 @@ namespace sge
                 for (auto it = evtwatchers.begin(); it != evtwatchers.end(); it++)
                 {
                     auto handler = get<0>(*it);
-                    auto user_data = get<1>(*it);
 
-                    if(!handler(this, &event, user_data))
+                    if(!handler(this, &event))
                     {
                         accepted = false;
                         break;
@@ -125,9 +124,8 @@ namespace sge
                     for (auto it = handlers.begin(); it != handlers.end(); it++)
                     {
                         auto handler = get<0>(*it);
-                        auto user_data = get<1>(*it);
 
-                        if (!handler(this, &event, user_data))
+                        if (!handler(this, &event))
                         {
                             break;
                         }
@@ -139,18 +137,16 @@ namespace sge
             {
                 auto handler = get<0>(*it);
                 auto timer = get<1>(*it);
-                auto user_data = get<2>(*it);
 
-                handler(this, timer.get_ticks(), user_data);
+                handler(this, timer.get_ticks());
                 timer.start();
             }
 
             for (auto it = drawing.begin(); it != drawing.end(); it++)
             {
                 auto handler = get<0>(*it);
-                auto user_data = get<1>(*it);
 
-                handler(this, user_data);
+                handler(this);
             }
 
             Uint32 ticks = fps_timer.get_ticks();

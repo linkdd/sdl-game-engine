@@ -13,29 +13,29 @@ namespace sge
 {
     class SGEMainLoop;
 
-    typedef std::function<bool(SGEMainLoop *, SDL_Event *, void *)> EventHandler;
-    typedef std::function<void(SGEMainLoop *, int, void *)> ProcessHandler;
-    typedef std::function<void(SGEMainLoop *, void *)> DrawHandler;
+    using EventHandler = std::function<bool(SGEMainLoop *, SDL_Event *)>;
+    using ProcessHandler = std::function<void(SGEMainLoop *, int)>;
+    using DrawHandler = std::function<void(SGEMainLoop *)>;
 
-    typedef std::tuple<EventHandler, void *> EventEntry;
-    typedef std::tuple<ProcessHandler, SGETimer, void *> ProcessEntry;
-    typedef std::tuple<DrawHandler, void *> DrawEntry;
+    using EventEntry = std::tuple<EventHandler>;
+    using ProcessEntry = std::tuple<ProcessHandler, SGETimer>;
+    using DrawEntry = std::tuple<DrawHandler>;
 
     class SGEMainLoop
     {
         public:
             SGEMainLoop(int fps);
 
-            void add_event_watcher(EventHandler handler, void *user_data);
+            void add_event_watcher(EventHandler handler);
             void remove_event_watcher(EventHandler handler);
 
-            void queue_event_handler(Uint32 evtype, EventHandler handler, void *user_data);
+            void queue_event_handler(Uint32 evtype, EventHandler handler);
             void dequeue_event_handler(Uint32 evtype, EventHandler handler);
 
-            void queue_process_handler(ProcessHandler handler, void *user_data);
+            void queue_process_handler(ProcessHandler handler);
             void dequeue_process_handler(ProcessHandler handler);
 
-            void queue_draw_handler(DrawHandler handler, void *user_data);
+            void queue_draw_handler(DrawHandler handler);
             void dequeue_draw_handler(DrawHandler handler);
 
             void run();
