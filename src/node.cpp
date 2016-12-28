@@ -9,23 +9,14 @@ namespace sge
 {
     Node::Node(string const &name) : name(name), parent(nullptr), input_enabled(false), process_enabled(false), draw_enabled(false) {}
 
-    Node::~Node()
-    {
-        for (auto it = children.begin(); it != children.end(); it++)
-        {
-            Node *child = *it;
-            delete child;
-        }
-    }
-
     const char *Node::get_name() const
     {
         return name.c_str();
     }
 
-    Node *Node::get_root()
+    shared_ptr<Node> Node::get_root()
     {
-        Node *root = this;
+        shared_ptr<Node> root = shared_from_this();
 
         while (root->get_parent() != nullptr)
         {
@@ -35,12 +26,12 @@ namespace sge
         return root;
     }
 
-    Node *Node::get_parent()
+    shared_ptr<Node> Node::get_parent()
     {
         return parent;
     }
 
-    Node *Node::get_node(string const &path)
+    shared_ptr<Node> Node::get_node(string const &path)
     {
         if (path[0] == '/')
         {
@@ -55,7 +46,7 @@ namespace sge
             {
                 if (pos == string::npos)
                 {
-                    return this;
+                    return shared_from_this();
                 }
                 else
                 {
@@ -75,7 +66,7 @@ namespace sge
             }
             else
             {
-                Node *child = nullptr;
+                shared_ptr<Node> child = nullptr;
 
                 for (auto it = children.begin(); it != children.end(); it++)
                 {
@@ -98,17 +89,17 @@ namespace sge
         }
     }
 
-    void Node::add_child(Node *child, bool reparent)
+    void Node::add_child(shared_ptr<Node> child, bool reparent)
     {
-        children.push_back(child);
+        children.push_back(std::move(child));
 
         if (reparent)
         {
-            child->reparent(this, true, false);
+            child->reparent(shared_from_this(), true, false);
         }
     }
 
-    void Node::remove_child(Node *child, bool reparent)
+    void Node::remove_child(shared_ptr<Node> child, bool reparent)
     {
         for (auto it = children.begin(); it != children.end(); it++)
         {
@@ -125,18 +116,18 @@ namespace sge
         }
     }
 
-    void Node::reparent(Node *newparent, bool remove, bool add)
+    void Node::reparent(shared_ptr<Node> newparent, bool remove, bool add)
     {
         if (remove && parent != nullptr)
         {
-            parent->remove_child(this, false);
+            parent->remove_child(shared_from_this(), false);
         }
 
         parent = newparent;
 
         if (add && parent != nullptr)
         {
-            parent->add_child(this, false);
+            parent->add_child(shared_from_this(), false);
         }
     }
 
@@ -150,7 +141,7 @@ namespace sge
         input_enabled = enabled;
     }
 
-    bool Node::send_input(Engine *engine, SDL_Event *event)
+    bool Node::send_input(weak_ptr<Engine> engine, SDL_Event *event)
     {
         bool result = true;
 
@@ -159,17 +150,15 @@ namespace sge
             result = result && input(engine, event);
         }
 
-        for (auto it = children.begin(); it != children.end(); it++)
+        for (auto &child : children)
         {
-            Node *child = *it;
-
             result = result && child->send_input(engine, event);
         }
 
         return result;
     }
 
-    bool Node::input(Engine *engine, SDL_Event *event) {}
+    bool Node::input(weak_ptr<Engine> engine, SDL_Event *event) {}
 
     bool Node::has_process() const
     {
@@ -181,22 +170,20 @@ namespace sge
         process_enabled = enabled;
     }
 
-    void Node::send_process(Engine *engine, Uint32 delta)
+    void Node::send_process(weak_ptr<Engine> engine, Uint32 delta)
     {
         if (has_process())
         {
             process(engine, delta);
         }
 
-        for (auto it = children.begin(); it != children.end(); it++)
+        for (auto &child : children)
         {
-            Node *child = *it;
-
             child->send_process(engine, delta);
         }
     }
 
-    void Node::process(Engine *engine, Uint32 delta) {}
+    void Node::process(weak_ptr<Engine> engine, Uint32 delta) {}
 
     bool Node::has_draw() const
     {
@@ -208,51 +195,45 @@ namespace sge
         draw_enabled = enabled;
     }
 
-    void Node::send_draw(Engine *engine)
+    void Node::send_draw(weak_ptr<Engine> engine)
     {
         if (has_draw())
         {
             draw(engine);
         }
 
-        for (auto it = children.begin(); it != children.end(); it++)
+        for (auto &child : children)
         {
-            Node *child = *it;
-
             child->send_draw(engine);
         }
     }
 
-    void Node::draw(Engine *engine) {}
+    void Node::draw(weak_ptr<Engine> engine) {}
 
-    void Node::send_enter_tree(Engine *engine)
+    void Node::send_enter_tree(weak_ptr<Engine> engine)
     {
         enter_tree(engine);
 
-        for (auto it = children.begin(); it != children.end(); it++)
+        for (auto &child : children)
         {
-            Node *child = *it;
-
             child->send_enter_tree(engine);
         }
 
         ready (engine);
     }
 
-    void Node::enter_tree(Engine *engine) {}
-    void Node::ready(Engine *engine) {}
+    void Node::enter_tree(weak_ptr<Engine> engine) {}
+    void Node::ready(weak_ptr<Engine> engine) {}
 
-    void Node::send_exit_tree(Engine *engine)
+    void Node::send_exit_tree(weak_ptr<Engine> engine)
     {
-        for (auto it = children.begin(); it != children.end(); it++)
+        for (auto &child : children)
         {
-            Node *child = *it;
-
             child->send_exit_tree(engine);
         }
 
         exit_tree(engine);
     }
 
-    void Node::exit_tree(Engine *engine) {}
+    void Node::exit_tree(weak_ptr<Engine> engine) {}
 }

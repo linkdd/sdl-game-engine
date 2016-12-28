@@ -5,6 +5,7 @@
 #include <sge/node.hpp>
 
 #include <unordered_map>
+#include <memory>
 #include <string>
 
 namespace sge
@@ -15,8 +16,8 @@ namespace sge
             Scene();
             ~Scene();
 
-            virtual void load(Engine *engine) = 0;
-            virtual void unload(Engine *engine) = 0;
+            virtual void load(std::weak_ptr<Engine> engine) = 0;
+            virtual void unload(std::weak_ptr<Engine> engine) = 0;
 
             Node *get_root_node() const;
 
@@ -27,10 +28,10 @@ namespace sge
     class SceneManager
     {
         public:
-            SceneManager(Engine *engine);
+            SceneManager(std::weak_ptr<Engine> engine);
             ~SceneManager();
 
-            void add_scene(std::string const &name, Scene *scene);
+            void add_scene(std::string const &name, std::shared_ptr<Scene> scene);
             void switch_to_scene(std::string const &name);
 
             bool event_handler(SDL_Event *event);
@@ -38,10 +39,10 @@ namespace sge
             void draw_handler();
 
         private:
-            Engine *engine;
-            Scene *current_scene;
+            std::weak_ptr<Engine> engine;
+            std::shared_ptr<Scene> current_scene;
 
-            std::unordered_map<std::string, Scene *> scenes;
+            std::unordered_map<std::string, std::shared_ptr<Scene>> scenes;
     };
 }
 

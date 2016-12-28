@@ -18,7 +18,7 @@ namespace sge
         return root_node;
     }
 
-    SceneManager::SceneManager(Engine *engine) : current_scene(nullptr), engine(engine) {}
+    SceneManager::SceneManager(weak_ptr<Engine> engine) : current_scene(nullptr), engine(engine) {}
 
     SceneManager::~SceneManager()
     {
@@ -28,9 +28,9 @@ namespace sge
         }
     }
 
-    void SceneManager::add_scene(string const &name, Scene *scene)
+    void SceneManager::add_scene(string const &name, shared_ptr<Scene> scene)
     {
-        scenes[name] = scene;
+        scenes[name] = std::move(scene);
     }
 
     void SceneManager::switch_to_scene(string const &name)

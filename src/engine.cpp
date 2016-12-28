@@ -78,7 +78,7 @@ namespace sge
               configuration.getb("display/resizable", false)
           )),
           _mloop(configuration.geti("fps", 60)),
-          _scmgr(this),
+          _scmgr(shared_from_this()),
           _asset_file_locator(std::make_shared<FileLocator>(configuration.gets("assets/file/location", ""))),
           _asset_image_loader(std::make_shared<ImageLoader>()),
           _asset_font_loader(std::make_shared<FontLoader>())

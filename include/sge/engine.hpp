@@ -41,7 +41,7 @@ namespace sge
             std::unordered_map<std::string, std::string> kvdb;
     };
 
-    class Engine
+    class Engine : public std::enable_shared_from_this<Engine>
     {
         public:
             Engine(Configuration &configuration);
