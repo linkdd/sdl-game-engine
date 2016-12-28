@@ -1,7 +1,6 @@
 #ifndef __SGE_ACTION_MANAGER_HPP
 #define __SGE_ACTION_MANAGER_HPP
 
-#include <sge/mainloop.hpp>
 #include <SDL.h>
 
 #include <unordered_map>
@@ -20,7 +19,7 @@ namespace sge
             bool is_action_pressed(std::string const &name) const;
             bool is_action_released(std::string const &name) const;
 
-            bool event_handler(SGEMainLoop *mainloop, SDL_Event *event);
+            bool event_handler(SDL_Event *event);
 
         private:
             std::unordered_map<std::string, std::list<SDL_Keycode>> a_keyboard;

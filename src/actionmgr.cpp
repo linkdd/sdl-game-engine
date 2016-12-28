@@ -29,7 +29,7 @@ namespace sge
         return !a_active.at(name);
     }
 
-    bool SGEActionManager::event_handler(SGEMainLoop *mainloop, SDL_Event *event)
+    bool SGEActionManager::event_handler(SDL_Event *event)
     {
         switch (event->type)
         {

@@ -11,15 +11,11 @@
 
 namespace sge
 {
-    class SGEMainLoop;
+    using EventHandler = std::function<bool(SDL_Event *)>;
+    using ProcessHandler = std::function<void(int)>;
+    using DrawHandler = std::function<void(void)>;
 
-    using EventHandler = std::function<bool(SGEMainLoop *, SDL_Event *)>;
-    using ProcessHandler = std::function<void(SGEMainLoop *, int)>;
-    using DrawHandler = std::function<void(SGEMainLoop *)>;
-
-    using EventEntry = std::tuple<EventHandler>;
     using ProcessEntry = std::tuple<ProcessHandler, SGETimer>;
-    using DrawEntry = std::tuple<DrawHandler>;
 
     class SGEMainLoop
     {
@@ -46,10 +42,10 @@ namespace sge
             bool running;
             SGETimer fps_timer;
 
-            std::list<EventEntry> evtwatchers;
-            std::unordered_map<Uint32, std::list<EventEntry>> events;
+            std::list<EventHandler> evtwatchers;
+            std::unordered_map<Uint32, std::list<EventHandler>> events;
             std::list<ProcessEntry> processing;
-            std::list<DrawEntry> drawing;
+            std::list<DrawHandler> drawing;
     };
 }
 

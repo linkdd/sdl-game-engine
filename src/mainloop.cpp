@@ -26,7 +26,7 @@ namespace sge
     {
         for (auto it = evtwatchers.begin(); it != evtwatchers.end(); it++)
         {
-            if (functions_equal(get<0>(*it), handler))
+            if (functions_equal(*it, handler))
             {
                 evtwatchers.erase(it);
                 break;
@@ -47,7 +47,7 @@ namespace sge
 
             for (auto it = handlers.begin(); it != handlers.end(); it++)
             {
-                if (functions_equal(get<0>(*it), handler))
+                if (functions_equal(*it, handler))
                 {
                     handlers.erase(it);
                     break;
@@ -78,14 +78,14 @@ namespace sge
 
     void SGEMainLoop::queue_draw_handler(DrawHandler handler)
     {
-        drawing.push_back(DrawEntry(handler));
+        drawing.push_back(std::move(handler));
     }
 
     void SGEMainLoop::dequeue_draw_handler(DrawHandler handler)
     {
         for (auto it = drawing.begin(); it != drawing.end(); it++)
         {
-            if (functions_equal(get<0>(*it), handler))
+            if (functions_equal(*it, handler))
             {
                 drawing.erase(it);
                 break;
@@ -108,9 +108,9 @@ namespace sge
 
                 for (auto it = evtwatchers.begin(); it != evtwatchers.end(); it++)
                 {
-                    auto handler = get<0>(*it);
+                    auto handler = *it;
 
-                    if(!handler(this, &event))
+                    if(!handler(&event))
                     {
                         accepted = false;
                         break;
@@ -123,9 +123,9 @@ namespace sge
 
                     for (auto it = handlers.begin(); it != handlers.end(); it++)
                     {
-                        auto handler = get<0>(*it);
+                        auto handler = *it;
 
-                        if (!handler(this, &event))
+                        if (!handler(&event))
                         {
                             break;
                         }
@@ -138,15 +138,15 @@ namespace sge
                 auto handler = get<0>(*it);
                 auto timer = get<1>(*it);
 
-                handler(this, timer.get_ticks());
+                handler(timer.get_ticks());
                 timer.start();
             }
 
             for (auto it = drawing.begin(); it != drawing.end(); it++)
             {
-                auto handler = get<0>(*it);
+                auto handler = *it;
 
-                handler(this);
+                handler();
             }
 
             Uint32 ticks = fps_timer.get_ticks();
