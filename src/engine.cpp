@@ -76,7 +76,9 @@ namespace sge
           ),
           _mloop(configuration.geti("fps", 60)),
           _scmgr(this),
-          _asset_file_locator(configuration.gets("assets/file/location", ""))
+          _asset_file_locator(std::make_shared<SGEFileLocator>(configuration.gets("assets/file/location", ""))),
+          _asset_image_loader(std::make_shared<SGEImageLoader>()),
+          _asset_font_loader(std::make_shared<SGEFontLoader>())
     {
         _startup.add_initializer(&_sdl_init);
         _startup.add_initializer(&_sdl_img_init);
@@ -93,9 +95,9 @@ namespace sge
             throw e;
         }
 
-        _assets.register_locator(&_asset_file_locator);
+        _assets.register_locator(_asset_file_locator);
         _assets.register_loader(
-            &_asset_image_loader,
+            _asset_image_loader,
             {
                 "png",
                 "bmp",
@@ -110,7 +112,7 @@ namespace sge
                 "lbm", "iff"
             }
         );
-        _assets.register_loader(&_asset_font_loader, {"ttf"});
+        _assets.register_loader(_asset_image_loader, {"ttf"});
 
         _mloop.queue_event_handler(
             SDL_QUIT,

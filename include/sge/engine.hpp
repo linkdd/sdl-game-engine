@@ -68,10 +68,9 @@ namespace sge
 
             SGEAssetManager _assets;
 
-            SGEFileLocator _asset_file_locator;
-
-            SGEImageLoader _asset_image_loader;
-            SGEFontLoader _asset_font_loader;
+            std::shared_ptr<SGEFileLocator> _asset_file_locator;
+            std::shared_ptr<SGEImageLoader> _asset_image_loader;
+            std::shared_ptr<SGEFontLoader> _asset_font_loader;
     };
 }
 

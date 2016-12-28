@@ -47,7 +47,6 @@ set(
     ${sge_SOURCE_DIR}/src/initializers/sdl-image.cpp
     ${sge_SOURCE_DIR}/src/initializers/sdl-window.cpp
     ${sge_SOURCE_DIR}/src/actionmgr.cpp
-    ${sge_SOURCE_DIR}/src/assets
     ${sge_SOURCE_DIR}/src/engine.cpp
     ${sge_SOURCE_DIR}/src/init.cpp
     ${sge_SOURCE_DIR}/src/initializers

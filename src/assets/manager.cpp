@@ -4,16 +4,16 @@ using namespace std;
 
 namespace sge
 {
-    void SGEAssetManager::register_locator(SGEAssetLocator *locator)
+    void SGEAssetManager::register_locator(std::shared_ptr<SGEAssetLocator> locator)
     {
-        locators.push_back(locator);
+        locators.push_back(std::move(locator));
     }
 
-    void SGEAssetManager::register_loader(SGEAssetLoader *loader, vector<string> const &extensions)
+    void SGEAssetManager::register_loader(std::shared_ptr<SGEAssetLoader> loader, std::vector<string> const &extensions)
     {
-        for (auto it = extensions.begin(); it != extensions.end(); it++)
+        for (const auto &ext : extensions)
         {
-            loaders[*it] = loader;
+            loaders[ext] = loader;
         }
     }
 

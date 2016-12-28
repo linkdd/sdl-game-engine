@@ -6,29 +6,29 @@
 #include <sge/assets/asset.hpp>
 #include <sge/assets/cache.hpp>
 
-#include <unordered_map>
 #include <iostream>
+#include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
-#include <list>
 
 namespace sge
 {
     class SGEAssetManager
     {
         private:
-            std::list<SGEAssetLocator *> locators;
-            std::unordered_map<std::string, SGEAssetLoader *> loaders;
+            std::vector<std::shared_ptr<SGEAssetLocator>> locators;
+            std::unordered_map<std::string, std::shared_ptr<SGEAssetLoader>> loaders;
 
             SGEAssetCache cache;
 
         public:
-            void register_locator(SGEAssetLocator *locator);
-            void register_loader(SGEAssetLoader *loader, std::vector<std::string> const &extensions);
+            void register_locator(std::shared_ptr<SGEAssetLocator> locator);
+            void register_loader(std::shared_ptr<SGEAssetLoader> loader, std::vector<std::string> const &extensions);
 
             void unload(SGEBaseAsset *asset);
 
-            template <class A, class D>
+            template <typename A, typename D>
             A *load(D const &assetdesc)
             {
                 static_assert(std::is_base_of<SGEBaseAsset, A>::value, "Supplied asset type does not inherit from SGEAsset");
