@@ -106,9 +106,9 @@ namespace sge
             {
                 bool accepted = true;
 
-                for (auto it = evtwatchers.begin(); it != evtwatchers.end(); it++)
+                for (auto &it : evtwatchers)
                 {
-                    auto handler = get<0>(*it);
+                    auto handler = get<0>(it);
 
                     if(!handler(this, &event))
                     {
@@ -121,9 +121,9 @@ namespace sge
                 {
                     auto handlers = events[event.type];
 
-                    for (auto it = handlers.begin(); it != handlers.end(); it++)
+                    for (auto &it : handlers)
                     {
-                        auto handler = get<0>(*it);
+                        auto handler = get<0>(it);
 
                         if (!handler(this, &event))
                         {
@@ -133,18 +133,18 @@ namespace sge
                 }
             }
 
-            for (auto it = processing.begin(); it != processing.end(); it++)
+            for (auto &it : processing)
             {
-                auto handler = get<0>(*it);
-                auto timer = get<1>(*it);
+                auto handler = get<0>(it);
+                auto timer = get<1>(it);
 
                 handler(this, timer.get_ticks());
                 timer.start();
             }
 
-            for (auto it = drawing.begin(); it != drawing.end(); it++)
+            for (auto &it : drawing)
             {
-                auto handler = get<0>(*it);
+                auto handler = get<0>(it);
 
                 handler(this);
             }
