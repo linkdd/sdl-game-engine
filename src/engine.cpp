@@ -80,10 +80,10 @@ namespace sge
           _asset_image_loader(std::make_shared<SGEImageLoader>()),
           _asset_font_loader(std::make_shared<SGEFontLoader>())
     {
-        _startup.add_initializer(&_sdl_init);
-        _startup.add_initializer(&_sdl_img_init);
-        _startup.add_initializer(&_sdl_fonts_init);
-        _startup.add_initializer(&_sdl_window_init);
+        _startup.add_initializer(_sdl_init);
+        _startup.add_initializer(_sdl_img_init);
+        _startup.add_initializer(_sdl_fonts_init);
+        _startup.add_initializer(_sdl_window_init);
 
         try
         {

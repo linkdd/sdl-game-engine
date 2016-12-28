@@ -33,13 +33,13 @@ namespace sge
     class SGEStartup
     {
         public:
-            void add_initializer(SGEInitializer *initializer);
+            void add_initializer(SGEInitializer &initializer);
 
             void initialize();
             void shutdown();
 
         private:
-            std::list<SGEInitializer *> initializers;
+            std::list<SGEInitializer &> initializers;
     };
 }
 
