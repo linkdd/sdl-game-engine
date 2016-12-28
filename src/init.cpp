@@ -33,9 +33,9 @@ namespace sge
         return freed;
     }
 
-    void Startup::add_initializer(Initializer *initializer)
+    void Startup::add_initializer(std::shared_ptr<Initializer> initializer)
     {
-        initializers.push_back(initializer);
+        initializers.push_back(std::move(initializer));
     }
 
     void Startup::initialize()

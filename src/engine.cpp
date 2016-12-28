@@ -68,12 +68,15 @@ namespace sge
 
     Engine::Engine(Configuration &configuration)
         : _configuration(configuration),
-          _sdl_window_init(
+          _sdl_init(std::make_shared<SDLInitializer>()),
+          _sdl_img_init(std::make_shared<SDLImageInitializer>()),
+          _sdl_fonts_init(std::make_shared<SDLFontsInitializer>()),
+          _sdl_window_init(std::make_shared<SDLWindowInitializer>(
               configuration.geti("display/width", 640),
               configuration.geti("display/height", 480),
               configuration.getb("display/fullscreen", false),
               configuration.getb("display/resizable", false)
-          ),
+          )),
           _mloop(configuration.geti("fps", 60)),
           _scmgr(this),
           _asset_file_locator(std::make_shared<FileLocator>(configuration.gets("assets/file/location", ""))),

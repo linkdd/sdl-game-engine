@@ -17,6 +17,7 @@
 #include <sge/assets/loaders/font.hpp>
 
 #include <unordered_map>
+#include <memory>
 #include <string>
 
 namespace sge
@@ -57,10 +58,10 @@ namespace sge
             Configuration _configuration;
 
             Startup _startup;
-            SDLInitializer _sdl_init;
-            SDLImageInitializer _sdl_img_init;
-            SDLFontsInitializer _sdl_fonts_init;
-            SDLWindowInitializer _sdl_window_init;
+            std::shared_ptr<SDLInitializer> _sdl_init;
+            std::shared_ptr<SDLImageInitializer> _sdl_img_init;
+            std::shared_ptr<SDLFontsInitializer> _sdl_fonts_init;
+            std::shared_ptr<SDLWindowInitializer> _sdl_window_init;
 
             MainLoop _mloop;
             ActionManager _amgr;

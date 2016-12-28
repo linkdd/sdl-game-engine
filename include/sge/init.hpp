@@ -2,7 +2,8 @@
 #define __SGE_INIT_HPP
 
 #include <sge/error.hpp>
-#include <list>
+#include <memory>
+#include <vector>
 
 namespace sge
 {
@@ -33,13 +34,13 @@ namespace sge
     class Startup
     {
         public:
-            void add_initializer(Initializer &initializer);
+            void add_initializer(std::shared_ptr<Initializer> initializer);
 
             void initialize();
             void shutdown();
 
         private:
-            std::list<Initializer &> initializers;
+            std::vector<std::shared_ptr<Initializer>> initializers;
     };
 }
 
