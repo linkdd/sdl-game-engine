@@ -27,7 +27,7 @@ namespace sge
             else
             {
                 _location = tmp;
-                _location = location.substr(0, location.length() - 1);
+                _location = _location.substr(0, _location.length() - 1);
             }
         }
         else
