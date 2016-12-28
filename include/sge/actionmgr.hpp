@@ -2,7 +2,7 @@
 #define __SGE_ACTION_MANAGER_HPP
 
 #include <sge/mainloop.hpp>
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #include <unordered_map>
 #include <string>

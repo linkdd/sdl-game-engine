@@ -1,8 +1,9 @@
 #ifndef __SGE_IMAGE_LOADER_HPP
 #define __SGE_IMAGE_LOADER_HPP
 
+#include <SDL_image.h>
+
 #include <sge/assets/loader.hpp>
-#include <SDL/SDL_image.h>
 
 namespace sge
 {

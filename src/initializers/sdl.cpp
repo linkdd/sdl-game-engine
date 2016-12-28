@@ -1,5 +1,5 @@
 #include <sge/initializers/sdl.hpp>
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 namespace sge
 {

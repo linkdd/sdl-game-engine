@@ -1,8 +1,9 @@
 #ifndef __SGE_SDL_WINDOW_INIT_HPP
 #define __SGE_SDL_WINDOW_INIT_HPP
 
+#include <SDL.h>
+
 #include <sge/init.hpp>
-#include <SDL/SDL.h>
 
 namespace sge
 {

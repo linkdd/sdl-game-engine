@@ -2,7 +2,7 @@
 #define __SGE_NODE_HPP
 
 #include <sge/engine-forward.hpp>
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <string>
 #include <list>
 

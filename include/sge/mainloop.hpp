@@ -2,7 +2,7 @@
 #define __SGE_MAINLOOP_HPP
 
 #include <sge/timer.hpp>
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #include <unordered_map>
 #include <functional>

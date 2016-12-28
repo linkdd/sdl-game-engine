@@ -3,7 +3,7 @@
 
 #include <sge/error.hpp>
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <string>
 
 namespace sge

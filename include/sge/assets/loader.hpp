@@ -3,7 +3,7 @@
 
 #include <sge/assets/asset.hpp>
 #include <sge/error.hpp>
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 namespace sge
 {

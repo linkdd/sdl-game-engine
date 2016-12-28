@@ -1,7 +1,7 @@
 #ifndef __SGE_TIMER_HPP
 #define __SGE_TIMER_HPP
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 namespace sge
 {

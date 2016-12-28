@@ -1,6 +1,7 @@
+#include <SDL.h>
+
 #include <sge/assets/locators/file.hpp>
 #include <algorithm>
-#include <SDL/SDL.h>
 
 using namespace std;
 

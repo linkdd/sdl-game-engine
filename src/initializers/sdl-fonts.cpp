@@ -1,6 +1,7 @@
+#include <SDL.h>
+#include <SDL_ttf.h>
+
 #include <sge/initializers/sdl-fonts.hpp>
-#include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
 
 namespace sge
 {

@@ -1,6 +1,7 @@
+#include <SDL.h>
+#include <SDL_image.h>
+
 #include <sge/initializers/sdl-image.hpp>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
 
 namespace sge
 {
