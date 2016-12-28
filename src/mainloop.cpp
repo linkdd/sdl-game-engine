@@ -19,7 +19,7 @@ namespace sge
 
     void SGEMainLoop::add_event_watcher(EventHandler handler)
     {
-        evtwatchers.push_back(std::move(handler));
+        evtwatchers.push_back(EventEntry(handler));
     }
 
     void SGEMainLoop::remove_event_watcher(EventHandler handler)
