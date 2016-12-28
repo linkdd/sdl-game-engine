@@ -14,25 +14,25 @@
 
 namespace sge
 {
-    class SGEAssetManager
+    class AssetManager
     {
         private:
-            std::vector<std::shared_ptr<SGEAssetLocator>> locators;
-            std::unordered_map<std::string, std::shared_ptr<SGEAssetLoader>> loaders;
+            std::vector<std::shared_ptr<AssetLocator>> locators;
+            std::unordered_map<std::string, std::shared_ptr<AssetLoader>> loaders;
 
-            SGEAssetCache cache;
+            AssetCache cache;
 
         public:
-            void register_locator(std::shared_ptr<SGEAssetLocator> locator);
-            void register_loader(std::shared_ptr<SGEAssetLoader> loader, std::vector<std::string> const &extensions);
+            void register_locator(std::shared_ptr<AssetLocator> locator);
+            void register_loader(std::shared_ptr<AssetLoader> loader, std::vector<std::string> const &extensions);
 
-            void unload(SGEBaseAsset *asset);
+            void unload(BaseAsset *asset);
 
             template <typename A, typename D>
             A *load(D const &assetdesc)
             {
-                static_assert(std::is_base_of<SGEBaseAsset, A>::value, "Supplied asset type does not inherit from SGEAsset");
-                static_assert(std::is_base_of<SGEAssetDescriptor, D>::value, "Supplied descriptor type does not inherit from SGEAssetDescriptor");
+                static_assert(std::is_base_of<BaseAsset, A>::value, "Supplied asset type does not inherit from Asset");
+                static_assert(std::is_base_of<AssetDescriptor, D>::value, "Supplied descriptor type does not inherit from AssetDescriptor");
 
                 A *asset = nullptr;
 
@@ -48,9 +48,9 @@ namespace sge
                         {
                             input = locator->locate(assetdesc.name());
                         }
-                        catch (SGEAssetLocatorError const &e)
+                        catch (AssetLocatorError const &e)
                         {
-                            std::cerr << "[SGEAssetLocatorError] " << e.what() << std::endl;
+                            std::cerr << "[AssetLocatorError] " << e.what() << std::endl;
                             input = nullptr;
                         }
 
@@ -71,9 +71,9 @@ namespace sge
                             {
                                 loader->load(asset, input);
                             }
-                            catch (SGEAssetLoaderError const &e)
+                            catch (AssetLoaderError const &e)
                             {
-                                std::cerr << "[SGEAssetLoaderError] " << e.what() << std::endl;
+                                std::cerr << "[AssetLoaderError] " << e.what() << std::endl;
                                 delete asset;
                                 asset = nullptr;
                             }
@@ -85,7 +85,7 @@ namespace sge
                         }
                         else
                         {
-                            std::cerr << "[SGEAssetLoaderError] No loader found for extension: " << assetdesc.extension() << std::endl;
+                            std::cerr << "[AssetLoaderError] No loader found for extension: " << assetdesc.extension() << std::endl;
                             delete asset;
                             asset = nullptr;
                         }

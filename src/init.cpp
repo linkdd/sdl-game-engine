@@ -2,10 +2,10 @@
 
 namespace sge
 {
-    SGEInitializer::SGEInitializer() : initialized(false), freed(false)
+    Initializer::Initializer() : initialized(false), freed(false)
     {}
 
-    void SGEInitializer::initialize()
+    void Initializer::initialize()
     {
         if (!initialized)
         {
@@ -14,7 +14,7 @@ namespace sge
         }
     }
 
-    void SGEInitializer::shutdown()
+    void Initializer::shutdown()
     {
         if (!freed)
         {
@@ -23,22 +23,22 @@ namespace sge
         }
     }
 
-    bool SGEInitializer::is_initialized() const
+    bool Initializer::is_initialized() const
     {
         return initialized;
     }
 
-    bool SGEInitializer::is_freed() const
+    bool Initializer::is_freed() const
     {
         return freed;
     }
 
-    void SGEStartup::add_initializer(SGEInitializer *initializer)
+    void Startup::add_initializer(Initializer *initializer)
     {
         initializers.push_back(initializer);
     }
 
-    void SGEStartup::initialize()
+    void Startup::initialize()
     {
         for (auto it = initializers.begin(); it != initializers.end(); it++)
         {
@@ -51,7 +51,7 @@ namespace sge
         }
     }
 
-    void SGEStartup::shutdown()
+    void Startup::shutdown()
     {
         for (auto it = initializers.rbegin(); it != initializers.rend(); it++)
         {

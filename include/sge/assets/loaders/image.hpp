@@ -7,15 +7,15 @@
 
 namespace sge
 {
-    class SGEImage : public SGEAsset<SDL_Surface *> {};
+    class Image : public Asset<SDL_Surface *> {};
 
-    class SGEImageDescriptor : public SGEAssetDescriptor {};
+    class ImageDescriptor : public AssetDescriptor {};
 
-    class SGEImageLoader : public SGEAssetLoader
+    class ImageLoader : public AssetLoader
     {
         public:
-            virtual void load(SGEBaseAsset *asset, SDL_RWops *input);
-            virtual void unload(SGEBaseAsset *asset);
+            virtual void load(BaseAsset *asset, SDL_RWops *input);
+            virtual void unload(BaseAsset *asset);
     };
 }
 

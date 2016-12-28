@@ -9,7 +9,7 @@
 
 namespace sge
 {
-    class SGEActionManager
+    class ActionManager
     {
         public:
             void register_keyboard_action(std::string const &name, SDL_Keycode key);

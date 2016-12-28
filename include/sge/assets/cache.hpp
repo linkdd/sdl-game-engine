@@ -8,15 +8,15 @@
 
 namespace sge
 {
-    struct SGEAssetHasher
+    struct AssetHasher
     {
-        size_t operator()(const SGEAssetDescriptor &key) const
+        size_t operator()(const AssetDescriptor &key) const
         {
             return key.get_hash();
         }
     };
 
-    class SGEAssetCache : public std::unordered_map<SGEAssetDescriptor, SGEBaseAsset *, SGEAssetHasher> {};
+    class AssetCache : public std::unordered_map<AssetDescriptor, BaseAsset *, AssetHasher> {};
 }
 
 #endif /* __SGE_ASSET_CACHE_HPP */

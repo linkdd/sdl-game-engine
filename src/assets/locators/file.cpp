@@ -15,7 +15,7 @@ namespace sge
     const char REPLACE = '\\';
 #endif
 
-    SGEFileLocator::SGEFileLocator(string const &location) : SGEAssetLocator()
+    FileLocator::FileLocator(string const &location) : AssetLocator()
     {
         if (location.empty())
         {
@@ -37,7 +37,7 @@ namespace sge
         }
     }
 
-    SDL_RWops *SGEFileLocator::locate(string const &assetname)
+    SDL_RWops *FileLocator::locate(string const &assetname)
     {
         string fullpath = _location + SEPARATOR + assetname;
         replace(fullpath.begin(), fullpath.end(), REPLACE, SEPARATOR);
@@ -46,7 +46,7 @@ namespace sge
 
         if (input == nullptr)
         {
-            throw SGEAssetLocatorError("SDL", SDL_GetError());
+            throw AssetLocatorError("SDL", SDL_GetError());
         }
 
         return input;

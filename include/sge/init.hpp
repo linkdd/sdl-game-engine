@@ -6,10 +6,10 @@
 
 namespace sge
 {
-    class SGEInitializer
+    class Initializer
     {
         public:
-            SGEInitializer();
+            Initializer();
 
             virtual void do_initialize() = 0;
             virtual void do_shutdown() = 0;
@@ -25,21 +25,21 @@ namespace sge
             bool freed;
     };
 
-    class SGEInitError : public SGEException
+    class InitError : public Exception
     {
-        using SGEException::SGEException;
+        using Exception::Exception;
     };
 
-    class SGEStartup
+    class Startup
     {
         public:
-            void add_initializer(SGEInitializer &initializer);
+            void add_initializer(Initializer &initializer);
 
             void initialize();
             void shutdown();
 
         private:
-            std::list<SGEInitializer &> initializers;
+            std::list<Initializer &> initializers;
     };
 }
 

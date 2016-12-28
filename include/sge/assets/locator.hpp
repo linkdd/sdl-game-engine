@@ -8,12 +8,12 @@
 
 namespace sge
 {
-    class SGEAssetLocatorError : public SGEException
+    class AssetLocatorError : public Exception
     {
-        using SGEException::SGEException;
+        using Exception::Exception;
     };
 
-    class SGEAssetLocator
+    class AssetLocator
     {
         public:
             virtual SDL_RWops *locate(std::string const &assetname) = 0;

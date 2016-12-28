@@ -11,7 +11,7 @@ namespace sge
     {
         if (IMG_Init(IMG_INIT_EVERYTHING) & IMG_INIT_EVERYTHING != IMG_INIT_EVERYTHING)
         {
-            throw SGEInitError("SDL_image", IMG_GetError());
+            throw InitError("SDL_image", IMG_GetError());
         }
     }
 

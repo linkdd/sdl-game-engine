@@ -6,11 +6,11 @@
 
 namespace sge
 {
-    class SGEException : public std::exception
+    class Exception : public std::exception
     {
         public:
-            SGEException(std::string const &domain, std::string const &msg) throw() : domain(domain), msg(msg) {}
-            virtual ~SGEException() throw() {}
+            Exception(std::string const &domain, std::string const &msg) throw() : domain(domain), msg(msg) {}
+            virtual ~Exception() throw() {}
 
             virtual const char *what() const throw()
             {

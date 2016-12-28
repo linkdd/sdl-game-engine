@@ -7,7 +7,7 @@ namespace sge
     {
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
         {
-            throw SGEInitError("SDL", SDL_GetError());
+            throw InitError("SDL", SDL_GetError());
         }
     }
 

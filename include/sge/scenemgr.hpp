@@ -9,28 +9,28 @@
 
 namespace sge
 {
-    class SGEScene
+    class Scene
     {
         public:
-            SGEScene();
-            ~SGEScene();
+            Scene();
+            ~Scene();
 
-            virtual void load(SGEngine *engine) = 0;
-            virtual void unload(SGEngine *engine) = 0;
+            virtual void load(Engine *engine) = 0;
+            virtual void unload(Engine *engine) = 0;
 
-            SGENode *get_root_node() const;
+            Node *get_root_node() const;
 
         private:
-            SGENode *root_node;
+            Node *root_node;
     };
 
-    class SGESceneManager
+    class SceneManager
     {
         public:
-            SGESceneManager(SGEngine *engine);
-            ~SGESceneManager();
+            SceneManager(Engine *engine);
+            ~SceneManager();
 
-            void add_scene(std::string const &name, SGEScene *scene);
+            void add_scene(std::string const &name, Scene *scene);
             void switch_to_scene(std::string const &name);
 
             bool event_handler(SDL_Event *event);
@@ -38,10 +38,10 @@ namespace sge
             void draw_handler();
 
         private:
-            SGEngine *engine;
-            SGEScene *current_scene;
+            Engine *engine;
+            Scene *current_scene;
 
-            std::unordered_map<std::string, SGEScene *> scenes;
+            std::unordered_map<std::string, Scene *> scenes;
     };
 }
 

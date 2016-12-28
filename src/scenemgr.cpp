@@ -4,8 +4,8 @@ using namespace std;
 
 namespace sge
 {
-    SGEScene::SGEScene() : root_node(nullptr) {}
-    SGEScene::~SGEScene()
+    Scene::Scene() : root_node(nullptr) {}
+    Scene::~Scene()
     {
         if (root_node != nullptr)
         {
@@ -13,14 +13,14 @@ namespace sge
         }
     }
 
-    SGENode *SGEScene::get_root_node() const
+    Node *Scene::get_root_node() const
     {
         return root_node;
     }
 
-    SGESceneManager::SGESceneManager(SGEngine *engine) : current_scene(nullptr), engine(engine) {}
+    SceneManager::SceneManager(Engine *engine) : current_scene(nullptr), engine(engine) {}
 
-    SGESceneManager::~SGESceneManager()
+    SceneManager::~SceneManager()
     {
         if (current_scene != nullptr)
         {
@@ -28,12 +28,12 @@ namespace sge
         }
     }
 
-    void SGESceneManager::add_scene(string const &name, SGEScene *scene)
+    void SceneManager::add_scene(string const &name, Scene *scene)
     {
         scenes[name] = scene;
     }
 
-    void SGESceneManager::switch_to_scene(string const &name)
+    void SceneManager::switch_to_scene(string const &name)
     {
         if (current_scene != nullptr)
         {
@@ -54,7 +54,7 @@ namespace sge
         }
     }
 
-    bool SGESceneManager::event_handler(SDL_Event *event)
+    bool SceneManager::event_handler(SDL_Event *event)
     {
         if (current_scene != nullptr && current_scene->get_root_node() != nullptr)
         {
@@ -64,7 +64,7 @@ namespace sge
         return true;
     }
 
-    void SGESceneManager::process_handler(Uint32 delta)
+    void SceneManager::process_handler(Uint32 delta)
     {
         if (current_scene != nullptr && current_scene->get_root_node() != nullptr)
         {
@@ -72,7 +72,7 @@ namespace sge
         }
     }
 
-    void SGESceneManager::draw_handler()
+    void SceneManager::draw_handler()
     {
         if (current_scene != nullptr && current_scene->get_root_node() != nullptr)
         {

@@ -15,7 +15,7 @@ namespace sge
 
         if (SDL_CreateWindowAndRenderer(width, height, flags, &_window, &_renderer) != 0)
         {
-            throw SGEInitError("SDL", SDL_GetError());
+            throw InitError("SDL", SDL_GetError());
         }
     }
 

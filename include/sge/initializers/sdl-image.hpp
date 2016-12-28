@@ -5,7 +5,7 @@
 
 namespace sge
 {
-    class SDLImageInitializer : public SGEInitializer
+    class SDLImageInitializer : public Initializer
     {
         public:
             void do_initialize();

@@ -5,7 +5,7 @@
 
 namespace sge
 {
-    class SDLFontsInitializer : public SGEInitializer
+    class SDLFontsInitializer : public Initializer
     {
         public:
             void do_initialize();

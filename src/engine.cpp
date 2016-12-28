@@ -14,7 +14,7 @@ namespace sge
         return ss.str();
     }
 
-    string SGEConfiguration::gets(string const &param, string const &_default) const
+    string Configuration::gets(string const &param, string const &_default) const
     {
         string result;
 
@@ -30,43 +30,43 @@ namespace sge
         return result;
     }
 
-    int SGEConfiguration::geti(string const &param, int _default) const
+    int Configuration::geti(string const &param, int _default) const
     {
         return stoi(gets(param, to_string<int>(_default)));
     }
 
-    bool SGEConfiguration::getb(string const &param, bool _default) const
+    bool Configuration::getb(string const &param, bool _default) const
     {
         return bool(geti(param, int(_default)));
     }
 
-    float SGEConfiguration::getf(string const &param, float _default) const
+    float Configuration::getf(string const &param, float _default) const
     {
         return stof(gets(param, to_string<float>(_default)));
     }
 
-    SGEConfiguration &SGEConfiguration::set(string const &param, string const &value)
+    Configuration &Configuration::set(string const &param, string const &value)
     {
         kvdb[param] = value;
         return *this;
     }
 
-    SGEConfiguration &SGEConfiguration::set(string const &param, int value)
+    Configuration &Configuration::set(string const &param, int value)
     {
         return set(param, to_string<int>(value));
     }
 
-    SGEConfiguration &SGEConfiguration::set(string const &param, bool value)
+    Configuration &Configuration::set(string const &param, bool value)
     {
         return set(param, int(value));
     }
 
-    SGEConfiguration &SGEConfiguration::set(string const &param, float value)
+    Configuration &Configuration::set(string const &param, float value)
     {
         return set(param, to_string<float>(value));
     }
 
-    SGEngine::SGEngine(SGEConfiguration &configuration)
+    Engine::Engine(Configuration &configuration)
         : _configuration(configuration),
           _sdl_window_init(
               configuration.geti("display/width", 640),
@@ -76,9 +76,9 @@ namespace sge
           ),
           _mloop(configuration.geti("fps", 60)),
           _scmgr(this),
-          _asset_file_locator(std::make_shared<SGEFileLocator>(configuration.gets("assets/file/location", ""))),
-          _asset_image_loader(std::make_shared<SGEImageLoader>()),
-          _asset_font_loader(std::make_shared<SGEFontLoader>())
+          _asset_file_locator(std::make_shared<FileLocator>(configuration.gets("assets/file/location", ""))),
+          _asset_image_loader(std::make_shared<ImageLoader>()),
+          _asset_font_loader(std::make_shared<FontLoader>())
     {
         _startup.add_initializer(_sdl_init);
         _startup.add_initializer(_sdl_img_init);
@@ -89,7 +89,7 @@ namespace sge
         {
             _startup.initialize();
         }
-        catch(SGEInitError const &e)
+        catch(InitError const &e)
         {
             _startup.shutdown();
             throw e;
@@ -149,37 +149,37 @@ namespace sge
         );
     }
 
-    SGEngine::~SGEngine()
+    Engine::~Engine()
     {
         _startup.shutdown();
     }
 
-    SGEConfiguration &SGEngine::configuration()
+    Configuration &Engine::configuration()
     {
         return _configuration;
     }
 
-    SGEStartup &SGEngine::startup()
+    Startup &Engine::startup()
     {
         return _startup;
     }
 
-    SGEMainLoop &SGEngine::mainloop()
+    MainLoop &Engine::mainloop()
     {
         return _mloop;
     }
 
-    SGEActionManager &SGEngine::actions()
+    ActionManager &Engine::actions()
     {
         return _amgr;
     }
 
-    SGEAssetManager &SGEngine::assets()
+    AssetManager &Engine::assets()
     {
         return _assets;
     }
 
-    SGESceneManager &SGEngine::scenes()
+    SceneManager &Engine::scenes()
     {
         return _scmgr;
     }

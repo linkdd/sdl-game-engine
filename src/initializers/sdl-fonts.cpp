@@ -9,7 +9,7 @@ namespace sge
     {
         if (TTF_Init() != 0)
         {
-            throw SGEInitError("SDL_ttf", TTF_GetError());
+            throw InitError("SDL_ttf", TTF_GetError());
         }
     }
 

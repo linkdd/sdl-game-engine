@@ -5,7 +5,7 @@
 
 namespace sge
 {
-    class SDLInitializer : public SGEInitializer
+    class SDLInitializer : public Initializer
     {
         public:
             void do_initialize();

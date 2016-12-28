@@ -15,12 +15,12 @@ namespace sge
     using ProcessHandler = std::function<void(int)>;
     using DrawHandler = std::function<void(void)>;
 
-    using ProcessEntry = std::tuple<ProcessHandler, SGETimer>;
+    using ProcessEntry = std::tuple<ProcessHandler, Timer>;
 
-    class SGEMainLoop
+    class MainLoop
     {
         public:
-            SGEMainLoop(int fps);
+            MainLoop(int fps);
 
             void add_event_watcher(EventHandler handler);
             void remove_event_watcher(EventHandler handler);
@@ -40,7 +40,7 @@ namespace sge
         private:
             int fps;
             bool running;
-            SGETimer fps_timer;
+            Timer fps_timer;
 
             std::list<EventHandler> evtwatchers;
             std::unordered_map<Uint32, std::list<EventHandler>> events;

@@ -21,56 +21,56 @@
 
 namespace sge
 {
-    class SGEConfiguration
+    class Configuration
     {
         public:
-            SGEConfiguration();
+            Configuration();
 
             std::string gets(std::string const &param, std::string const &_default = std::string()) const;
             int geti(std::string const &param, int _default = 0) const;
             bool getb(std::string const &param, bool _default = false) const;
             float getf(std::string const &param, float _default = 0.0) const;
 
-            SGEConfiguration &set(std::string const &param, std::string const &value);
-            SGEConfiguration &set(std::string const &param, int value);
-            SGEConfiguration &set(std::string const &param, bool value);
-            SGEConfiguration &set(std::string const &param, float value);
+            Configuration &set(std::string const &param, std::string const &value);
+            Configuration &set(std::string const &param, int value);
+            Configuration &set(std::string const &param, bool value);
+            Configuration &set(std::string const &param, float value);
 
         private:
             std::unordered_map<std::string, std::string> kvdb;
     };
 
-    class SGEngine
+    class Engine
     {
         public:
-            SGEngine(SGEConfiguration &configuration);
-            ~SGEngine();
+            Engine(Configuration &configuration);
+            ~Engine();
 
-            SGEConfiguration &configuration();
-            SGEStartup &startup();
-            SGEMainLoop &mainloop();
-            SGEActionManager &actions();
-            SGEAssetManager &assets();
-            SGESceneManager &scenes();
+            Configuration &configuration();
+            Startup &startup();
+            MainLoop &mainloop();
+            ActionManager &actions();
+            AssetManager &assets();
+            SceneManager &scenes();
 
         private:
-            SGEConfiguration _configuration;
+            Configuration _configuration;
 
-            SGEStartup _startup;
+            Startup _startup;
             SDLInitializer _sdl_init;
             SDLImageInitializer _sdl_img_init;
             SDLFontsInitializer _sdl_fonts_init;
             SDLWindowInitializer _sdl_window_init;
 
-            SGEMainLoop _mloop;
-            SGEActionManager _amgr;
-            SGESceneManager _scmgr;
+            MainLoop _mloop;
+            ActionManager _amgr;
+            SceneManager _scmgr;
 
-            SGEAssetManager _assets;
+            AssetManager _assets;
 
-            std::shared_ptr<SGEFileLocator> _asset_file_locator;
-            std::shared_ptr<SGEImageLoader> _asset_image_loader;
-            std::shared_ptr<SGEFontLoader> _asset_font_loader;
+            std::shared_ptr<FileLocator> _asset_file_locator;
+            std::shared_ptr<ImageLoader> _asset_image_loader;
+            std::shared_ptr<FontLoader> _asset_font_loader;
     };
 }
 

@@ -6,13 +6,13 @@
 
 namespace sge
 {
-    class SGEAssetDescriptor
+    class AssetDescriptor
     {
         public:
-            SGEAssetDescriptor(std::string const &assetname);
+            AssetDescriptor(std::string const &assetname);
 
             virtual size_t get_hash() const;
-            virtual bool compare(const SGEAssetDescriptor &other) const;
+            virtual bool compare(const AssetDescriptor &other) const;
 
             std::string name() const;
             std::string extension() const;
@@ -21,23 +21,23 @@ namespace sge
             std::string assetname;
     };
 
-    class SGEBaseAsset
+    class BaseAsset
     {
         public:
-            SGEBaseAsset(SGEAssetDescriptor &assetdesc);
+            BaseAsset(AssetDescriptor &assetdesc);
 
-            SGEAssetDescriptor &descriptor() const;
+            AssetDescriptor &descriptor() const;
 
             void acquire();
             bool dispose();
 
         private:
             int refcount;
-            SGEAssetDescriptor &desc;
+            AssetDescriptor &desc;
     };
 
     template <typename T>
-    class SGEAsset : public SGEBaseAsset
+    class Asset : public BaseAsset
     {
         public:
             void setAsset(T content)
@@ -57,7 +57,7 @@ namespace sge
 
 namespace std
 {
-    bool operator==(const sge::SGEAssetDescriptor &lhs, const sge::SGEAssetDescriptor &rhs);
+    bool operator==(const sge::AssetDescriptor &lhs, const sge::AssetDescriptor &rhs);
 }
 
 #endif /* __SGE_ASSET_HPP */

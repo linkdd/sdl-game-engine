@@ -7,7 +7,7 @@
 
 namespace sge
 {
-    class SDLWindowInitializer : public SGEInitializer
+    class SDLWindowInitializer : public Initializer
     {
         public:
             SDLWindowInitializer(int width, int height, bool fullscreen, bool resizable);

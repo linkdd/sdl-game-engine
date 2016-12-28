@@ -4,32 +4,32 @@ using namespace std;
 
 namespace sge
 {
-    void SGEActionManager::register_keyboard_action(string const &name, SDL_Keycode key)
+    void ActionManager::register_keyboard_action(string const &name, SDL_Keycode key)
     {
         a_keyboard[name].push_back(key);
     }
 
-    void SGEActionManager::register_mouse_action(string const &name, Uint8 button)
+    void ActionManager::register_mouse_action(string const &name, Uint8 button)
     {
         a_mouse[name].push_back(button);
     }
 
-    void SGEActionManager::register_joystick_action(string const &name, Uint8 button)
+    void ActionManager::register_joystick_action(string const &name, Uint8 button)
     {
         a_joystick[name].push_back(button);
     }
 
-    bool SGEActionManager::is_action_pressed(string const &name) const
+    bool ActionManager::is_action_pressed(string const &name) const
     {
         return a_active.at(name);
     }
 
-    bool SGEActionManager::is_action_released(string const &name) const
+    bool ActionManager::is_action_released(string const &name) const
     {
         return !a_active.at(name);
     }
 
-    bool SGEActionManager::event_handler(SDL_Event *event)
+    bool ActionManager::event_handler(SDL_Event *event)
     {
         switch (event->type)
         {

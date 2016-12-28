@@ -7,15 +7,15 @@
 
 namespace sge
 {
-    class SGEFont : public SGEAsset<TTF_Font *> {};
+    class Font : public Asset<TTF_Font *> {};
 
-    class SGEFontDescriptor : public SGEAssetDescriptor
+    class FontDescriptor : public AssetDescriptor
     {
         public:
-            SGEFontDescriptor(std::string const &assetname, int font_size);
+            FontDescriptor(std::string const &assetname, int font_size);
 
             virtual size_t get_hash() const;
-            virtual bool compare(const SGEFontDescriptor &other) const;
+            virtual bool compare(const FontDescriptor &other) const;
 
             int fontSize() const;
 
@@ -23,11 +23,11 @@ namespace sge
             int font_size;
     };
 
-    class SGEFontLoader : public SGEAssetLoader
+    class FontLoader : public AssetLoader
     {
         public:
-            virtual void load(SGEBaseAsset *asset, SDL_RWops *input);
-            virtual void unload(SGEBaseAsset *asset);
+            virtual void load(BaseAsset *asset, SDL_RWops *input);
+            virtual void unload(BaseAsset *asset);
     };
 }
 

@@ -5,10 +5,10 @@
 
 namespace sge
 {
-    class SGETimer
+    class Timer
     {
         public:
-            SGETimer() : ticks(0) {}
+            Timer() : ticks(0) {}
 
             void start()
             {

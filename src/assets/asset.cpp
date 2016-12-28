@@ -5,25 +5,25 @@ using namespace std;
 
 namespace sge
 {
-    SGEAssetDescriptor::SGEAssetDescriptor(string const &assetname) : assetname(assetname) {}
+    AssetDescriptor::AssetDescriptor(string const &assetname) : assetname(assetname) {}
 
-    size_t SGEAssetDescriptor::get_hash() const
+    size_t AssetDescriptor::get_hash() const
     {
         hash<string> hashfn;
         return hashfn(assetname);
     }
 
-    bool SGEAssetDescriptor::compare(const SGEAssetDescriptor &other) const
+    bool AssetDescriptor::compare(const AssetDescriptor &other) const
     {
         return (assetname == other.name());
     }
 
-    string SGEAssetDescriptor::name() const
+    string AssetDescriptor::name() const
     {
         return assetname;
     }
 
-    string SGEAssetDescriptor::extension() const
+    string AssetDescriptor::extension() const
     {
         size_t found = assetname.rfind(".");
         string result("");
@@ -36,19 +36,19 @@ namespace sge
         return result;
     }
 
-    SGEBaseAsset::SGEBaseAsset(SGEAssetDescriptor &assetdesc) : desc(assetdesc), refcount(0) {}
+    BaseAsset::BaseAsset(AssetDescriptor &assetdesc) : desc(assetdesc), refcount(0) {}
 
-    SGEAssetDescriptor &SGEBaseAsset::descriptor() const
+    AssetDescriptor &BaseAsset::descriptor() const
     {
         return desc;
     }
 
-    void SGEBaseAsset::acquire()
+    void BaseAsset::acquire()
     {
         refcount++;
     }
 
-    bool SGEBaseAsset::dispose()
+    bool BaseAsset::dispose()
     {
         refcount--;
         return (refcount <= 0);
@@ -57,7 +57,7 @@ namespace sge
 
 namespace std
 {
-    bool operator==(const sge::SGEAssetDescriptor &lhs, const sge::SGEAssetDescriptor &rhs)
+    bool operator==(const sge::AssetDescriptor &lhs, const sge::AssetDescriptor &rhs)
     {
         return (typeid(lhs) == typeid(rhs)) && lhs.compare(rhs);
     }

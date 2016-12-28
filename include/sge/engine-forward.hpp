@@ -3,7 +3,7 @@
 
 namespace sge
 {
-    class SGEngine;
+    class Engine;
 }
 
 #endif /* __SGE_ENGINE_FORWARD_HPP */

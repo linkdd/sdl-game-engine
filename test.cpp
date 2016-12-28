@@ -6,7 +6,7 @@ using namespace sge;
 
 int main()
 {
-    SGEConfiguration conf;
+    Configuration conf;
     int retcode = 0;
 
     conf.set("fps", 60)
@@ -17,29 +17,28 @@ int main()
 
     try
     {
-        SGEngine engine(configuration);
+        Engine engine(configuration);
 
         engine.actions().register_keyboard_action("ui_quit", SDLK_ESCAPE);
 
         engine.mainloop().queue_process_handler(
-            [](SGEMainLoop *mloop, Uint32 delta, SGEngine *engine)
+            [&](Uint32 delta)
             {
-                if (engine->actions().is_action_pressed("ui_quit"))
+                if (engine.actions().is_action_pressed("ui_quit"))
                 {
-                    mloop->quit();
+                    engine.mainloop().quit();
                 }
-            },
-            &engine
+            }
         );
 
-        SGEImageDescriptor descriptor("test.png");
-        SGEImage *img = engine.assets().load<SGEImage, SGEImageDescriptor>(descriptor);
+        ImageDescriptor descriptor("test.png");
+        Image *img = engine.assets().load<Image, ImageDescriptor>(descriptor);
 
         engine.mainloop().run();
 
         engine.assets().unload(img);
     }
-    catch (SGEException const &e)
+    catch (Exception const &e)
     {
         cerr << "Error: " << e.what() << endl;
         retcode = 1;

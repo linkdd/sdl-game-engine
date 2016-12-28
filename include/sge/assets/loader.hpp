@@ -7,16 +7,16 @@
 
 namespace sge
 {
-    class SGEAssetLoaderError : public SGEException
+    class AssetLoaderError : public Exception
     {
-        using SGEException::SGEException;
+        using Exception::Exception;
     };
 
-    class SGEAssetLoader
+    class AssetLoader
     {
         public:
-            virtual void load(SGEBaseAsset *asset, SDL_RWops *input) = 0;
-            virtual void unload(SGEBaseAsset *asset) = 0;
+            virtual void load(BaseAsset *asset, SDL_RWops *input) = 0;
+            virtual void unload(BaseAsset *asset) = 0;
     };
 }
 

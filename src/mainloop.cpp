@@ -14,15 +14,15 @@ namespace sge
         return (*pa) == (*pb);
     }
 
-    SGEMainLoop::SGEMainLoop(int fps) : running(false), fps(fps)
+    MainLoop::MainLoop(int fps) : running(false), fps(fps)
     {}
 
-    void SGEMainLoop::add_event_watcher(EventHandler handler)
+    void MainLoop::add_event_watcher(EventHandler handler)
     {
         evtwatchers.push_back(std::move(handler));
     }
 
-    void SGEMainLoop::remove_event_watcher(EventHandler handler)
+    void MainLoop::remove_event_watcher(EventHandler handler)
     {
         for (auto it = evtwatchers.begin(); it != evtwatchers.end(); it++)
         {
@@ -34,12 +34,12 @@ namespace sge
         }
     }
 
-    void SGEMainLoop::queue_event_handler(Uint32 evtype, EventHandler handler)
+    void MainLoop::queue_event_handler(Uint32 evtype, EventHandler handler)
     {
         events[evtype].push_back(std::move(handler));
     }
 
-    void SGEMainLoop::dequeue_event_handler(Uint32 evtype, EventHandler handler)
+    void MainLoop::dequeue_event_handler(Uint32 evtype, EventHandler handler)
     {
         if (events.find(evtype) != events.end())
         {
@@ -56,15 +56,15 @@ namespace sge
         }
     }
 
-    void SGEMainLoop::queue_process_handler(ProcessHandler handler)
+    void MainLoop::queue_process_handler(ProcessHandler handler)
     {
-        SGETimer timer;
+        Timer timer;
         timer.start();
 
         processing.push_back(std::make_tuple(std::move(handler), std::move(timer)));
     }
 
-    void SGEMainLoop::dequeue_process_handler(ProcessHandler handler)
+    void MainLoop::dequeue_process_handler(ProcessHandler handler)
     {
         for (auto it = processing.begin(); it != processing.end(); it++)
         {
@@ -76,12 +76,12 @@ namespace sge
         }
     }
 
-    void SGEMainLoop::queue_draw_handler(DrawHandler handler)
+    void MainLoop::queue_draw_handler(DrawHandler handler)
     {
         drawing.push_back(std::move(handler));
     }
 
-    void SGEMainLoop::dequeue_draw_handler(DrawHandler handler)
+    void MainLoop::dequeue_draw_handler(DrawHandler handler)
     {
         for (auto it = drawing.begin(); it != drawing.end(); it++)
         {
@@ -93,7 +93,7 @@ namespace sge
         }
     }
 
-    void SGEMainLoop::run()
+    void MainLoop::run()
     {
         running = true;
 
@@ -152,7 +152,7 @@ namespace sge
         }
     }
 
-    void SGEMainLoop::quit()
+    void MainLoop::quit()
     {
         running = false;
     }

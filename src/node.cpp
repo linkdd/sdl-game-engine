@@ -7,25 +7,25 @@ using namespace std;
 
 namespace sge
 {
-    SGENode::SGENode(string const &name) : name(name), parent(nullptr), input_enabled(false), process_enabled(false), draw_enabled(false) {}
+    Node::Node(string const &name) : name(name), parent(nullptr), input_enabled(false), process_enabled(false), draw_enabled(false) {}
 
-    SGENode::~SGENode()
+    Node::~Node()
     {
         for (auto it = children.begin(); it != children.end(); it++)
         {
-            SGENode *child = *it;
+            Node *child = *it;
             delete child;
         }
     }
 
-    const char *SGENode::get_name() const
+    const char *Node::get_name() const
     {
         return name.c_str();
     }
 
-    SGENode *SGENode::get_root()
+    Node *Node::get_root()
     {
-        SGENode *root = this;
+        Node *root = this;
 
         while (root->get_parent() != nullptr)
         {
@@ -35,12 +35,12 @@ namespace sge
         return root;
     }
 
-    SGENode *SGENode::get_parent()
+    Node *Node::get_parent()
     {
         return parent;
     }
 
-    SGENode *SGENode::get_node(string const &path)
+    Node *Node::get_node(string const &path)
     {
         if (path[0] == '/')
         {
@@ -75,7 +75,7 @@ namespace sge
             }
             else
             {
-                SGENode *child = nullptr;
+                Node *child = nullptr;
 
                 for (auto it = children.begin(); it != children.end(); it++)
                 {
@@ -98,7 +98,7 @@ namespace sge
         }
     }
 
-    void SGENode::add_child(SGENode *child, bool reparent)
+    void Node::add_child(Node *child, bool reparent)
     {
         children.push_back(child);
 
@@ -108,7 +108,7 @@ namespace sge
         }
     }
 
-    void SGENode::remove_child(SGENode *child, bool reparent)
+    void Node::remove_child(Node *child, bool reparent)
     {
         for (auto it = children.begin(); it != children.end(); it++)
         {
@@ -125,7 +125,7 @@ namespace sge
         }
     }
 
-    void SGENode::reparent(SGENode *newparent, bool remove, bool add)
+    void Node::reparent(Node *newparent, bool remove, bool add)
     {
         if (remove && parent != nullptr)
         {
@@ -140,17 +140,17 @@ namespace sge
         }
     }
 
-    bool SGENode::has_input() const
+    bool Node::has_input() const
     {
         return input_enabled;
     }
 
-    void SGENode::set_input(bool enabled)
+    void Node::set_input(bool enabled)
     {
         input_enabled = enabled;
     }
 
-    bool SGENode::send_input(SGEngine *engine, SDL_Event *event)
+    bool Node::send_input(Engine *engine, SDL_Event *event)
     {
         bool result = true;
 
@@ -161,7 +161,7 @@ namespace sge
 
         for (auto it = children.begin(); it != children.end(); it++)
         {
-            SGENode *child = *it;
+            Node *child = *it;
 
             result = result && child->send_input(engine, event);
         }
@@ -169,19 +169,19 @@ namespace sge
         return result;
     }
 
-    bool SGENode::input(SGEngine *engine, SDL_Event *event) {}
+    bool Node::input(Engine *engine, SDL_Event *event) {}
 
-    bool SGENode::has_process() const
+    bool Node::has_process() const
     {
         return process_enabled;
     }
 
-    void SGENode::set_process(bool enabled)
+    void Node::set_process(bool enabled)
     {
         process_enabled = enabled;
     }
 
-    void SGENode::send_process(SGEngine *engine, Uint32 delta)
+    void Node::send_process(Engine *engine, Uint32 delta)
     {
         if (has_process())
         {
@@ -190,25 +190,25 @@ namespace sge
 
         for (auto it = children.begin(); it != children.end(); it++)
         {
-            SGENode *child = *it;
+            Node *child = *it;
 
             child->send_process(engine, delta);
         }
     }
 
-    void SGENode::process(SGEngine *engine, Uint32 delta) {}
+    void Node::process(Engine *engine, Uint32 delta) {}
 
-    bool SGENode::has_draw() const
+    bool Node::has_draw() const
     {
         return draw_enabled;
     }
 
-    void SGENode::set_draw(bool enabled)
+    void Node::set_draw(bool enabled)
     {
         draw_enabled = enabled;
     }
 
-    void SGENode::send_draw(SGEngine *engine)
+    void Node::send_draw(Engine *engine)
     {
         if (has_draw())
         {
@@ -217,21 +217,21 @@ namespace sge
 
         for (auto it = children.begin(); it != children.end(); it++)
         {
-            SGENode *child = *it;
+            Node *child = *it;
 
             child->send_draw(engine);
         }
     }
 
-    void SGENode::draw(SGEngine *engine) {}
+    void Node::draw(Engine *engine) {}
 
-    void SGENode::send_enter_tree(SGEngine *engine)
+    void Node::send_enter_tree(Engine *engine)
     {
         enter_tree(engine);
 
         for (auto it = children.begin(); it != children.end(); it++)
         {
-            SGENode *child = *it;
+            Node *child = *it;
 
             child->send_enter_tree(engine);
         }
@@ -239,14 +239,14 @@ namespace sge
         ready (engine);
     }
 
-    void SGENode::enter_tree(SGEngine *engine) {}
-    void SGENode::ready(SGEngine *engine) {}
+    void Node::enter_tree(Engine *engine) {}
+    void Node::ready(Engine *engine) {}
 
-    void SGENode::send_exit_tree(SGEngine *engine)
+    void Node::send_exit_tree(Engine *engine)
     {
         for (auto it = children.begin(); it != children.end(); it++)
         {
-            SGENode *child = *it;
+            Node *child = *it;
 
             child->send_exit_tree(engine);
         }
@@ -254,5 +254,5 @@ namespace sge
         exit_tree(engine);
     }
 
-    void SGENode::exit_tree(SGEngine *engine) {}
+    void Node::exit_tree(Engine *engine) {}
 }
