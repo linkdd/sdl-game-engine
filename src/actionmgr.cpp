@@ -37,7 +37,7 @@ namespace sge
                 for (auto it = a_joystick.begin(); it != a_joystick.end(); it++)
                 {
                     string action = it->first;
-                    list<Uint8> button = it->second;
+                    vector<Uint8> button = it->second;
 
                     for (auto it = button.begin(); it != button.end(); it++)
                     {
@@ -55,7 +55,7 @@ namespace sge
                 for (auto it = a_joystick.begin(); it != a_joystick.end(); it++)
                 {
                     string action = it->first;
-                    list<Uint8> button = it->second;
+                    vector<Uint8> button = it->second;
 
                     for (auto it = button.begin(); it != button.end(); it++)
                     {
@@ -73,7 +73,7 @@ namespace sge
                 for (auto it = a_keyboard.begin(); it != a_keyboard.end(); it++)
                 {
                     string action = it->first;
-                    list<SDL_Keycode> key = it->second;
+                    vector<SDL_Keycode> key = it->second;
 
                     for (auto it = key.begin(); it != key.end(); it++)
                     {
@@ -91,7 +91,7 @@ namespace sge
                 for (auto it = a_keyboard.begin(); it != a_keyboard.end(); it++)
                 {
                     string action = it->first;
-                    list<SDL_Keycode> key = it->second;
+                    vector<SDL_Keycode> key = it->second;
 
                     for (auto it = key.begin(); it != key.end(); it++)
                     {
@@ -109,7 +109,7 @@ namespace sge
                 for (auto it = a_mouse.begin(); it != a_mouse.end(); it++)
                 {
                     string action = it->first;
-                    list<Uint8> button = it->second;
+                    vector<Uint8> button = it->second;
 
                     for (auto it = button.begin(); it != button.end(); it++)
                     {
@@ -128,7 +128,7 @@ namespace sge
                 for (auto it = a_mouse.begin(); it != a_mouse.end(); it++)
                 {
                     string action = it->first;
-                    list<Uint8> button = it->second;
+                    vector<Uint8> button = it->second;
 
                     for (auto it = button.begin(); it != button.end(); it++)
                     {
