@@ -34,14 +34,14 @@ namespace sge
         switch (event->type)
         {
             case SDL_CONTROLLERBUTTONDOWN:
-                for (auto it = a_joystick.begin(); it != a_joystick.end(); it++)
+                for (auto &joy : a_joystick)
                 {
-                    string action = it->first;
-                    vector<Uint8> button = it->second;
+                    string action = joy.first;
+                    vector<Uint8> button = joy.second;
 
-                    for (auto it = button.begin(); it != button.end(); it++)
+                    for (auto b : button)
                     {
-                        if (*it == event->cbutton.button)
+                        if (b == event->cbutton.button)
                         {
                             a_active[action] = true;
                             break;
@@ -52,14 +52,14 @@ namespace sge
                 break;
 
             case SDL_CONTROLLERBUTTONUP:
-                for (auto it = a_joystick.begin(); it != a_joystick.end(); it++)
+                for (auto &joy : a_joystick)
                 {
-                    string action = it->first;
-                    vector<Uint8> button = it->second;
+                    string action = joy.first;
+                    vector<Uint8> button = joy.second;
 
-                    for (auto it = button.begin(); it != button.end(); it++)
+                    for (auto &b : button)
                     {
-                        if (*it == event->cbutton.button)
+                        if (b == event->cbutton.button)
                         {
                             a_active[action] = false;
                             break;
@@ -70,14 +70,14 @@ namespace sge
                 break;
 
             case SDL_KEYDOWN:
-                for (auto it = a_keyboard.begin(); it != a_keyboard.end(); it++)
+                for (auto &kbd : a_keyboard)
                 {
-                    string action = it->first;
-                    vector<SDL_Keycode> key = it->second;
+                    string action = kbd.first;
+                    vector<SDL_Keycode> keys = kbd.second;
 
-                    for (auto it = key.begin(); it != key.end(); it++)
+                    for (auto &key : keys)
                     {
-                        if (*it == event->key.keysym.sym)
+                        if (key == event->key.keysym.sym)
                         {
                             a_active[action] = true;
                             break;
@@ -88,14 +88,14 @@ namespace sge
                 break;
 
             case SDL_KEYUP:
-                for (auto it = a_keyboard.begin(); it != a_keyboard.end(); it++)
+                for (auto &kbd : a_keyboard)
                 {
-                    string action = it->first;
-                    vector<SDL_Keycode> key = it->second;
+                    string action = kbd.first;
+                    vector<SDL_Keycode> keys = kbd.second;
 
-                    for (auto it = key.begin(); it != key.end(); it++)
+                    for (auto &key : keys)
                     {
-                        if (*it == event->key.keysym.sym)
+                        if (key == event->key.keysym.sym)
                         {
                             a_active[action] = false;
                             break;
@@ -106,14 +106,14 @@ namespace sge
                 break;
 
             case SDL_MOUSEBUTTONDOWN:
-                for (auto it = a_mouse.begin(); it != a_mouse.end(); it++)
+                for (auto &mouse : a_mouse)
                 {
-                    string action = it->first;
-                    vector<Uint8> button = it->second;
+                    string action = mouse.first;
+                    vector<Uint8> button = mouse.second;
 
-                    for (auto it = button.begin(); it != button.end(); it++)
+                    for (auto &b : button)
                     {
-                        if (*it == event->button.button)
+                        if (b == event->button.button)
                         {
                             a_active[action] = true;
                             break;
@@ -123,16 +123,15 @@ namespace sge
 
                 break;
 
-
             case SDL_MOUSEBUTTONUP:
-                for (auto it = a_mouse.begin(); it != a_mouse.end(); it++)
+                for (auto &mouse : a_mouse)
                 {
-                    string action = it->first;
-                    vector<Uint8> button = it->second;
+                    string action = mouse.first;
+                    vector<Uint8> button = mouse.second;
 
-                    for (auto it = button.begin(); it != button.end(); it++)
+                    for (auto &b : button)
                     {
-                        if (*it == event->button.button)
+                        if (b == event->button.button)
                         {
                             a_active[action] = false;
                             break;
