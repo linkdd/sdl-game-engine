@@ -52,8 +52,8 @@ namespace sge
             bool draw_enabled;
 
             std::string name;
-            std::shared_ptr<Node> parent;
-            std::list<std::shared_ptr<Node> > children;
+            std::weak_ptr<Node> parent;
+            std::list<std::shared_ptr<Node>> children;
     };
 }
 

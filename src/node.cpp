@@ -7,7 +7,7 @@ using namespace std;
 
 namespace sge
 {
-    Node::Node(string const &name) : name(name), parent(nullptr), input_enabled(false), process_enabled(false), draw_enabled(false) {}
+    Node::Node(string const &name) : name(name), input_enabled(false), process_enabled(false), draw_enabled(false) {}
 
     const char *Node::get_name() const
     {
@@ -28,7 +28,7 @@ namespace sge
 
     shared_ptr<Node> Node::get_parent()
     {
-        return parent;
+        return parent.lock();
     }
 
     shared_ptr<Node> Node::get_node(string const &path)
@@ -118,16 +118,16 @@ namespace sge
 
     void Node::reparent(shared_ptr<Node> newparent, bool remove, bool add)
     {
-        if (remove && parent != nullptr)
+        if (remove && get_parent() != nullptr)
         {
-            parent->remove_child(shared_from_this(), false);
+            get_parent()->remove_child(shared_from_this(), false);
         }
 
         parent = newparent;
 
-        if (add && parent != nullptr)
+        if (add && get_parent() != nullptr)
         {
-            parent->add_child(shared_from_this(), false);
+            get_parent()->add_child(shared_from_this(), false);
         }
     }
 
