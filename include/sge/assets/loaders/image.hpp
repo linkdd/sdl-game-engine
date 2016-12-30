@@ -7,9 +7,15 @@
 
 namespace sge
 {
-    class Image : public Asset<SDL_Surface *> {};
+    class Image : public Asset<SDL_Surface *>
+    {
+        using Asset::Asset;
+    };
 
-    class ImageDescriptor : public AssetDescriptor {};
+    class ImageDescriptor : public AssetDescriptor
+    {
+        using AssetDescriptor::AssetDescriptor;
+    };
 
     class ImageLoader : public AssetLoader
     {

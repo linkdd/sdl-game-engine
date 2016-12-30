@@ -7,10 +7,15 @@
 
 namespace sge
 {
-    class Font : public Asset<TTF_Font *> {};
+    class Font : public Asset<TTF_Font *>
+    {
+        using Asset<TTF_Font *>::Asset;
+    };
 
     class FontDescriptor : public AssetDescriptor
     {
+        using AssetDescriptor::AssetDescriptor;
+
         public:
             FontDescriptor(std::string const &assetname, int font_size);
 

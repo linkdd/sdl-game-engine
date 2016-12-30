@@ -21,12 +21,14 @@ namespace sge
     {
         if (asset->dispose())
         {
-            if (cache.find(asset->descriptor()) != cache.end())
+            auto it = cache.find(asset->descriptor());
+
+            if (it != cache.end())
             {
-                cache.erase(asset->descriptor());
+                cache.erase(it);
             }
 
-            auto loader = loaders[asset->descriptor().extension()];
+            auto loader = loaders[asset->descriptor()->extension()];
             loader->unload(asset);
             delete asset;
         }

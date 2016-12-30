@@ -54,6 +54,9 @@ namespace sge
             AssetManager &assets();
             SceneManager &scenes();
 
+            SDL_Window *window() const;
+            SDL_Renderer *renderer() const;
+
         private:
             Configuration _configuration;
 

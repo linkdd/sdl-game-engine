@@ -34,9 +34,10 @@ namespace sge
                 static_assert(std::is_base_of<BaseAsset, A>::value, "Supplied asset type does not inherit from Asset");
                 static_assert(std::is_base_of<AssetDescriptor, D>::value, "Supplied descriptor type does not inherit from AssetDescriptor");
 
+                auto passetdesc = std::make_shared<D>(assetdesc);
                 A *asset = nullptr;
 
-                if (cache.find(assetdesc) == cache.end())
+                if (cache.find(passetdesc) == cache.end())
                 {
                     SDL_RWops *input = nullptr;
 
@@ -46,7 +47,7 @@ namespace sge
 
                         try
                         {
-                            input = locator->locate(assetdesc.name());
+                            input = locator->locate(passetdesc->name());
                         }
                         catch (AssetLocatorError const &e)
                         {
@@ -62,10 +63,10 @@ namespace sge
 
                     if (input != nullptr)
                     {
-                        if (loaders.find(assetdesc.extension()) != loaders.end())
+                        if (loaders.find(passetdesc->extension()) != loaders.end())
                         {
-                            auto loader = loaders[assetdesc.extension()];
-                            asset = new A(assetdesc);
+                            auto loader = loaders[passetdesc->extension()];
+                            asset = new A(passetdesc);
 
                             try
                             {
@@ -80,12 +81,12 @@ namespace sge
 
                             if (asset != nullptr)
                             {
-                                cache[assetdesc] = asset;
+                                cache[passetdesc] = static_cast<BaseAsset *>(asset);
                             }
                         }
                         else
                         {
-                            std::cerr << "[AssetLoaderError] No loader found for extension: " << assetdesc.extension() << std::endl;
+                            std::cerr << "[AssetLoaderError] No loader found for extension: " << passetdesc->extension() << std::endl;
                             delete asset;
                             asset = nullptr;
                         }
@@ -93,7 +94,7 @@ namespace sge
                 }
                 else
                 {
-                    asset = cache[assetdesc];
+                    asset = static_cast<A *>(cache[passetdesc]);
                 }
 
                 if (asset != nullptr)

@@ -36,9 +36,9 @@ namespace sge
         return result;
     }
 
-    BaseAsset::BaseAsset(AssetDescriptor &assetdesc) : desc(assetdesc), refcount(0) {}
+    BaseAsset::BaseAsset(std::shared_ptr<AssetDescriptor> assetdesc) : desc(assetdesc), refcount(0) {}
 
-    AssetDescriptor &BaseAsset::descriptor() const
+    std::shared_ptr<AssetDescriptor> BaseAsset::descriptor() const
     {
         return desc;
     }
@@ -52,13 +52,5 @@ namespace sge
     {
         refcount--;
         return (refcount <= 0);
-    }
-}
-
-namespace std
-{
-    bool operator==(const sge::AssetDescriptor &lhs, const sge::AssetDescriptor &rhs)
-    {
-        return (typeid(lhs) == typeid(rhs)) && lhs.compare(rhs);
     }
 }

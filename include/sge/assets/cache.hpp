@@ -5,18 +5,27 @@
 #include <sge/assets/cache.hpp>
 
 #include <unordered_map>
+#include <memory>
 
 namespace sge
 {
     struct AssetHasher
     {
-        size_t operator()(const AssetDescriptor &key) const
+        size_t operator()(std::shared_ptr<AssetDescriptor> const &key) const
         {
-            return key.get_hash();
+            return key->get_hash();
         }
     };
 
-    class AssetCache : public std::unordered_map<AssetDescriptor, BaseAsset *, AssetHasher> {};
+    struct AssetPred
+    {
+        bool operator()(std::shared_ptr<AssetDescriptor> const &a, std::shared_ptr<AssetDescriptor> const &b) const
+        {
+            return a->compare(*b);
+        }
+    };
+
+    class AssetCache : public std::unordered_map<std::shared_ptr<AssetDescriptor>, BaseAsset *, AssetHasher, AssetPred> {};
 }
 
 #endif /* __SGE_ASSET_CACHE_HPP */

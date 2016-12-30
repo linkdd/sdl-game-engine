@@ -2,6 +2,7 @@
 #define __SGE_ASSET_HPP
 
 #include <functional>
+#include <memory>
 #include <string>
 
 namespace sge
@@ -24,21 +25,23 @@ namespace sge
     class BaseAsset
     {
         public:
-            BaseAsset(AssetDescriptor &assetdesc);
+            BaseAsset(std::shared_ptr<AssetDescriptor> assetdesc);
 
-            AssetDescriptor &descriptor() const;
+            std::shared_ptr<AssetDescriptor> descriptor() const;
 
             void acquire();
             bool dispose();
 
         private:
             int refcount;
-            AssetDescriptor &desc;
+            std::shared_ptr<AssetDescriptor> desc;
     };
 
     template <typename T>
     class Asset : public BaseAsset
     {
+        using BaseAsset::BaseAsset;
+
         public:
             void setAsset(T content)
             {
@@ -53,11 +56,6 @@ namespace sge
         private:
             T _asset;
     };
-}
-
-namespace std
-{
-    bool operator==(const sge::AssetDescriptor &lhs, const sge::AssetDescriptor &rhs);
 }
 
 #endif /* __SGE_ASSET_HPP */

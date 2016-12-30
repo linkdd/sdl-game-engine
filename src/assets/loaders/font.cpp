@@ -26,9 +26,9 @@ namespace sge
     void FontLoader::load(BaseAsset *asset, SDL_RWops *input)
     {
         Font *font = static_cast<Font *>(asset);
-        auto descriptor = static_cast<FontDescriptor &>(font->descriptor());
+        auto descriptor = static_pointer_cast<FontDescriptor>(font->descriptor());
 
-        TTF_Font *content = TTF_OpenFontRW(input, 1, descriptor.fontSize());
+        TTF_Font *content = TTF_OpenFontRW(input, 1, descriptor->fontSize());
 
         if (content == nullptr)
         {

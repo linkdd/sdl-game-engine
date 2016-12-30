@@ -99,6 +99,7 @@ namespace sge
         }
 
         _assets.register_locator(_asset_file_locator);
+        _assets.register_loader(_asset_font_loader, {"ttf"});
         _assets.register_loader(
             _asset_image_loader,
             {
@@ -115,41 +116,13 @@ namespace sge
                 "lbm", "iff"
             }
         );
-        _assets.register_loader(_asset_image_loader, {"ttf"});
 
-        _mloop.queue_event_handler(
-            SDL_QUIT,
-            [&](SDL_Event *evt)
-            {
-                _mloop.quit();
-                return true;
-            }
-        );
-
-        _mloop.add_event_watcher(
-            [&](SDL_Event *evt)
-            {
-                return _amgr.event_handler(evt);
-            }
-        );
-        _mloop.add_event_watcher(
-            [&](SDL_Event *evt)
-            {
-                return _scmgr.event_handler(evt);
-            }
-        );
-        _mloop.queue_process_handler(
-            [&](Uint32 delta)
-            {
-                _scmgr.process_handler(delta);
-            }
-        );
-        _mloop.queue_draw_handler(
-            [&]()
-            {
-                _scmgr.draw_handler();
-            }
-        );
+        _mloop.queue_event_handler(SDL_QUIT, [&](SDL_Event *evt) { _mloop.quit(); return true; });
+        _mloop.add_event_watcher([&](SDL_Event *evt) { return _amgr.event_handler(evt); });
+        _mloop.add_event_watcher([&](SDL_Event *evt) { return _scmgr.event_handler(evt); });
+        _mloop.queue_process_handler([&](Uint32 delta) { _scmgr.process_handler(delta); });
+        _mloop.queue_draw_handler([&]() { SDL_RenderClear(renderer()); });
+        _mloop.queue_draw_handler([&]() { _scmgr.draw_handler(); });
     }
 
     Engine::~Engine()
@@ -185,5 +158,15 @@ namespace sge
     SceneManager &Engine::scenes()
     {
         return _scmgr;
+    }
+
+    SDL_Window *Engine::window() const
+    {
+        return _sdl_window_init->window();
+    }
+
+    SDL_Renderer *Engine::renderer() const
+    {
+        return _sdl_window_init->renderer();
     }
 }

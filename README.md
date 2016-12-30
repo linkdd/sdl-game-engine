@@ -54,7 +54,7 @@ The **scene graph** is a tree of node, each one implementing a specific task:
 Example of nodes:
 
  - ``PositionNode``: handle relative and absolute position
- - ``SpriteNode``: loads an asset and draw at a position (first child ``PositionNode`` is used)
+ - ``SpriteNode``: loads an asset and draw at a position
  - ``AnimatedSpriteNode``: loads multiple asset, change the frame on update, draw at a position
  - ``AreaNode``: notified when overlaps with another ``AreaNode``
  - ...
