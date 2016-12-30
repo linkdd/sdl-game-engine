@@ -39,7 +39,7 @@ namespace sge
         {
             if (current_scene->get_root_node() != nullptr)
             {
-                current_scene->get_root_node()->send_exit_tree(engine);
+                current_scene->get_root_node()->send_exit_tree();
             }
 
             current_scene->unload(engine);
@@ -50,7 +50,7 @@ namespace sge
 
         if (current_scene->get_root_node() != nullptr)
         {
-            current_scene->get_root_node()->send_enter_tree(engine);
+            current_scene->get_root_node()->send_enter_tree();
         }
     }
 
@@ -58,7 +58,7 @@ namespace sge
     {
         if (current_scene != nullptr && current_scene->get_root_node() != nullptr)
         {
-            return current_scene->get_root_node()->send_input(engine, event);
+            return current_scene->get_root_node()->send_input(event);
         }
 
         return true;
@@ -68,7 +68,7 @@ namespace sge
     {
         if (current_scene != nullptr && current_scene->get_root_node() != nullptr)
         {
-            current_scene->get_root_node()->send_process(engine, delta);
+            current_scene->get_root_node()->send_process(delta);
         }
     }
 
@@ -76,7 +76,7 @@ namespace sge
     {
         if (current_scene != nullptr && current_scene->get_root_node() != nullptr)
         {
-            current_scene->get_root_node()->send_draw(engine);
+            current_scene->get_root_node()->send_draw();
         }
     }
 }

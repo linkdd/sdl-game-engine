@@ -7,7 +7,7 @@ using namespace std;
 
 namespace sge
 {
-    Node::Node(string const &name) : name(name), input_enabled(false), process_enabled(false), draw_enabled(false) {}
+    Node::Node(string const &name, weak_ptr<Engine> engine) : name(name), engine(engine), input_enabled(false), process_enabled(false), draw_enabled(false), in_tree(false) {}
 
     const char *Node::get_name() const
     {
@@ -120,6 +120,11 @@ namespace sge
     {
         if (remove && get_parent() != nullptr)
         {
+            if (is_in_tree())
+            {
+                send_exit_tree();
+            }
+
             get_parent()->remove_child(shared_from_this(), false);
         }
 
@@ -128,6 +133,11 @@ namespace sge
         if (add && get_parent() != nullptr)
         {
             get_parent()->add_child(shared_from_this(), false);
+
+            if (is_in_tree())
+            {
+                send_enter_tree();
+            }
         }
     }
 
@@ -141,24 +151,24 @@ namespace sge
         input_enabled = enabled;
     }
 
-    bool Node::send_input(weak_ptr<Engine> engine, SDL_Event *event)
+    bool Node::send_input(SDL_Event *event)
     {
         bool result = true;
 
         if (has_input())
         {
-            result = result && input(engine, event);
+            result = result && input(event);
         }
 
         for (auto &child : children)
         {
-            result = result && child->send_input(engine, event);
+            result = result && child->send_input(event);
         }
 
         return result;
     }
 
-    bool Node::input(weak_ptr<Engine> engine, SDL_Event *event) {}
+    bool Node::input(SDL_Event *event) {}
 
     bool Node::has_process() const
     {
@@ -170,20 +180,20 @@ namespace sge
         process_enabled = enabled;
     }
 
-    void Node::send_process(weak_ptr<Engine> engine, Uint32 delta)
+    void Node::send_process(Uint32 delta)
     {
         if (has_process())
         {
-            process(engine, delta);
+            process(delta);
         }
 
         for (auto &child : children)
         {
-            child->send_process(engine, delta);
+            child->send_process(delta);
         }
     }
 
-    void Node::process(weak_ptr<Engine> engine, Uint32 delta) {}
+    void Node::process(Uint32 delta) {}
 
     bool Node::has_draw() const
     {
@@ -195,45 +205,54 @@ namespace sge
         draw_enabled = enabled;
     }
 
-    void Node::send_draw(weak_ptr<Engine> engine)
+    void Node::send_draw()
     {
         if (has_draw())
         {
-            draw(engine);
+            draw();
         }
 
         for (auto &child : children)
         {
-            child->send_draw(engine);
+            child->send_draw();
         }
     }
 
-    void Node::draw(weak_ptr<Engine> engine) {}
+    void Node::draw() {}
 
-    void Node::send_enter_tree(weak_ptr<Engine> engine)
+    void Node::send_enter_tree()
     {
-        enter_tree(engine);
+        enter_tree();
 
         for (auto &child : children)
         {
-            child->send_enter_tree(engine);
+            child->send_enter_tree();
         }
 
-        ready (engine);
+        in_tree = true;
+
+        ready ();
     }
 
-    void Node::enter_tree(weak_ptr<Engine> engine) {}
-    void Node::ready(weak_ptr<Engine> engine) {}
+    void Node::enter_tree() {}
+    void Node::ready() {}
 
-    void Node::send_exit_tree(weak_ptr<Engine> engine)
+    void Node::send_exit_tree()
     {
         for (auto &child : children)
         {
-            child->send_exit_tree(engine);
+            child->send_exit_tree();
         }
 
-        exit_tree(engine);
+        exit_tree();
+
+        in_tree = false;
     }
 
-    void Node::exit_tree(weak_ptr<Engine> engine) {}
+    void Node::exit_tree() {}
+
+    bool Node::is_in_tree() const
+    {
+        return in_tree;
+    }
 }
