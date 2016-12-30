@@ -41,10 +41,8 @@ namespace sge
                 {
                     SDL_RWops *input = nullptr;
 
-                    for (auto it = locators.begin(); it != locators.end(); it++)
+                    for (auto &locator : locators)
                     {
-                        auto locator = *it;
-
                         try
                         {
                             input = locator->locate(passetdesc->name());
@@ -90,6 +88,10 @@ namespace sge
                             delete asset;
                             asset = nullptr;
                         }
+                    }
+                    else
+                    {
+                        std::cerr << "[AssetLocatorError] Request asset not found by any locator: " << passetdesc->name() << std::endl;
                     }
                 }
                 else

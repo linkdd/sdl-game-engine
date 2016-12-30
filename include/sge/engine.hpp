@@ -25,8 +25,6 @@ namespace sge
     class Configuration
     {
         public:
-            Configuration();
-
             std::string gets(std::string const &param, std::string const &_default = std::string()) const;
             int geti(std::string const &param, int _default = 0) const;
             bool getb(std::string const &param, bool _default = false) const;

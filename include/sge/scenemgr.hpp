@@ -14,21 +14,20 @@ namespace sge
     {
         public:
             Scene();
-            ~Scene();
 
-            virtual void load(std::weak_ptr<Engine> engine) = 0;
-            virtual void unload(std::weak_ptr<Engine> engine) = 0;
+            virtual void load(std::shared_ptr<Engine> engine) = 0;
+            virtual void unload(std::shared_ptr<Engine> engine) = 0;
 
-            Node *get_root_node() const;
+            std::shared_ptr<Node> get_root_node() const;
 
         private:
-            Node *root_node;
+            std::shared_ptr<Node> root_node;
     };
 
     class SceneManager
     {
         public:
-            SceneManager(std::weak_ptr<Engine> engine);
+            SceneManager(Engine *engine);
             ~SceneManager();
 
             void add_scene(std::string const &name, std::shared_ptr<Scene> scene);
@@ -39,7 +38,7 @@ namespace sge
             void draw_handler();
 
         private:
-            std::weak_ptr<Engine> engine;
+            std::shared_ptr<Engine> engine;
             std::shared_ptr<Scene> current_scene;
 
             std::unordered_map<std::string, std::shared_ptr<Scene>> scenes;

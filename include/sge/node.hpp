@@ -13,7 +13,7 @@ namespace sge
     class Node : public std::enable_shared_from_this<Node>
     {
         public:
-            Node(std::string const &name, std::weak_ptr<Engine> engine);
+            Node(std::string const &name, std::shared_ptr<Engine> engine);
 
             const char *get_name() const;
             virtual std::vector<std::string> mro() const;
@@ -63,7 +63,7 @@ namespace sge
             std::vector<std::shared_ptr<Node>> children;
 
         protected:
-            std::weak_ptr<Engine> engine;
+            std::shared_ptr<Engine> engine;
 
     };
 }

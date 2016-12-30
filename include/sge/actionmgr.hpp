@@ -16,8 +16,8 @@ namespace sge
             void register_mouse_action(std::string const &name, Uint8 button);
             void register_joystick_action(std::string const &name, Uint8 button);
 
-            bool is_action_pressed(std::string const &name) const;
-            bool is_action_released(std::string const &name) const;
+            bool is_action_pressed(std::string const &name);
+            bool is_action_released(std::string const &name);
 
             bool event_handler(SDL_Event *event);
 

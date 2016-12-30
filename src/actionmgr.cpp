@@ -19,14 +19,14 @@ namespace sge
         a_joystick[name].push_back(button);
     }
 
-    bool ActionManager::is_action_pressed(string const &name) const
+    bool ActionManager::is_action_pressed(string const &name)
     {
-        return a_active.at(name);
+        return a_active[name];
     }
 
-    bool ActionManager::is_action_released(string const &name) const
+    bool ActionManager::is_action_released(string const &name)
     {
-        return !a_active.at(name);
+        return !a_active[name];
     }
 
     bool ActionManager::event_handler(SDL_Event *event)

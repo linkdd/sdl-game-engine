@@ -7,7 +7,7 @@ using namespace std;
 
 namespace sge
 {
-    Node::Node(string const &name, weak_ptr<Engine> engine) : name(name), engine(engine), input_enabled(false), process_enabled(false), draw_enabled(false), in_tree(false) {}
+    Node::Node(string const &name, shared_ptr<Engine> engine) : name(name), engine(engine), input_enabled(false), process_enabled(false), draw_enabled(false), in_tree(false) {}
 
     const char *Node::get_name() const
     {

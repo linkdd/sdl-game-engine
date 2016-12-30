@@ -1,5 +1,6 @@
 #include <sge/sge.hpp>
 #include <iostream>
+#include <memory>
 
 using namespace std;
 using namespace sge;
@@ -17,7 +18,7 @@ int main()
 
     try
     {
-        Engine engine(configuration);
+        Engine engine(conf);
 
         engine.actions().register_keyboard_action("ui_quit", SDLK_ESCAPE);
 

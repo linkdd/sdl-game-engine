@@ -59,7 +59,7 @@ set(
     ${sge_SOURCE_DIR}/src/nodes/sprite.cpp
 )
 
-add_library(sge ${HEADERS} ${SOURCES})
+add_library(sge SHARED ${HEADERS} ${SOURCES})
 target_include_directories(
     sge
     PUBLIC
@@ -73,4 +73,18 @@ target_link_libraries(
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
+)
+
+add_executable(testsge ${sge_SOURCE_DIR}/test.cpp)
+target_include_directories(
+    testsge
+    PUBLIC
+        ${SDL2_INCLUDE_DIRS}
+        ${SDL2_IMAGE_INCLUDE_DIRS}
+        ${SDL2_TTF_INCLUDE_DIRS}
+        $<BUILD_INTERFACE:${sge_SOURCE_DIR}/include>
+)
+target_link_libraries(
+    testsge
+    sge
 )

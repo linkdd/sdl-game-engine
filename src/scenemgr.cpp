@@ -1,3 +1,4 @@
+#include <sge/engine.hpp>
 #include <sge/scenemgr.hpp>
 
 using namespace std;
@@ -5,20 +6,13 @@ using namespace std;
 namespace sge
 {
     Scene::Scene() : root_node(nullptr) {}
-    Scene::~Scene()
-    {
-        if (root_node != nullptr)
-        {
-            delete root_node;
-        }
-    }
 
-    Node *Scene::get_root_node() const
+    std::shared_ptr<Node> Scene::get_root_node() const
     {
         return root_node;
     }
 
-    SceneManager::SceneManager(weak_ptr<Engine> engine) : current_scene(nullptr), engine(engine) {}
+    SceneManager::SceneManager(Engine *engine) : current_scene(nullptr), engine(engine) {}
 
     SceneManager::~SceneManager()
     {

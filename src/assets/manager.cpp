@@ -19,7 +19,7 @@ namespace sge
 
     void AssetManager::unload(BaseAsset *asset)
     {
-        if (asset->dispose())
+        if (asset != nullptr && asset->dispose())
         {
             auto it = cache.find(asset->descriptor());
 
