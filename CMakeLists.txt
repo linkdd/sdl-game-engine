@@ -33,6 +33,7 @@ set(
     ${sge_SOURCE_DIR}/include/sge/scenemgr.hpp
     ${sge_SOURCE_DIR}/include/sge/sge.hpp
     ${sge_SOURCE_DIR}/include/sge/timer.hpp
+    ${sge_SOURCE_DIR}/include/sge/nodes/position.hpp
 )
 
 set(
@@ -53,6 +54,7 @@ set(
     ${sge_SOURCE_DIR}/src/mainloop.cpp
     ${sge_SOURCE_DIR}/src/node.cpp
     ${sge_SOURCE_DIR}/src/scenemgr.cpp
+    ${sge_SOURCE_DIR}/src/nodes/position.cpp
 )
 
 add_library(sge ${HEADERS} ${SOURCES})

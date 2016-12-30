@@ -14,6 +14,24 @@ namespace sge
         return name.c_str();
     }
 
+    vector<string> Node::mro() const
+    {
+        return {"Node"};
+    }
+
+    bool Node::is_of(std::string const &nodetype) const
+    {
+        for (auto &_nodetype : mro())
+        {
+            if (_nodetype == nodetype)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     shared_ptr<Node> Node::get_root()
     {
         shared_ptr<Node> root = shared_from_this();
@@ -68,11 +86,11 @@ namespace sge
             {
                 shared_ptr<Node> child = nullptr;
 
-                for (auto it = children.begin(); it != children.end(); it++)
+                for (auto &_child : children)
                 {
-                    if ((*it)->get_name() == childpath)
+                    if (_child->get_name() == childpath)
                     {
-                        child = *it;
+                        child = _child;
                         break;
                     }
                 }
@@ -87,6 +105,32 @@ namespace sge
                 }
             }
         }
+    }
+
+    vector<shared_ptr<Node>> Node::find_children_by_type(vector<string> const &types)
+    {
+        vector<shared_ptr<Node>> result;
+
+        for (auto &child : children)
+        {
+            for (auto &nodetype : types)
+            {
+                if (child->is_of(nodetype))
+                {
+                    result.push_back(child);
+                    break;
+                }
+            }
+
+            auto child_result = child->find_children_by_type(types);
+
+            if (!child_result.empty())
+            {
+                result.insert(result.end(), child_result.begin(), child_result.end());
+            }
+        }
+
+        return result;
     }
 
     void Node::add_child(shared_ptr<Node> child, bool reparent)
