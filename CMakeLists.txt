@@ -74,6 +74,7 @@ target_link_libraries(
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
 )
+target_compile_definitions(sge PUBLIC SDL_MAIN_HANDLED)
 
 add_executable(testsge ${sge_SOURCE_DIR}/test.cpp)
 target_include_directories(
