@@ -18,6 +18,7 @@ set(
     ${sge_SOURCE_DIR}/include/sge/assets/manager.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/loaders/font.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/loaders/image.hpp
+    ${sge_SOURCE_DIR}/include/sge/assets/loaders/tileset.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/locators/file.hpp
     ${sge_SOURCE_DIR}/include/sge/initializers/sdl-fonts.hpp
     ${sge_SOURCE_DIR}/include/sge/initializers/sdl.hpp
@@ -43,6 +44,7 @@ set(
     ${sge_SOURCE_DIR}/src/assets/manager.cpp
     ${sge_SOURCE_DIR}/src/assets/loaders/font.cpp
     ${sge_SOURCE_DIR}/src/assets/loaders/image.cpp
+    ${sge_SOURCE_DIR}/src/assets/loaders/tileset.cpp
     ${sge_SOURCE_DIR}/src/assets/locators/file.cpp
     ${sge_SOURCE_DIR}/src/initializers/sdl.cpp
     ${sge_SOURCE_DIR}/src/initializers/sdl-fonts.cpp

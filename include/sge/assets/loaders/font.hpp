@@ -1,9 +1,9 @@
 #ifndef __SGE_FONT_LOADER_HPP
 #define __SGE_FONT_LOADER_HPP
 
-#include <SDL_ttf.h>
-
 #include <sge/assets/loader.hpp>
+
+#include <SDL_ttf.h>
 
 namespace sge
 {

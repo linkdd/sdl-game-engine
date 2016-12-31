@@ -15,6 +15,7 @@
 #include <sge/assets/locators/file.hpp>
 #include <sge/assets/loaders/image.hpp>
 #include <sge/assets/loaders/font.hpp>
+#include <sge/assets/loaders/tileset.hpp>
 
 #include <unordered_map>
 #include <memory>
@@ -39,7 +40,7 @@ namespace sge
             std::unordered_map<std::string, std::string> kvdb;
     };
 
-    class Engine : public std::enable_shared_from_this<Engine>
+    class Engine
     {
         public:
             Engine(Configuration &configuration);
@@ -73,6 +74,7 @@ namespace sge
             std::shared_ptr<FileLocator> _asset_file_locator;
             std::shared_ptr<ImageLoader> _asset_image_loader;
             std::shared_ptr<FontLoader> _asset_font_loader;
+            std::shared_ptr<TileSetLoader> _asset_tileset_loader;
     };
 }
 

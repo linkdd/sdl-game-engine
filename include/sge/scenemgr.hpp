@@ -27,7 +27,7 @@ namespace sge
     class SceneManager
     {
         public:
-            SceneManager(Engine *engine);
+            SceneManager(std::shared_ptr<Engine> engine);
             ~SceneManager();
 
             void add_scene(std::string const &name, std::shared_ptr<Scene> scene);
