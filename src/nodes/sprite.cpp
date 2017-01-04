@@ -8,7 +8,7 @@ namespace sge
     {
         if (sprite != nullptr)
         {
-            engine->assets().unload(sprite);
+            engine.assets().unload(sprite);
         }
     }
 
@@ -25,12 +25,12 @@ namespace sge
 
         if (sprite == nullptr)
         {
-            sprite = engine->assets().load<Image, ImageDescriptor>(d);
+            sprite = engine.assets().load<Image, ImageDescriptor>(d);
         }
         else if (sprite->descriptor()->name() != d.name())
         {
-            engine->assets().unload(sprite);
-            sprite = engine->assets().load<Image, ImageDescriptor>(d);
+            engine.assets().unload(sprite);
+            sprite = engine.assets().load<Image, ImageDescriptor>(d);
         }
     }
 
@@ -41,7 +41,7 @@ namespace sge
 
     void SpriteNode::draw()
     {
-        SDL_Texture *t = SDL_CreateTextureFromSurface(engine->renderer(), sprite->asset());
+        SDL_Texture *t = SDL_CreateTextureFromSurface(engine.renderer(), sprite->asset());
         bool error = false;
 
         if (t != NULL)
@@ -54,7 +54,7 @@ namespace sge
             dest.w = sprite->asset()->w;
             dest.h = sprite->asset()->h;
 
-            if (SDL_RenderCopy(engine->renderer(), t, NULL, &dest) != 0)
+            if (SDL_RenderCopy(engine.renderer(), t, NULL, &dest) != 0)
             {
                 error = true;
             }

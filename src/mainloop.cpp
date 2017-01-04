@@ -140,7 +140,6 @@ namespace sge
 
             for (auto &handler : drawing)
             {
-
                 handler();
             }
 

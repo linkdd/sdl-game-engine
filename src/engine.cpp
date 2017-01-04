@@ -14,9 +14,6 @@ namespace sge
         return ss.str();
     }
 
-    template <class T>
-    void disable_deleter(T *ptr) {};
-
     string Configuration::gets(string const &param, string const &_default) const
     {
         string result;
@@ -81,7 +78,7 @@ namespace sge
               configuration.getb("display/resizable", false)
           )),
           _mloop(configuration.geti("fps", 60)),
-          _scmgr(std::shared_ptr<Engine>(this, disable_deleter<Engine>)),
+          _scmgr(*this),
           _asset_file_locator(std::make_shared<FileLocator>(configuration.gets("assets/file/location", ""))),
           _asset_image_loader(std::make_shared<ImageLoader>()),
           _asset_font_loader(std::make_shared<FontLoader>()),

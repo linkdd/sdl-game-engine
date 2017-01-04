@@ -12,7 +12,7 @@ namespace sge
         return root_node;
     }
 
-    SceneManager::SceneManager(shared_ptr<Engine> engine) : current_scene(nullptr), engine(engine) {}
+    SceneManager::SceneManager(Engine &engine) : current_scene(nullptr), engine(engine) {}
 
     SceneManager::~SceneManager()
     {
