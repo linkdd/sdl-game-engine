@@ -2,6 +2,7 @@
 
 #include <sge/assets/locators/file.hpp>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 

@@ -1,6 +1,8 @@
 #ifndef __SGE_ENGINE_HPP
 #define __SGE_ENGINE_HPP
 
+#include <sge/config.hpp>
+
 #include <sge/init.hpp>
 #include <sge/initializers/sdl.hpp>
 #include <sge/initializers/sdl-image.hpp>
@@ -15,31 +17,12 @@
 #include <sge/assets/locators/file.hpp>
 #include <sge/assets/loaders/image.hpp>
 #include <sge/assets/loaders/font.hpp>
-#include <sge/assets/loaders/tileset.hpp>
+#include <sge/assets/loaders/json.hpp>
 
-#include <unordered_map>
 #include <memory>
-#include <string>
 
 namespace sge
 {
-    class Configuration
-    {
-        public:
-            std::string gets(std::string const &param, std::string const &_default = std::string()) const;
-            int geti(std::string const &param, int _default = 0) const;
-            bool getb(std::string const &param, bool _default = false) const;
-            float getf(std::string const &param, float _default = 0.0) const;
-
-            Configuration &set(std::string const &param, std::string const &value);
-            Configuration &set(std::string const &param, int value);
-            Configuration &set(std::string const &param, bool value);
-            Configuration &set(std::string const &param, float value);
-
-        private:
-            std::unordered_map<std::string, std::string> kvdb;
-    };
-
     class Engine
     {
         public:
@@ -74,7 +57,7 @@ namespace sge
             std::shared_ptr<FileLocator> _asset_file_locator;
             std::shared_ptr<ImageLoader> _asset_image_loader;
             std::shared_ptr<FontLoader> _asset_font_loader;
-            std::shared_ptr<TileSetLoader> _asset_tileset_loader;
+            std::shared_ptr<JSONLoader> _asset_json_loader;
     };
 }
 

@@ -1,6 +1,7 @@
 #include <sge/sge.hpp>
 #include <iostream>
 #include <memory>
+#include <config.h>
 
 using namespace std;
 using namespace sge;
@@ -14,7 +15,8 @@ int main()
         .set("display/width", 1024)
         .set("display/height", 768)
         .set("display/fullscreen", true)
-        .set("display/resizable", false);
+        .set("display/resizable", false)
+        .set("assets/file/location", string(SGE_SOURCE_DIR));
 
     try
     {

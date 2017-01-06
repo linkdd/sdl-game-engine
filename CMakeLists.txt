@@ -18,13 +18,14 @@ set(
     ${sge_SOURCE_DIR}/include/sge/assets/manager.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/loaders/font.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/loaders/image.hpp
-    ${sge_SOURCE_DIR}/include/sge/assets/loaders/tileset.hpp
+    ${sge_SOURCE_DIR}/include/sge/assets/loaders/json.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/locators/file.hpp
     ${sge_SOURCE_DIR}/include/sge/initializers/sdl-fonts.hpp
     ${sge_SOURCE_DIR}/include/sge/initializers/sdl.hpp
     ${sge_SOURCE_DIR}/include/sge/initializers/sdl-image.hpp
     ${sge_SOURCE_DIR}/include/sge/initializers/sdl-window.hpp
     ${sge_SOURCE_DIR}/include/sge/actionmgr.hpp
+    ${sge_SOURCE_DIR}/include/sge/config.hpp
     ${sge_SOURCE_DIR}/include/sge/engine-forward.hpp
     ${sge_SOURCE_DIR}/include/sge/engine.hpp
     ${sge_SOURCE_DIR}/include/sge/error.hpp
@@ -44,13 +45,14 @@ set(
     ${sge_SOURCE_DIR}/src/assets/manager.cpp
     ${sge_SOURCE_DIR}/src/assets/loaders/font.cpp
     ${sge_SOURCE_DIR}/src/assets/loaders/image.cpp
-    ${sge_SOURCE_DIR}/src/assets/loaders/tileset.cpp
+    ${sge_SOURCE_DIR}/src/assets/loaders/json.cpp
     ${sge_SOURCE_DIR}/src/assets/locators/file.cpp
     ${sge_SOURCE_DIR}/src/initializers/sdl.cpp
     ${sge_SOURCE_DIR}/src/initializers/sdl-fonts.cpp
     ${sge_SOURCE_DIR}/src/initializers/sdl-image.cpp
     ${sge_SOURCE_DIR}/src/initializers/sdl-window.cpp
     ${sge_SOURCE_DIR}/src/actionmgr.cpp
+    ${sge_SOURCE_DIR}/src/config.cpp
     ${sge_SOURCE_DIR}/src/engine.cpp
     ${sge_SOURCE_DIR}/src/init.cpp
     ${sge_SOURCE_DIR}/src/initializers
@@ -69,6 +71,7 @@ target_include_directories(
         ${SDL2_IMAGE_INCLUDE_DIRS}
         ${SDL2_TTF_INCLUDE_DIRS}
         $<BUILD_INTERFACE:${sge_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${sge_SOURCE_DIR}/lib/json/src>
 )
 target_link_libraries(
     sge
@@ -78,14 +81,20 @@ target_link_libraries(
 )
 target_compile_definitions(sge PUBLIC SDL_MAIN_HANDLED)
 
+configure_file(
+    ${sge_SOURCE_DIR}/config.h
+    ${sge_BINARY_DIR}/config.h
+)
 add_executable(testsge ${sge_SOURCE_DIR}/test.cpp)
 target_include_directories(
     testsge
     PUBLIC
+        ${sge_BINARY_DIR}
         ${SDL2_INCLUDE_DIRS}
         ${SDL2_IMAGE_INCLUDE_DIRS}
         ${SDL2_TTF_INCLUDE_DIRS}
         $<BUILD_INTERFACE:${sge_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${sge_SOURCE_DIR}/lib/json/src>
 )
 target_link_libraries(
     testsge

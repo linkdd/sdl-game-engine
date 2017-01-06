@@ -3,6 +3,7 @@
 
 #include <sge/assets/loader.hpp>
 
+#include <SDL.h>
 #include <SDL_ttf.h>
 
 namespace sge

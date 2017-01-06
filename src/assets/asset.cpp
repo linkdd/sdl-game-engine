@@ -30,7 +30,7 @@ namespace sge
 
         if (found != string::npos)
         {
-            result = assetname.substr(found);
+            result = assetname.substr(found + 1);
         }
 
         return result;
