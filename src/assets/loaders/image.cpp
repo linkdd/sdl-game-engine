@@ -1,10 +1,12 @@
 #include <sge/assets/loaders/image.hpp>
 
+using namespace std;
+
 namespace sge
 {
-    void ImageLoader::load(BaseAsset *asset, SDL_RWops *input)
+    void ImageLoader::load(shared_ptr<BaseAsset> asset, SDL_RWops *input)
     {
-        Image *img = static_cast<Image *>(asset);
+        shared_ptr<Image> img = static_pointer_cast<Image>(asset);
 
         SDL_Surface *content = IMG_Load_RW(input, 1);
 
@@ -18,7 +20,10 @@ namespace sge
 
     void ImageLoader::unload(BaseAsset *asset)
     {
-        Image *img = static_cast<Image *>(asset);
-        SDL_FreeSurface(img->asset());
+        if (asset->loaded())
+        {
+            Image *img = static_cast<Image *>(asset);
+            SDL_FreeSurface(img->asset());
+        }
     }
 }

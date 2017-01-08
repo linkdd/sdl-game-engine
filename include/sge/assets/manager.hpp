@@ -6,10 +6,10 @@
 #include <sge/assets/asset.hpp>
 #include <sge/assets/cache.hpp>
 
+#include <unordered_map>
 #include <iostream>
 #include <memory>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 namespace sge
@@ -29,13 +29,13 @@ namespace sge
             void unload(BaseAsset *asset);
 
             template <typename A, typename D>
-            A *load(D const &assetdesc)
+            std::shared_ptr<A> load(D const &assetdesc)
             {
                 static_assert(std::is_base_of<BaseAsset, A>::value, "Supplied asset type does not inherit from Asset");
                 static_assert(std::is_base_of<AssetDescriptor, D>::value, "Supplied descriptor type does not inherit from AssetDescriptor");
 
                 auto passetdesc = std::make_shared<D>(assetdesc);
-                A *asset = nullptr;
+                std::shared_ptr<A> asset = nullptr;
 
                 if (cache.find(passetdesc) == cache.end())
                 {
@@ -64,7 +64,15 @@ namespace sge
                         if (loaders.find(passetdesc->extension()) != loaders.end())
                         {
                             auto loader = loaders[passetdesc->extension()];
-                            asset = new A(passetdesc);
+
+                            asset = std::shared_ptr<A>(
+                                new A(loader, passetdesc),
+                                [&](A *ptr_asset)
+                                {
+                                    BaseAsset *ptr_basset = static_cast<BaseAsset *>(ptr_asset);
+                                    unload(ptr_basset);
+                                }
+                            );
 
                             try
                             {
@@ -73,20 +81,17 @@ namespace sge
                             catch (AssetLoaderError const &e)
                             {
                                 std::cerr << "[AssetLoaderError] " << e.what() << std::endl;
-                                delete asset;
-                                asset = nullptr;
+                                asset.reset();
                             }
 
                             if (asset != nullptr)
                             {
-                                cache[passetdesc] = static_cast<BaseAsset *>(asset);
+                                cache[passetdesc] = std::static_pointer_cast<BaseAsset>(asset);
                             }
                         }
                         else
                         {
                             std::cerr << "[AssetLoaderError] No loader found for extension: " << passetdesc->extension() << std::endl;
-                            delete asset;
-                            asset = nullptr;
                         }
                     }
                     else
@@ -96,12 +101,7 @@ namespace sge
                 }
                 else
                 {
-                    asset = static_cast<A *>(cache[passetdesc]);
-                }
-
-                if (asset != nullptr)
-                {
-                    asset->acquire();
+                    asset = std::static_pointer_cast<A>(cache[passetdesc].lock());
                 }
 
                 return asset;

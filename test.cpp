@@ -6,6 +6,24 @@
 using namespace std;
 using namespace sge;
 
+class TestScene : public Scene
+{
+    public:
+        virtual void load(Engine &engine)
+        {
+            shared_ptr<SpriteNode> sprite = make_shared<SpriteNode>(string("sprite"), engine);
+            sprite->set_sprite("rsrc/test.png");
+            sprite->set_pos(50, 50);
+
+            root_node = static_pointer_cast<Node>(sprite);
+        }
+
+        virtual void unload(Engine &engine)
+        {
+            root_node.reset();
+        }
+};
+
 int main()
 {
     Configuration conf;
@@ -34,12 +52,11 @@ int main()
             }
         );
 
-        ImageDescriptor descriptor("test.png");
-        Image *img = engine.assets().load<Image, ImageDescriptor>(descriptor);
+        auto testscene = make_shared<TestScene>();
+        engine.scenes().add_scene("test", testscene);
+        engine.scenes().switch_to_scene("test");
 
         engine.mainloop().run();
-
-        engine.assets().unload(img);
     }
     catch (Exception const &e)
     {

@@ -36,21 +36,27 @@ namespace sge
         return result;
     }
 
-    BaseAsset::BaseAsset(std::shared_ptr<AssetDescriptor> assetdesc) : desc(assetdesc), refcount(0) {}
+    BaseAsset::BaseAsset(shared_ptr<AssetLoader> loader, shared_ptr<AssetDescriptor> assetdesc)
+        : _loader(loader), desc(assetdesc), _loaded(false)
+    {}
 
-    std::shared_ptr<AssetDescriptor> BaseAsset::descriptor() const
+    shared_ptr<AssetLoader> BaseAsset::loader()
+    {
+        return _loader;
+    }
+
+    void BaseAsset::setLoaded()
+    {
+        _loaded = true;
+    }
+
+    bool BaseAsset::loaded() const
+    {
+        return _loaded;
+    }
+
+    shared_ptr<AssetDescriptor> BaseAsset::descriptor()
     {
         return desc;
-    }
-
-    void BaseAsset::acquire()
-    {
-        refcount++;
-    }
-
-    bool BaseAsset::dispose()
-    {
-        refcount--;
-        return (refcount <= 0);
     }
 }

@@ -25,7 +25,7 @@ namespace sge
         }
     };
 
-    class AssetCache : public std::unordered_map<std::shared_ptr<AssetDescriptor>, BaseAsset *, AssetHasher, AssetPred> {};
+    class AssetCache : public std::unordered_map<std::shared_ptr<AssetDescriptor>, std::weak_ptr<BaseAsset>, AssetHasher, AssetPred> {};
 }
 
 #endif /* __SGE_ASSET_CACHE_HPP */

@@ -4,14 +4,6 @@
 
 namespace sge
 {
-    SpriteNode::~SpriteNode()
-    {
-        if (sprite != nullptr)
-        {
-            engine.assets().unload(sprite);
-        }
-    }
-
     std::vector<std::string> SpriteNode::mro() const
     {
         auto _mro = PositionNode::mro();
@@ -29,7 +21,7 @@ namespace sge
         }
         else if (sprite->descriptor()->name() != d.name())
         {
-            engine.assets().unload(sprite);
+            sprite.reset();
             sprite = engine.assets().load<Image, ImageDescriptor>(d);
         }
     }
@@ -41,6 +33,11 @@ namespace sge
 
     void SpriteNode::draw()
     {
+        if (sprite == nullptr)
+        {
+            return;
+        }
+
         SDL_Texture *t = SDL_CreateTextureFromSurface(engine.renderer(), sprite->asset());
         bool error = false;
 

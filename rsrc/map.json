@@ -1,0 +1,24 @@
+{
+    "tileset": {
+        "resource": "rsrc/tileset.png",
+        "with": 32,
+        "height": 32,
+        "spacing": 0
+    },
+    "tiles": {
+        "red": [0, 0],
+        "green": [0, 1],
+        "blue": [1, 0],
+        "yellow": [1, 1]
+    },
+    "map": {
+        "width": 4,
+        "height": 4,
+        "tiles": [
+            ["green", "green", "yellow", "yellow"],
+            ["green", "green", "blue", "yellow"],
+            ["red", "blue", "blue", "blue"],
+            ["red", "red", "blue", null]
+        ]
+    }
+}

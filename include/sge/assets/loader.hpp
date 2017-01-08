@@ -3,7 +3,10 @@
 
 #include <sge/assets/asset.hpp>
 #include <sge/error.hpp>
+
 #include <SDL.h>
+
+#include <memory>
 
 namespace sge
 {
@@ -15,7 +18,7 @@ namespace sge
     class AssetLoader
     {
         public:
-            virtual void load(BaseAsset *asset, SDL_RWops *input) = 0;
+            virtual void load(std::shared_ptr<BaseAsset> asset, SDL_RWops *input) = 0;
             virtual void unload(BaseAsset *asset) = 0;
     };
 }

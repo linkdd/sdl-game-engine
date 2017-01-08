@@ -8,9 +8,9 @@ namespace sge
 {
     class SpriteNode : public PositionNode
     {
-        public:
-            ~SpriteNode();
+        using PositionNode::PositionNode;
 
+        public:
             virtual std::vector<std::string> mro() const;
 
             void set_sprite(std::string const &assetname);
@@ -19,7 +19,7 @@ namespace sge
             virtual void draw();
 
         private:
-            Image *sprite;
+            std::shared_ptr<Image> sprite;
     };
 }
 

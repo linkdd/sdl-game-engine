@@ -1,6 +1,8 @@
 #ifndef __SGE_ASSET_HPP
 #define __SGE_ASSET_HPP
 
+#include <sge/assets/loader-forward.hpp>
+
 #include <functional>
 #include <memory>
 #include <string>
@@ -25,16 +27,21 @@ namespace sge
     class BaseAsset
     {
         public:
-            BaseAsset(std::shared_ptr<AssetDescriptor> assetdesc);
+            BaseAsset(std::shared_ptr<AssetLoader> loader, std::shared_ptr<AssetDescriptor> assetdesc);
 
-            std::shared_ptr<AssetDescriptor> descriptor() const;
+            std::shared_ptr<AssetLoader> loader();
+            std::shared_ptr<AssetDescriptor> descriptor();
 
-            void acquire();
-            bool dispose();
+            bool loaded() const;
+
+        protected:
+            void setLoaded();
 
         private:
-            int refcount;
+            std::shared_ptr<AssetLoader> _loader;
             std::shared_ptr<AssetDescriptor> desc;
+            bool _loaded;
+
     };
 
     template <typename T>
@@ -46,6 +53,7 @@ namespace sge
             void setAsset(T content)
             {
                 _asset = content;
+                setLoaded();
             }
 
             T asset() const

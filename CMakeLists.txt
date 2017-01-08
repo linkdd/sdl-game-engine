@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(sge)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
 set(CMAKE_CXX_STANDARD_REQUIRED On)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${sge_SOURCE_DIR}/cmake)
 
@@ -13,6 +13,7 @@ set(
     HEADERS
     ${sge_SOURCE_DIR}/include/sge/assets/asset.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/cache.hpp
+    ${sge_SOURCE_DIR}/include/sge/assets/loader-forward.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/loader.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/locator.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/manager.hpp
@@ -37,6 +38,7 @@ set(
     ${sge_SOURCE_DIR}/include/sge/timer.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/position.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/sprite.hpp
+    ${sge_SOURCE_DIR}/include/sge/nodes/tilemap.hpp
 )
 
 set(
@@ -61,6 +63,7 @@ set(
     ${sge_SOURCE_DIR}/src/scenemgr.cpp
     ${sge_SOURCE_DIR}/src/nodes/position.cpp
     ${sge_SOURCE_DIR}/src/nodes/sprite.cpp
+    ${sge_SOURCE_DIR}/src/nodes/tilemap.cpp
 )
 
 add_library(sge SHARED ${HEADERS} ${SOURCES})

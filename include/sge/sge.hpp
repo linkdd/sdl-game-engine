@@ -4,4 +4,8 @@
 #include <sge/error.hpp>
 #include <sge/engine.hpp>
 
+#include <sge/nodes/position.hpp>
+#include <sge/nodes/sprite.hpp>
+#include <sge/nodes/tilemap.hpp>
+
 #endif /* __SGE_HPP */

@@ -20,7 +20,7 @@ namespace sge
 
             std::shared_ptr<Node> get_root_node() const;
 
-        private:
+        protected:
             std::shared_ptr<Node> root_node;
     };
 

@@ -4,12 +4,12 @@ using namespace std;
 
 namespace sge
 {
-    void AssetManager::register_locator(std::shared_ptr<AssetLocator> locator)
+    void AssetManager::register_locator(shared_ptr<AssetLocator> locator)
     {
-        locators.push_back(std::move(locator));
+        locators.push_back(move(locator));
     }
 
-    void AssetManager::register_loader(std::shared_ptr<AssetLoader> loader, std::vector<string> const &extensions)
+    void AssetManager::register_loader(shared_ptr<AssetLoader> loader, vector<string> const &extensions)
     {
         for (const auto &ext : extensions)
         {
@@ -19,18 +19,14 @@ namespace sge
 
     void AssetManager::unload(BaseAsset *asset)
     {
-        if (asset != nullptr && asset->dispose())
+        auto it = cache.find(asset->descriptor());
+
+        if (it != cache.end())
         {
-            auto it = cache.find(asset->descriptor());
-
-            if (it != cache.end())
-            {
-                cache.erase(it);
-            }
-
-            auto loader = loaders[asset->descriptor()->extension()];
-            loader->unload(asset);
-            delete asset;
+            cache.erase(it);
         }
+
+        asset->loader()->unload(asset);
+        delete asset;
     }
 }

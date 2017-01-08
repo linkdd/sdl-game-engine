@@ -21,7 +21,7 @@ namespace sge
     class JSONLoader : public AssetLoader
     {
         public:
-            virtual void load(BaseAsset *asset, SDL_RWops *input);
+            virtual void load(std::shared_ptr<BaseAsset> asset, SDL_RWops *input);
             virtual void unload(BaseAsset *asset);
     };
 }
