@@ -31,7 +31,7 @@ namespace sge
         {
             _startup.initialize();
         }
-        catch(InitError const &e)
+        catch(const InitError &e)
         {
             _startup.shutdown();
             throw e;

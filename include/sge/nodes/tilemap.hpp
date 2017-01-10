@@ -14,7 +14,7 @@ namespace sge
         public:
             virtual std::vector<std::string> mro() const;
 
-            void set_tilemap(std::string const &assetname);
+            void set_tilemap(const std::string &assetname);
             
             SDL_Rect get_viewport() const;
             void set_viewport(SDL_Rect vport);

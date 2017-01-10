@@ -13,7 +13,7 @@ namespace sge
         public:
             virtual std::vector<std::string> mro() const;
 
-            void set_sprite(std::string const &assetname);
+            void set_sprite(const std::string &assetname);
 
             virtual void ready();
             virtual void draw();

@@ -8,9 +8,9 @@ namespace sge
     class FileLocator : public AssetLocator
     {
         public:
-            FileLocator(std::string const &location);
+            FileLocator(const std::string &location);
 
-            virtual SDL_RWops *locate(std::string const &assetname);
+            virtual SDL_RWops *locate(const std::string &assetname);
 
         private:
             std::string _location;

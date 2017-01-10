@@ -22,12 +22,12 @@ namespace sge
         }
     }
 
-    void SceneManager::add_scene(string const &name, shared_ptr<Scene> scene)
+    void SceneManager::add_scene(const string &name, shared_ptr<Scene> scene)
     {
         scenes[name] = std::move(scene);
     }
 
-    void SceneManager::switch_to_scene(string const &name)
+    void SceneManager::switch_to_scene(const string &name)
     {
         if (current_scene != nullptr)
         {

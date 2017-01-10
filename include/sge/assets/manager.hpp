@@ -24,12 +24,12 @@ namespace sge
 
         public:
             void register_locator(std::shared_ptr<AssetLocator> locator);
-            void register_loader(std::shared_ptr<AssetLoader> loader, std::vector<std::string> const &extensions);
+            void register_loader(std::shared_ptr<AssetLoader> loader, std::vector<std::string>const  &extensions);
 
             void unload(BaseAsset *asset);
 
             template <typename A, typename D>
-            std::shared_ptr<A> load(D const &assetdesc)
+            std::shared_ptr<A> load(const D &assetdesc)
             {
                 static_assert(std::is_base_of<BaseAsset, A>::value, "Supplied asset type does not inherit from Asset");
                 static_assert(std::is_base_of<AssetDescriptor, D>::value, "Supplied descriptor type does not inherit from AssetDescriptor");
@@ -47,7 +47,7 @@ namespace sge
                         {
                             input = locator->locate(passetdesc->name());
                         }
-                        catch (AssetLocatorError const &e)
+                        catch (const AssetLocatorError &e)
                         {
                             std::cerr << "[AssetLocatorError] " << e.what() << std::endl;
                             input = nullptr;
@@ -78,7 +78,7 @@ namespace sge
                             {
                                 loader->load(asset, input);
                             }
-                            catch (AssetLoaderError const &e)
+                            catch (const AssetLoaderError &e)
                             {
                                 std::cerr << "[AssetLoaderError] " << e.what() << std::endl;
                                 asset.reset();

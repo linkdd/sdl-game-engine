@@ -16,7 +16,7 @@ namespace sge
     class AssetLocator
     {
         public:
-            virtual SDL_RWops *locate(std::string const &assetname) = 0;
+            virtual SDL_RWops *locate(const std::string &assetname) = 0;
     };
 }
 

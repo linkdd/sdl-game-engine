@@ -58,7 +58,7 @@ int main()
 
         engine.mainloop().run();
     }
-    catch (Exception const &e)
+    catch (const Exception &e)
     {
         cerr << "Error: " << e.what() << endl;
         retcode = 1;

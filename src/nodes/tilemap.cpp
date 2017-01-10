@@ -13,7 +13,7 @@ namespace sge
         return _mro;
     }
 
-    void TileMapNode::set_tilemap(string const &assetname)
+    void TileMapNode::set_tilemap(const string &assetname)
     {
         JSONDescriptor tmap_d(assetname);
 

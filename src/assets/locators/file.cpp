@@ -16,7 +16,7 @@ namespace sge
     const char REPLACE = '\\';
 #endif
 
-    FileLocator::FileLocator(string const &location) : AssetLocator()
+    FileLocator::FileLocator(const string &location) : AssetLocator()
     {
         if (location.empty())
         {
@@ -38,7 +38,7 @@ namespace sge
         }
     }
 
-    SDL_RWops *FileLocator::locate(string const &assetname)
+    SDL_RWops *FileLocator::locate(const string &assetname)
     {
         string fullpath = _location + SEPARATOR + assetname;
         replace(fullpath.begin(), fullpath.end(), REPLACE, SEPARATOR);

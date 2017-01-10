@@ -9,7 +9,7 @@ namespace sge
         locators.push_back(move(locator));
     }
 
-    void AssetManager::register_loader(shared_ptr<AssetLoader> loader, vector<string> const &extensions)
+    void AssetManager::register_loader(shared_ptr<AssetLoader> loader, vector<string>const  &extensions)
     {
         for (const auto &ext : extensions)
         {

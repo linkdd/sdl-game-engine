@@ -13,16 +13,16 @@ namespace sge
     class Node : public std::enable_shared_from_this<Node>
     {
         public:
-            Node(std::string const &name, Engine &engine);
+            Node(const std::string &name, Engine &engine);
 
             const char *get_name() const;
             virtual std::vector<std::string> mro() const;
-            bool is_of(std::string const &nodetype) const;
+            bool is_of(const std::string &nodetype) const;
 
             std::shared_ptr<Node> get_root();
             std::shared_ptr<Node> get_parent();
-            std::shared_ptr<Node> get_node(std::string const &path);
-            std::vector<std::shared_ptr<Node>> find_children_by_type(std::vector<std::string> const &types);
+            std::shared_ptr<Node> get_node(const std::string &path);
+            std::vector<std::shared_ptr<Node>> find_children_by_type(std::vector<std::string>const  &types);
             void add_child(std::shared_ptr<Node> child, bool reparent = true);
             void remove_child(std::shared_ptr<Node> child, bool reparent = true);
             void reparent(std::shared_ptr<Node> parent, bool remove = true, bool add = true);

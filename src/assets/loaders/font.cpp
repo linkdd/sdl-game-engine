@@ -4,7 +4,7 @@ using namespace std;
 
 namespace sge
 {
-    FontDescriptor::FontDescriptor(string const &assetname, int font_size) : AssetDescriptor(assetname), font_size(font_size) {}
+    FontDescriptor::FontDescriptor(const string &assetname, int font_size) : AssetDescriptor(assetname), font_size(font_size) {}
 
     size_t FontDescriptor::get_hash() const
     {
@@ -12,9 +12,9 @@ namespace sge
         return AssetDescriptor::get_hash() ^ hashfn(font_size);
     }
 
-    bool FontDescriptor::compare(AssetDescriptor const &other) const
+    bool FontDescriptor::compare(const AssetDescriptor &other) const
     {
-        auto descriptor = static_cast<FontDescriptor const &>(other);
+        auto descriptor = static_cast<const FontDescriptor &>(other);
         return AssetDescriptor::compare(other) && (font_size == descriptor.fontSize());
     }
 

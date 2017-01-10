@@ -4,27 +4,27 @@ using namespace std;
 
 namespace sge
 {
-    void ActionManager::register_keyboard_action(string const &name, SDL_Keycode key)
+    void ActionManager::register_keyboard_action(const string &name, SDL_Keycode key)
     {
         a_keyboard[name].push_back(key);
     }
 
-    void ActionManager::register_mouse_action(string const &name, Uint8 button)
+    void ActionManager::register_mouse_action(const string &name, Uint8 button)
     {
         a_mouse[name].push_back(button);
     }
 
-    void ActionManager::register_joystick_action(string const &name, Uint8 button)
+    void ActionManager::register_joystick_action(const string &name, Uint8 button)
     {
         a_joystick[name].push_back(button);
     }
 
-    bool ActionManager::is_action_pressed(string const &name)
+    bool ActionManager::is_action_pressed(const string &name)
     {
         return a_active[name];
     }
 
-    bool ActionManager::is_action_released(string const &name)
+    bool ActionManager::is_action_released(const string &name)
     {
         return !a_active[name];
     }

@@ -11,7 +11,7 @@ namespace sge
         return _mro;
     }
 
-    void SpriteNode::set_sprite(std::string const &assetname)
+    void SpriteNode::set_sprite(const std::string &assetname)
     {
         ImageDescriptor d(assetname);
 

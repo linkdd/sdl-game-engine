@@ -5,7 +5,7 @@ using namespace std;
 
 namespace sge
 {
-    AssetDescriptor::AssetDescriptor(string const &assetname) : assetname(assetname) {}
+    AssetDescriptor::AssetDescriptor(const string &assetname) : assetname(assetname) {}
 
     size_t AssetDescriptor::get_hash() const
     {
@@ -13,7 +13,7 @@ namespace sge
         return hashfn(assetname);
     }
 
-    bool AssetDescriptor::compare(AssetDescriptor const &other) const
+    bool AssetDescriptor::compare(const AssetDescriptor &other) const
     {
         return (assetname == other.name());
     }

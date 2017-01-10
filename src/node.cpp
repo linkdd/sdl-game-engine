@@ -8,7 +8,7 @@ using namespace std;
 
 namespace sge
 {
-    Node::Node(string const &name, Engine &engine) : name(name), engine(engine), input_enabled(false), process_enabled(false), draw_enabled(false), in_tree(false) {}
+    Node::Node(const string &name, Engine &engine) : name(name), engine(engine), input_enabled(false), process_enabled(false), draw_enabled(false), in_tree(false) {}
 
     const char *Node::get_name() const
     {
@@ -20,7 +20,7 @@ namespace sge
         return {"Node"};
     }
 
-    bool Node::is_of(std::string const &nodetype) const
+    bool Node::is_of(const std::string &nodetype) const
     {
         for (auto &_nodetype : mro())
         {
@@ -50,7 +50,7 @@ namespace sge
         return parent.lock();
     }
 
-    shared_ptr<Node> Node::get_node(string const &path)
+    shared_ptr<Node> Node::get_node(const string &path)
     {
         if (path[0] == '/')
         {
@@ -108,7 +108,7 @@ namespace sge
         }
     }
 
-    vector<shared_ptr<Node>> Node::find_children_by_type(vector<string> const &types)
+    vector<shared_ptr<Node>> Node::find_children_by_type(vector<string>const  &types)
     {
         vector<shared_ptr<Node>> result;
 

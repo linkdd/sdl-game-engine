@@ -30,8 +30,8 @@ namespace sge
             SceneManager(Engine &engine);
             ~SceneManager();
 
-            void add_scene(std::string const &name, std::shared_ptr<Scene> scene);
-            void switch_to_scene(std::string const &name);
+            void add_scene(const std::string &name, std::shared_ptr<Scene> scene);
+            void switch_to_scene(const std::string &name);
 
             bool event_handler(SDL_Event *event);
             void process_handler(Uint32 delta);

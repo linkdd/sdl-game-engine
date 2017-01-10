@@ -12,12 +12,12 @@ namespace sge
     class ActionManager
     {
         public:
-            void register_keyboard_action(std::string const &name, SDL_Keycode key);
-            void register_mouse_action(std::string const &name, Uint8 button);
-            void register_joystick_action(std::string const &name, Uint8 button);
+            void register_keyboard_action(const std::string &name, SDL_Keycode key);
+            void register_mouse_action(const std::string &name, Uint8 button);
+            void register_joystick_action(const std::string &name, Uint8 button);
 
-            bool is_action_pressed(std::string const &name);
-            bool is_action_released(std::string const &name);
+            bool is_action_pressed(const std::string &name);
+            bool is_action_released(const std::string &name);
 
             bool event_handler(SDL_Event *event);
 

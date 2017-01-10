@@ -18,10 +18,10 @@ namespace sge
         using AssetDescriptor::AssetDescriptor;
 
         public:
-            FontDescriptor(std::string const &assetname, int font_size);
+            FontDescriptor(const std::string &assetname, int font_size);
 
             virtual size_t get_hash() const;
-            virtual bool compare(AssetDescriptor const &other) const;
+            virtual bool compare(const AssetDescriptor &other) const;
 
             int fontSize() const;
 

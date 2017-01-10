@@ -12,10 +12,10 @@ namespace sge
     class AssetDescriptor
     {
         public:
-            AssetDescriptor(std::string const &assetname);
+            AssetDescriptor(const std::string &assetname);
 
             virtual size_t get_hash() const;
-            virtual bool compare(AssetDescriptor const &other) const;
+            virtual bool compare(const AssetDescriptor &other) const;
 
             std::string name() const;
             std::string extension() const;

@@ -14,7 +14,7 @@ namespace sge
         return _pos;
     }
 
-    void PositionNode::set_pos(SDL_Point const &pos)
+    void PositionNode::set_pos(const SDL_Point &pos)
     {
         _pos.x = pos.x;
         _pos.y = pos.y;
