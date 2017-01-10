@@ -10,7 +10,7 @@ namespace sge
     {
         public:
             Exception(const std::string &domain, const std::string &msg) throw() : runtime_error("[" + domain + "] " + msg) {}
-            virtual ~Exception() throw() {}
+            virtual ~Exception() noexcept {}
     };
 }
 
