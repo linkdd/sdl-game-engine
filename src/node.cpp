@@ -52,7 +52,11 @@ namespace sge
 
     shared_ptr<Node> Node::get_node(const string &path)
     {
-        if (path[0] == '/')
+        if (path.empty())
+        {
+            return shared_from_this();
+        }
+        else if (path[0] == '/')
         {
             return get_root()->get_node(path.substr(1));
         }
