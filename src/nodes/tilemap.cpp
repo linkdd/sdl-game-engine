@@ -19,12 +19,12 @@ namespace sge
 
         if (tilemap == nullptr)
         {
-            tilemap = engine.assets().load<JSON, JSONDescriptor>(tmap_d);
+            tilemap = engine.assets().load<JSON>(tmap_d);
         }
         else if (tilemap->descriptor()->name() != tmap_d.name())
         {
             tilemap.reset();
-            tilemap = engine.assets().load<JSON, JSONDescriptor>(tmap_d);
+            tilemap = engine.assets().load<JSON>(tmap_d);
         }
 
         string tileset_assetname = tilemap->asset()["/tileset/resource"_json_pointer];

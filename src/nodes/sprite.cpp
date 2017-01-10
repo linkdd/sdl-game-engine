@@ -17,12 +17,12 @@ namespace sge
 
         if (sprite == nullptr)
         {
-            sprite = engine.assets().load<Image, ImageDescriptor>(d);
+            sprite = engine.assets().load<Image>(d);
         }
         else if (sprite->descriptor()->name() != d.name())
         {
             sprite.reset();
-            sprite = engine.assets().load<Image, ImageDescriptor>(d);
+            sprite = engine.assets().load<Image>(d);
         }
     }
 

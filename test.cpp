@@ -15,7 +15,7 @@ class TestScene : public Scene
             sprite->set_sprite("rsrc/test.png");
             sprite->set_pos(50, 50);
 
-            root_node = static_pointer_cast<Node>(sprite);
+            root_node = sprite;
         }
 
         virtual void unload(Engine &engine)
