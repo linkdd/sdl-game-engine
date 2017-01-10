@@ -18,7 +18,7 @@ namespace sge
         return (assetname == other.name());
     }
 
-    string AssetDescriptor::name() const
+    const string &AssetDescriptor::name() const
     {
         return assetname;
     }

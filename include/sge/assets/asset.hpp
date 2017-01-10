@@ -17,7 +17,7 @@ namespace sge
             virtual size_t get_hash() const;
             virtual bool compare(const AssetDescriptor &other) const;
 
-            std::string name() const;
+            const std::string &name() const;
             std::string extension() const;
 
         private:
