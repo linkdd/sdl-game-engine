@@ -34,7 +34,7 @@ int main()
         .set("display/height", 768)
         .set("display/fullscreen", true)
         .set("display/resizable", false)
-        .set("assets/file/location", string(SGE_SOURCE_DIR));
+        .set("assets/file/location", SGE_SOURCE_DIR);
 
     try
     {
