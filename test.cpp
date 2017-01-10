@@ -11,7 +11,7 @@ class TestScene : public Scene
     public:
         virtual void load(Engine &engine)
         {
-            shared_ptr<SpriteNode> sprite = make_shared<SpriteNode>(string("sprite"), engine);
+            shared_ptr<SpriteNode> sprite = make_shared<SpriteNode>("sprite"s, engine);
             sprite->set_sprite("rsrc/test.png");
             sprite->set_pos(50, 50);
 
