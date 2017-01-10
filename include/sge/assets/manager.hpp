@@ -24,7 +24,7 @@ namespace sge
 
         public:
             void register_locator(std::shared_ptr<AssetLocator> locator);
-            void register_loader(std::shared_ptr<AssetLoader> loader, std::vector<std::string>const  &extensions);
+            void register_loader(std::shared_ptr<AssetLoader> loader, const std::vector<std::string> &extensions);
 
             void unload(BaseAsset *asset);
 
