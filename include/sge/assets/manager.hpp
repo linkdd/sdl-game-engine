@@ -26,8 +26,6 @@ namespace sge
             void register_locator(std::shared_ptr<AssetLocator> locator);
             void register_loader(std::shared_ptr<AssetLoader> loader, const std::vector<std::string> &extensions);
 
-            void unload(BaseAsset *asset);
-
             template <typename A, typename D>
             std::shared_ptr<A> load(const D &assetdesc)
             {
@@ -106,6 +104,9 @@ namespace sge
 
                 return asset;
             }
+
+        private:
+            void unload(BaseAsset *asset);
     };
 }
 
