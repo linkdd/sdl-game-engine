@@ -1,5 +1,7 @@
 #include <sge/assets/loaders/json.hpp>
+#include <exception>
 #include <iostream>
+#include <cstring>
 
 using namespace nlohmann;
 using namespace std;
@@ -20,10 +22,22 @@ namespace sge
         SDL_RWseek(input, 0, RW_SEEK_SET);
 
         char *buffer = new char[length];
-        SDL_RWread(input, buffer, length, 1);
-        json j = json::parse(buffer);
-        delete[] buffer;
+        memset(buffer, 0, length);
 
+        SDL_RWread(input, buffer, sizeof(char), length);
+        json j;
+
+        try
+        {
+            j = json::parse(buffer);
+        }
+        catch(const exception &e)
+        {
+            delete[] buffer;
+            throw AssetLoaderError("JSON", e.what());
+        }
+
+        delete[] buffer;
         jdoc->setAsset(j);
 
         if (SDL_RWclose(input) != 0)

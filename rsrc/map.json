@@ -1,7 +1,7 @@
 {
     "tileset": {
         "resource": "rsrc/tileset.png",
-        "with": 32,
+        "width": 32,
         "height": 32,
         "spacing": 0
     },
@@ -18,7 +18,7 @@
             ["green", "green", "yellow", "yellow"],
             ["green", "green", "blue", "yellow"],
             ["red", "blue", "blue", "blue"],
-            ["red", "red", "blue", null]
+            ["red", "red", "blue", ""]
         ]
     }
 }

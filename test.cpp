@@ -11,11 +11,12 @@ class TestScene : public Scene
     public:
         virtual void load(Engine &engine)
         {
-            shared_ptr<SpriteNode> sprite = make_shared<SpriteNode>("sprite"s, engine);
-            sprite->set_sprite("rsrc/test.png");
-            sprite->set_pos(50, 50);
+            shared_ptr<TileMapNode> tmap = make_shared<TileMapNode>("tmap"s, engine);
+            tmap->set_tilemap("rsrc/map.json");
+            tmap->set_pos(50, 50);
+            tmap->set_viewport(0, 0, 4, 4);
 
-            root_node = sprite;
+            root_node = tmap;
         }
 
         virtual void unload(Engine &engine)
