@@ -8,6 +8,8 @@ using namespace std;
 
 namespace sge
 {
+    JSONDescriptor::JSONDescriptor(const string &assetname) : AssetDescriptor(assetname, false) {}
+
     void JSONLoader::load(shared_ptr<BaseAsset> asset, SDL_RWops *input)
     {
         shared_ptr<JSON> jdoc = static_pointer_cast<JSON>(asset);

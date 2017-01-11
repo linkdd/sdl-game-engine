@@ -43,7 +43,7 @@ namespace sge
                     {
                         try
                         {
-                            input = locator->locate(passetdesc->name());
+                            input = locator->locate(passetdesc->name(), passetdesc->binary());
                         }
                         catch (const AssetLocatorError &e)
                         {

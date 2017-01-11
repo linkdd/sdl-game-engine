@@ -15,7 +15,8 @@ namespace sge
 
     class JSONDescriptor : public AssetDescriptor
     {
-        using AssetDescriptor::AssetDescriptor;
+        public:
+            JSONDescriptor(const std::string &assetname);
     };
 
     class JSONLoader : public AssetLoader

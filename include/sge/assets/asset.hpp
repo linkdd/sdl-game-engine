@@ -12,16 +12,18 @@ namespace sge
     class AssetDescriptor
     {
         public:
-            AssetDescriptor(const std::string &assetname);
+            AssetDescriptor(const std::string &assetname, bool binary = true);
 
             virtual size_t get_hash() const;
             virtual bool compare(const AssetDescriptor &other) const;
 
             const std::string &name() const;
             std::string extension() const;
+            bool binary() const;
 
         private:
             std::string assetname;
+            bool _binary;
     };
 
     class BaseAsset

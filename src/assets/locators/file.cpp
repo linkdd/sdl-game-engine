@@ -38,12 +38,12 @@ namespace sge
         }
     }
 
-    SDL_RWops *FileLocator::locate(const string &assetname)
+    SDL_RWops *FileLocator::locate(const string &assetname, bool binary)
     {
         string fullpath = _location + SEPARATOR + assetname;
         replace(fullpath.begin(), fullpath.end(), REPLACE, SEPARATOR);
 
-        SDL_RWops *input = SDL_RWFromFile(fullpath.c_str(), "rb");
+        SDL_RWops *input = SDL_RWFromFile(fullpath.c_str(), (binary ? "rb" : "r"));
 
         if (input == nullptr)
         {

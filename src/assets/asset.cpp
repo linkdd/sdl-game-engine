@@ -5,7 +5,7 @@ using namespace std;
 
 namespace sge
 {
-    AssetDescriptor::AssetDescriptor(const string &assetname) : assetname(assetname) {}
+    AssetDescriptor::AssetDescriptor(const string &assetname, bool binary) : assetname(assetname), _binary(binary) {}
 
     size_t AssetDescriptor::get_hash() const
     {
@@ -21,6 +21,11 @@ namespace sge
     const string &AssetDescriptor::name() const
     {
         return assetname;
+    }
+
+    bool AssetDescriptor::binary() const
+    {
+        return _binary;
     }
 
     string AssetDescriptor::extension() const

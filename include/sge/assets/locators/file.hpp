@@ -10,7 +10,7 @@ namespace sge
         public:
             FileLocator(const std::string &location);
 
-            virtual SDL_RWops *locate(const std::string &assetname);
+            virtual SDL_RWops *locate(const std::string &assetname, bool binary);
 
         private:
             std::string _location;
