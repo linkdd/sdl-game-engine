@@ -38,6 +38,7 @@ set(
     ${sge_SOURCE_DIR}/include/sge/timer.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/position.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/sprite.hpp
+    ${sge_SOURCE_DIR}/include/sge/nodes/animatedsprite.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/tilemap.hpp
 )
 
@@ -63,6 +64,7 @@ set(
     ${sge_SOURCE_DIR}/src/scenemgr.cpp
     ${sge_SOURCE_DIR}/src/nodes/position.cpp
     ${sge_SOURCE_DIR}/src/nodes/sprite.cpp
+    ${sge_SOURCE_DIR}/src/nodes/animatedsprite.cpp
     ${sge_SOURCE_DIR}/src/nodes/tilemap.cpp
 )
 

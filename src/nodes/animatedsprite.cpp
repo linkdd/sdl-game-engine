@@ -1,4 +1,4 @@
-#include <sge/nodes/sprite.hpp>
+#include <sge/nodes/animatedsprite.hpp>
 #include <sge/engine.hpp>
 #include <iostream>
 

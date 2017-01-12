@@ -17,6 +17,7 @@ namespace sge
             void set_animation(const std::string &assetname);
 
             virtual void ready();
+            virtual void process(Uint32 delta);
             virtual void draw();
 
         private:

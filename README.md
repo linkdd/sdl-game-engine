@@ -23,6 +23,7 @@ Example:
 
  - ``ImageLoader``: using **SDL2_image**, loads an image.
  - ``FontLoader``: using **SDL2_ttf**, loads a TTF font.
+ - ``JSONLoader``: loads a JSON file.
  - ``AudioLoader``: loads a sound file (*todo*).
 
 Asset requests are made using an ``AssetDescriptor``. The descriptor holds all
