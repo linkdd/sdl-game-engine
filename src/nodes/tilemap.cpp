@@ -148,10 +148,15 @@ namespace sge
                             dest.h -= (tileviewport.h * th - viewport.h);
                         }
 
-                        SDL_RenderCopy(engine.renderer(), tex, &src, &dest);
+                        if (SDL_RenderCopy(engine.renderer(), tex, &src, &dest) != 0)
+                        {
+                            cerr << "[TileMapNode][ERROR] SDL: " << SDL_GetError() << endl; 
+                        }
                     }
                 }
             }
+
+            SDL_DestroyTexture(tex);
         }
         else
         {

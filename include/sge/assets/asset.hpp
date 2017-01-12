@@ -58,7 +58,7 @@ namespace sge
                 setLoaded();
             }
 
-            T asset() const
+            T &asset()
             {
                 return _asset;
             }
