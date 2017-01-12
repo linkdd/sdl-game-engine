@@ -14,7 +14,7 @@ class TestScene : public Scene
             shared_ptr<TileMapNode> tmap = make_shared<TileMapNode>("tmap"s, engine);
             tmap->set_tilemap("rsrc/map.json");
             tmap->set_pos(50, 50);
-            tmap->set_viewport(0, 0, 4, 4);
+            tmap->set_viewport(-10, 10, 70, 70);
 
             root_node = tmap;
         }

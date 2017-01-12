@@ -52,15 +52,15 @@ namespace sge
 
     void TileMapNode::set_viewport(SDL_Rect vport)
     {
-        viewport = vport;
+        set_viewport(vport.x, vport.y, vport.w, vport.h);
     }
 
     void TileMapNode::set_viewport(int x, int y, int w, int h)
     {
-        viewport.x = x;
-        viewport.y = y;
-        viewport.w = w;
-        viewport.h = h;
+        viewport.x = max(0, x);
+        viewport.y = max(0, y);
+        viewport.w = max(0, w);
+        viewport.h = max(0, h);
     }
 
     void TileMapNode::ready()
@@ -90,9 +90,15 @@ namespace sge
             int th = tmap["/tileset/height"_json_pointer];
             int ts = tmap["/tileset/spacing"_json_pointer];
 
-            for(int x = viewport.x; x < viewport.w && x < mw; x++)
+            SDL_Rect tileviewport;
+            tileviewport.x = max(0, viewport.x / tw);
+            tileviewport.y = max(0, viewport.y / th);
+            tileviewport.w = min(mw, viewport.w / tw + (viewport.w % tw ? 1 : 0));
+            tileviewport.h = min(mh, viewport.h / th + (viewport.h % th ? 1 : 0));
+
+            for(int x = tileviewport.x; x < tileviewport.w; x++)
             {
-                for(int y = viewport.y; y < viewport.h && y < mh; y++)
+                for(int y = tileviewport.y; y < tileviewport.h; y++)
                 {
                     ostringstream spath;
                     spath << "/map/tiles/" << y << "/" << x;
@@ -119,6 +125,28 @@ namespace sge
                         dest.y = pos.y + y * th;
                         dest.w = tw;
                         dest.h = th;
+
+                        if (x == tileviewport.x)
+                        {
+                            src.x += (viewport.x - tileviewport.x);
+                            dest.x += (viewport.x - tileviewport.x);
+                        }
+                        else if (x == (tileviewport.w - 1))
+                        {
+                            src.w -= (tileviewport.w * tw - viewport.w);
+                            dest.w -= (tileviewport.w * tw - viewport.w);
+                        }
+
+                        if (y == tileviewport.y)
+                        {
+                            src.y += (viewport.y - tileviewport.y);
+                            dest.y += (viewport.y - tileviewport.y);
+                        }
+                        else if (y == (tileviewport.h - 1))
+                        {
+                            src.h -= (tileviewport.h * th - viewport.h);
+                            dest.h -= (tileviewport.h * th - viewport.h);
+                        }
 
                         SDL_RenderCopy(engine.renderer(), tex, &src, &dest);
                     }
