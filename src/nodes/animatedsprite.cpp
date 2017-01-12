@@ -74,6 +74,8 @@ namespace sge
             {
                 current_frame = 0;
             }
+
+            elapsed = 0;
         }
     }
 
