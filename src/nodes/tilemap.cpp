@@ -76,7 +76,7 @@ namespace sge
         }
 
         SDL_Surface *tset = tileset->asset();
-        json tmap = tilemap->asset();
+        json &tmap = tilemap->asset();
 
         SDL_Texture *tex = SDL_CreateTextureFromSurface(engine.renderer(), tset);
 
@@ -115,8 +115,8 @@ namespace sge
                         int tiley = tmap[json::json_pointer(path)];
 
                         SDL_Rect src;
-                        src.x = (tilex + ts) * tw;
-                        src.y = (tiley + ts) * th;
+                        src.x = tilex * (ts + tw);
+                        src.y = tiley * (ts + th);
                         src.w = tw;
                         src.h = th;
 
