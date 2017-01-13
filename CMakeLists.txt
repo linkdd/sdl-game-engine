@@ -105,3 +105,18 @@ target_link_libraries(
     testsge
     sge
 )
+
+install(
+    TARGETS sge
+    LIBRARY DESTINATION lib
+)
+
+install(
+    DIRECTORY ${sge_SOURCE_DIR}/include/sge
+    DESTINATION include
+)
+
+install(
+    FILES ${sge_SOURCE_DIR}/lib/json/src/json.hpp
+    DESTINATION include
+)
