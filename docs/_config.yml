@@ -1,1 +1,4 @@
 theme: jekyll-theme-tactile
+title: SDLGameEngine
+description: 2D Game Engine built on top of SDL2
+show_downloads: true
