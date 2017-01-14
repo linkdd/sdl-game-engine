@@ -88,7 +88,7 @@ how the engine will works. Feel free to use it to customize:
 
 ## Build
 
-You need ``cmake`` and a compiler supporting the **C++11** standard.
+You need ``cmake`` and a compiler supporting the **C++14** standard.
 
     $ mkdir __build__
     $ cd __build__
