@@ -91,10 +91,10 @@ namespace sge
             int ts = tmap["/tileset/spacing"_json_pointer];
 
             SDL_Rect tileviewport;
-            tileviewport.x = min(mw, max(0, viewport.x / tw));
-            tileviewport.y = min(mh, max(0, viewport.y / th));
-            tileviewport.w = min(mw, viewport.w / tw + (viewport.w % tw ? 1 : 0));
-            tileviewport.h = min(mh, viewport.h / th + (viewport.h % th ? 1 : 0));
+            tileviewport.x = min(mw - 1, max(0, viewport.x / tw));
+            tileviewport.y = min(mh - 1, max(0, viewport.y / th));
+            tileviewport.w = min(mw - 1, viewport.w / tw + (viewport.w % tw ? 1 : 0));
+            tileviewport.h = min(mh - 1, viewport.h / th + (viewport.h % th ? 1 : 0));
 
             for(int x = 0; x < tileviewport.w; x++)
             {
