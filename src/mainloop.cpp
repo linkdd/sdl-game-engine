@@ -131,8 +131,8 @@ namespace sge
 
             for (auto &it : processing)
             {
-                auto handler = get<0>(it);
-                auto timer = get<1>(it);
+                auto &handler = get<0>(it);
+                auto &timer = get<1>(it);
 
                 handler(timer.get_ticks());
                 timer.start();
