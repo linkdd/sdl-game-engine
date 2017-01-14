@@ -96,12 +96,12 @@ namespace sge
             tileviewport.w = min(mw, viewport.w / tw + (viewport.w % tw ? 1 : 0));
             tileviewport.h = min(mh, viewport.h / th + (viewport.h % th ? 1 : 0));
 
-            for(int x = tileviewport.x; x < tileviewport.w; x++)
+            for(int x = 0; x < tileviewport.w; x++)
             {
-                for(int y = tileviewport.y; y < tileviewport.h; y++)
+                for(int y = 0; y < tileviewport.h; y++)
                 {
                     ostringstream spath;
-                    spath << "/map/tiles/" << y << "/" << x;
+                    spath << "/map/tiles/" << (y + tileviewport.y) << "/" << (x + tileviewport.x);
                     string path = spath.str();
 
                     string tile = tmap[json::json_pointer(path)];
