@@ -2,73 +2,9 @@
 layout: default
 ---
 
-<div id="fb-root"></div>
-<script type="application/javascript">
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
-
-<script type="application/javascript">
-    window.twttr = (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0],
-        t = window.twttr || {};
-        if (d.getElementById(id)) return t;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://platform.twitter.com/widgets.js";
-        fjs.parentNode.insertBefore(js, fjs);
-
-        t._e = [];
-        t.ready = function(f) {
-            t._e.push(f);
-        };
-
-        return t;
-    }(document, "script", "twitter-wjs"));
-</script>
-
-<section id="buttons" class="clearfix">
-    <div class="fb-like"
-         data-href="https://linkdd.github.io/sdl-game-engine/"
-         data-layout="button_count"
-         data-action="like"
-         data-size="large"
-         data-show-faces="true"
-         data-share="true"
-         style="float: left;">
-    </div>
-
-    <a class="twitter-share-button"
-       href="https://twitter.com/intent/tweet?text=SDLGameEngine%20A%202D%20game%20engine%20easy%20to%20use"
-       data-size="large"
-       style="float: left;">
-        Tweet
-    </a>
-
-    <!-- Place this tag where you want the +1 button to render. -->
-    <div class="g-plusone"
-         data-size="tall"
-         data-href="https://linkdd.github.io/sdl-game-engine"
-         style="float: left;">
-    </div>
-
-    <!-- Place this tag after the last +1 button tag. -->
-    <script type="application/javascript">
-        (function() {
-            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-            po.src = 'https://apis.google.com/js/platform.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-        })();
-    </script>
-
+<section id="buttons" style="text-align: center;">
     <a href="https://www.patreon.com/bePatron?u=4372210"
-       data-patreon-widget-type="become-patron-button"
-       style="float: left;">
+       data-patreon-widget-type="become-patron-button">
         Become a Patron!
     </a>
     <script async src="https://cdn6.patreon.com/becomePatronButton.bundle.js"></script>
