@@ -1,9 +1,13 @@
 #include <sge/initializers/sdl-window.hpp>
 
+using namespace std;
+
 namespace sge
 {
-    SDLWindowInitializer::SDLWindowInitializer(int width, int height, bool fullscreen, bool resizable)
-        : width(width), height(height), fullscreen(fullscreen), resizable(resizable), _window(nullptr), _renderer(nullptr)
+    SDLWindowInitializer::SDLWindowInitializer(int width, int height, bool fullscreen, bool resizable, const string &scale)
+        : width(width), height(height),
+          fullscreen(fullscreen), resizable(resizable), scale(scale),
+          _window(nullptr), _renderer(nullptr)
     {}
 
     void SDLWindowInitializer::do_initialize()
@@ -16,6 +20,12 @@ namespace sge
         if (SDL_CreateWindowAndRenderer(width, height, flags, &_window, &_renderer) != 0)
         {
             throw InitError("SDL", SDL_GetError());
+        }
+
+        if (!scale.empty() && scale != "none")
+        {
+            SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, scale.c_str());
+            SDL_RenderSetLogicalSize(_renderer, width, height);
         }
     }
 

@@ -13,7 +13,8 @@ namespace sge
               configuration.geti("display/width", 640),
               configuration.geti("display/height", 480),
               configuration.getb("display/fullscreen", false),
-              configuration.getb("display/resizable", false)
+              configuration.getb("display/resizable", false),
+              configuration.gets("display/scale", "none")
           )),
           _mloop(configuration.geti("fps", 60)),
           _scmgr(*this),
