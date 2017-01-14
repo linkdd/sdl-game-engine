@@ -140,7 +140,7 @@ namespace sge
 
     void Node::add_child(shared_ptr<Node> child, bool reparent)
     {
-        children.push_back(std::move(child));
+        children.push_back(child);
 
         if (reparent)
         {
