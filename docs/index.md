@@ -2,13 +2,9 @@
 layout: default
 ---
 
-# SDL Game Engine
+# Features
 
-This project aims to create a full 2D game engine for the SDL2 library.
-
-## Features
-
-### Asset management
+## Asset management
 
 The ``AssetManager`` has a set of **Locators** and **Loaders**.
 
@@ -36,12 +32,12 @@ informations about the asset (ie: name, font size, bit rate, ...).
 The **manager** holds a cache of asset and descriptors. If a descriptor has already
 been loaded, the same asset is returned.
 
-### Actions management
+## Actions management
 
 Map keys, mouse buttons and controller buttons to a named action, and then check
 in your code if the action is triggered or not.
 
-### Scene management
+## Scene management
 
 The ``SceneManager`` keeps track of all your game's scenes. It handles the scene
 loading and unloading, and notify the scene's graph of inputs, updates, and draw
@@ -67,7 +63,7 @@ Example of nodes:
 In order to create a ``Scene``, you just need to inherit from it, and creates your
 nodes in the ``load()`` method, and delete them in the ``unload()`` method.
 
-### Initializers
+## Initializers
 
 If you want to initialize libraries (ie: Stemworks API) and unload them at shutdown,
 just inherit from ``Initializer`` and add it to the engine instance.
@@ -79,7 +75,7 @@ At the moment, the following initializers are enabled by default:
  - SDL2_ttf
  - SDL Window/Renderer creation
 
-### Configuration
+## Configuration
 
 The engine instance is initialized with a configuration object, used to customize
 how the engine will works. Feel free to use it to customize:
@@ -99,6 +95,6 @@ You need ``cmake`` and a compiler supporting the **C++14** standard.
     $ cmake ..
     $ make
 
-## License
+# License
 
 This project is released under the MIT License.
