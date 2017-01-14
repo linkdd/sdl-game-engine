@@ -57,10 +57,20 @@ namespace sge
 
     void TileMapNode::set_viewport(int x, int y, int w, int h)
     {
-        viewport.x = max(0, x);
-        viewport.y = max(0, y);
-        viewport.w = max(0, w);
-        viewport.h = max(0, h);
+        if (tilemap != nullptr)
+        {
+            json &tmap = tilemap->asset();
+
+            int mw = tmap["/map/width"_json_pointer];
+            int mh = tmap["/map/height"_json_pointer];
+            int tw = tmap["/tileset/width"_json_pointer];
+            int th = tmap["/tileset/height"_json_pointer];
+
+            viewport.w = max(0, w);
+            viewport.h = max(0, h);
+            viewport.x = min(mw * tw - viewport.w, max(0, x));
+            viewport.y = min(mh * th - viewport.h, max(0, y));
+        }
     }
 
     void TileMapNode::ready()
@@ -91,10 +101,10 @@ namespace sge
             int ts = tmap["/tileset/spacing"_json_pointer];
 
             SDL_Rect tileviewport;
-            tileviewport.x = min(mw - 1, max(0, viewport.x / tw));
-            tileviewport.y = min(mh - 1, max(0, viewport.y / th));
-            tileviewport.w = min(mw - 1, viewport.w / tw + (viewport.w % tw ? 1 : 0));
-            tileviewport.h = min(mh - 1, viewport.h / th + (viewport.h % th ? 1 : 0));
+            tileviewport.w = min(mw, viewport.w / tw + (viewport.w % tw ? 1 : 0));
+            tileviewport.h = min(mh, viewport.h / th + (viewport.h % th ? 1 : 0));
+            tileviewport.x = min(mw - tileviewport.w, max(0, viewport.x / tw));
+            tileviewport.y = min(mh - tileviewport.h, max(0, viewport.y / th));
 
             for(int x = 0; x < tileviewport.w; x++)
             {
@@ -125,28 +135,6 @@ namespace sge
                         dest.y = pos.y + y * th;
                         dest.w = tw;
                         dest.h = th;
-
-                        if (x == 0)
-                        {
-                            src.x += (viewport.x - tileviewport.x);
-                            dest.x += (viewport.x - tileviewport.x);
-                        }
-                        else if (x == (tileviewport.w - 1))
-                        {
-                            src.w -= (tileviewport.w * tw - viewport.w);
-                            dest.w -= (tileviewport.w * tw - viewport.w);
-                        }
-
-                        if (y == 0)
-                        {
-                            src.y += (viewport.y - tileviewport.y);
-                            dest.y += (viewport.y - tileviewport.y);
-                        }
-                        else if (y == (tileviewport.h - 1))
-                        {
-                            src.h -= (tileviewport.h * th - viewport.h);
-                            dest.h -= (tileviewport.h * th - viewport.h);
-                        }
 
                         if (SDL_RenderCopy(engine.renderer(), tex, &src, &dest) != 0)
                         {
