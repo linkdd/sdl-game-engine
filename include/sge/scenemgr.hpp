@@ -33,6 +33,8 @@ namespace sge
             void add_scene(const std::string &name, std::shared_ptr<Scene> scene);
             void switch_to_scene(const std::string &name);
 
+            std::shared_ptr<Node> get_scene_node();
+
             bool event_handler(SDL_Event *event);
             void process_handler(Uint32 delta);
             void draw_handler();

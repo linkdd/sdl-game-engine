@@ -34,12 +34,19 @@ set(
     ${sge_SOURCE_DIR}/include/sge/mainloop.hpp
     ${sge_SOURCE_DIR}/include/sge/node.hpp
     ${sge_SOURCE_DIR}/include/sge/scenemgr.hpp
+    ${sge_SOURCE_DIR}/include/sge/physics/manager.hpp
+    ${sge_SOURCE_DIR}/include/sge/physics/vector.hpp
+    ${sge_SOURCE_DIR}/include/sge/physics/shape.hpp
+    ${sge_SOURCE_DIR}/include/sge/physics/manifold.hpp
     ${sge_SOURCE_DIR}/include/sge/sge.hpp
     ${sge_SOURCE_DIR}/include/sge/timer.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/position.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/sprite.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/animatedsprite.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/tilemap.hpp
+    ${sge_SOURCE_DIR}/include/sge/nodes/collisionshape.hpp
+    ${sge_SOURCE_DIR}/include/sge/nodes/boundingbox.hpp
+    ${sge_SOURCE_DIR}/include/sge/nodes/body.hpp
 )
 
 set(
@@ -62,10 +69,14 @@ set(
     ${sge_SOURCE_DIR}/src/mainloop.cpp
     ${sge_SOURCE_DIR}/src/node.cpp
     ${sge_SOURCE_DIR}/src/scenemgr.cpp
+    ${sge_SOURCE_DIR}/src/physics/manager.cpp
     ${sge_SOURCE_DIR}/src/nodes/position.cpp
     ${sge_SOURCE_DIR}/src/nodes/sprite.cpp
     ${sge_SOURCE_DIR}/src/nodes/animatedsprite.cpp
     ${sge_SOURCE_DIR}/src/nodes/tilemap.cpp
+    ${sge_SOURCE_DIR}/src/nodes/collisionshape.cpp
+    ${sge_SOURCE_DIR}/src/nodes/boundingbox.cpp
+    ${sge_SOURCE_DIR}/src/nodes/body.cpp
 )
 
 add_library(sge SHARED ${HEADERS} ${SOURCES})

@@ -7,7 +7,7 @@ namespace sge
 {
     Scene::Scene() : root_node(nullptr) {}
 
-    std::shared_ptr<Node> Scene::get_root_node() const
+    shared_ptr<Node> Scene::get_root_node() const
     {
         return root_node;
     }
@@ -24,7 +24,7 @@ namespace sge
 
     void SceneManager::add_scene(const string &name, shared_ptr<Scene> scene)
     {
-        scenes[name] = std::move(scene);
+        scenes[name] = scene;
     }
 
     void SceneManager::switch_to_scene(const string &name)
@@ -46,6 +46,18 @@ namespace sge
         {
             current_scene->get_root_node()->send_enter_tree();
         }
+    }
+
+    shared_ptr<Node> SceneManager::get_scene_node()
+    {
+        shared_ptr<Node> result;
+
+        if (current_scene != nullptr)
+        {
+            result = current_scene->get_root_node();
+        }
+
+        return result;
     }
 
     bool SceneManager::event_handler(SDL_Event *event)

@@ -7,14 +7,14 @@ using namespace std;
 
 namespace sge
 {
-    std::vector<std::string> AnimatedSpriteNode::mro() const
+    vector<string> AnimatedSpriteNode::mro() const
     {
         auto _mro = PositionNode::mro();
         _mro.push_back("AnimatedSpriteNode");
         return _mro;
     }
 
-    void AnimatedSpriteNode::set_animation(const std::string &assetname)
+    void AnimatedSpriteNode::set_animation(const string &assetname)
     {
         JSONDescriptor info_d(assetname);
 

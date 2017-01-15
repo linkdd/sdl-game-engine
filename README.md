@@ -63,6 +63,21 @@ Example of nodes:
 In order to create a ``Scene``, you just need to inherit from it, and creates your
 nodes in the ``load()`` method, and delete them in the ``unload()`` method.
 
+### Physic Engine
+
+Specific nodes in the scene graph are used for collision detection:
+
+ - ``BodyNode``: is notified for a collision
+ - ``BoundingBoxNode``: as a child of the ``BodyNode``, defines a bounding box used to filter out nodes in the collision detection
+ - ``CollisionShapeNode``: as a child of the ``BodyNode``, defines the shape used to check for accurate collision
+
+2-step collision detection:
+
+ - for each ``BodyNode``, check if at least one child ``BoundingBoxNode`` is overlapping
+ - for each ``BodyNode`` with at least one ``BoundingBoxNode`` overlapping, construct the ``ContactManifold`` for each child ``CollisionShapeNode``
+
+Finally, the ``BodyNode`` is notified of a collision by receiving the resulting ``ContactManifold``.
+
 ### Initializers
 
 If you want to initialize libraries (ie: Stemworks API) and unload them at shutdown,

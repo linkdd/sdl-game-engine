@@ -8,5 +8,6 @@
 #include <sge/nodes/sprite.hpp>
 #include <sge/nodes/animatedsprite.hpp>
 #include <sge/nodes/tilemap.hpp>
+#include <sge/nodes/boundingbox.hpp>
 
 #endif /* __SGE_HPP */

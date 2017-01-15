@@ -22,7 +22,7 @@ namespace sge
             std::shared_ptr<Node> get_root();
             std::shared_ptr<Node> get_parent();
             std::shared_ptr<Node> get_node(const std::string &path);
-            std::vector<std::shared_ptr<Node>> find_children_by_type(std::vector<std::string>const  &types);
+            std::vector<std::shared_ptr<Node>> find_children_by_type(const std::vector<std::string> &types);
             void add_child(std::shared_ptr<Node> child, bool reparent = true);
             void remove_child(std::shared_ptr<Node> child, bool reparent = true);
             void reparent(std::shared_ptr<Node> parent, bool remove = true, bool add = true);

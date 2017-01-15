@@ -12,6 +12,7 @@
 #include <sge/mainloop.hpp>
 #include <sge/actionmgr.hpp>
 #include <sge/scenemgr.hpp>
+#include <sge/physics/manager.hpp>
 
 #include <sge/assets/manager.hpp>
 #include <sge/assets/locators/file.hpp>
@@ -35,6 +36,7 @@ namespace sge
             ActionManager &actions();
             AssetManager &assets();
             SceneManager &scenes();
+            PhysicManager &physics();
 
             SDL_Window *window() const;
             SDL_Renderer *renderer() const;
@@ -51,6 +53,7 @@ namespace sge
             MainLoop _mloop;
             ActionManager _amgr;
             SceneManager _scmgr;
+            PhysicManager _pmgr;
 
             AssetManager _assets;
 

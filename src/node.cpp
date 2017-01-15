@@ -112,7 +112,7 @@ namespace sge
         }
     }
 
-    vector<shared_ptr<Node>> Node::find_children_by_type(vector<string>const  &types)
+    vector<shared_ptr<Node>> Node::find_children_by_type(const vector<string> &types)
     {
         vector<shared_ptr<Node>> result;
 

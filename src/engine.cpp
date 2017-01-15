@@ -18,6 +18,7 @@ namespace sge
           )),
           _mloop(configuration.geti("fps", 60)),
           _scmgr(*this),
+          _pmgr(*this),
           _asset_file_locator(make_shared<FileLocator>(configuration.gets("assets/file/location", ""))),
           _asset_image_loader(make_shared<ImageLoader>()),
           _asset_font_loader(make_shared<FontLoader>()),
@@ -62,6 +63,7 @@ namespace sge
         _mloop.add_event_watcher([&](SDL_Event *evt) { return _amgr.event_handler(evt); });
         _mloop.add_event_watcher([&](SDL_Event *evt) { return _scmgr.event_handler(evt); });
         _mloop.queue_process_handler([&](Uint32 delta) { _scmgr.process_handler(delta); });
+        _mloop.queue_process_handler([&](Uint32 delta) { _pmgr.process_handler(delta); });
         _mloop.queue_draw_handler([&]() { SDL_RenderClear(renderer()); });
         _mloop.queue_draw_handler([&]() { _scmgr.draw_handler(); });
         _mloop.queue_draw_handler([&]() { SDL_RenderPresent(renderer()); });
@@ -100,6 +102,11 @@ namespace sge
     SceneManager &Engine::scenes()
     {
         return _scmgr;
+    }
+
+    PhysicManager &Engine::physics()
+    {
+        return _pmgr;
     }
 
     SDL_Window *Engine::window() const
