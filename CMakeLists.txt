@@ -120,6 +120,7 @@ target_link_libraries(
 install(
     TARGETS sge
     LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin
 )
 
 install(
