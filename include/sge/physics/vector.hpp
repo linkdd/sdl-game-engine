@@ -12,8 +12,15 @@ namespace sge
         float y;
 
         Vector() : x(0), y(0) {}
-        Vector(int x, int y) : x(x), y(y) {}
+        Vector(float x, float y) : x(x), y(y) {}
         Vector(SDL_Point p) : x(p.x), y(p.y) {}
+
+        Vector &operator=(const Vector &other)
+        {
+            x = other.x;
+            y = other.y;
+            return *this;
+        }
 
         float dot(const Vector &other) const
         {
@@ -30,12 +37,14 @@ namespace sge
             return sqrt(magnitude_squared());
         }
 
+        Vector normalize() const
+        {
+            return Vector(x, y) / magnitude();
+        }
+
         Vector normal() const
         {
-            Vector result;
-            result.x = -y;
-            result.y = x;
-            return result;
+            return Vector(-y, x);
         }
 
         Vector projection(const Vector &v) const
@@ -45,34 +54,22 @@ namespace sge
 
         Vector operator+(const Vector &other) const
         {
-            Vector result;
-            result.x = x + other.x;
-            result.y = y + other.y;
-            return result;
+            return Vector(x + other.x, y + other.y);
         }
 
         Vector operator-(const Vector &other) const
         {
-            Vector result;
-            result.x = x - other.x;
-            result.y = y - other.y;
-            return result;
+            return Vector(x - other.x, y - other.y);
         }
 
         Vector operator*(float n) const
         {
-            Vector result;
-            result.x = x * n;
-            result.y = y * n;
-            return result;
+            return Vector(x * n, y * n);
         }
 
         Vector operator/(float n) const
         {
-            Vector result;
-            result.x = x / n;
-            result.y = y / n;
-            return result;
+            return Vector(x / n, y / n);
         }
     };
 }

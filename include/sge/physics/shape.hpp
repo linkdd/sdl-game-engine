@@ -13,6 +13,8 @@ namespace sge
         Vector start;
         Vector end;
 
+        Edge(Vector s, Vector e) : start(s), end(e) {}
+
         Vector as_vector() const
         {
             return end - start;
@@ -23,6 +25,28 @@ namespace sge
     {
         std::vector<Vector> vertices;
         std::vector<Edge> edges;
+
+        Shape() {}
+        Shape(const std::vector<Vector> &vertices) : vertices(vertices)
+        {
+            for (auto it = vertices.begin(); it != vertices.end(); it++)
+            {
+                Vector start = *it;
+                Vector end;
+
+                if (next(it) == vertices.end())
+                {
+                    end = vertices.front();
+                }
+                else
+                {
+                    it++;
+                    end = *it;
+                }
+
+                edges.push_back(Edge(start, end));
+            }
+        }
 
         Shape translate(const Vector &v) const
         {
@@ -35,16 +59,13 @@ namespace sge
 
             for (auto edge : edges)
             {
-                Edge new_edge;
-                new_edge.start = edge.start + v;
-                new_edge.end = edge.end + v;
-                result.edges.push_back(new_edge);
+                result.edges.push_back(Edge(edge.start + v, edge.end + v));
             }
 
             return result;
         }
 
-        std::vector<int> projection(const Vector &v) const
+        std::vector<float> projection(const Vector &v) const
         {
             std::vector<Vector> projected;
 
@@ -53,8 +74,8 @@ namespace sge
                 projected.push_back(vertex.projection(v));
             }
 
-            std::vector<int> result;
-            Vector axis(1, 0);
+            std::vector<float> result;
+            Vector axis(1.0, 0.0);
 
             for (auto p : projected)
             {
@@ -66,22 +87,37 @@ namespace sge
             return result;
         }
 
-        bool overlap(const Shape &other) const
+        bool overlap(const Shape &other, Vector &mtv) const
         {
+            float penetration = 0.0;
+
             for (auto edge : edges)
             {
                 Vector n = edge.as_vector().normal();
-                std::vector<int> a_proj = projection(n);
-                std::vector<int> b_proj = other.projection(n);
+                std::vector<float> a_proj = projection(n);
+                std::vector<float> b_proj = other.projection(n);
 
-                int ax1 = a_proj.front();
-                int ax2 = a_proj.back();
-                int bx1 = b_proj.front();
-                int bx2 = b_proj.back();
+                float ax1 = a_proj.front();
+                float ax2 = a_proj.back();
+                float bx1 = b_proj.front();
+                float bx2 = b_proj.back();
 
-                if (!((ax1 <= bx1 <= ax2) || (ax1 <= bx2 <= ax2)))
+                float i1 = std::max(ax1, bx1);
+                float i2 = std::min(ax2, bx2);
+
+                if (i2 < i1)
                 {
                     return false;
+                }
+                else
+                {
+                    float local_penetration = i2 - i1;
+
+                    if (penetration == 0.0 || local_penetration < penetration)
+                    {
+                        penetration = local_penetration;
+                        mtv = n.normalize() * penetration;
+                    }
                 }
             }
 

@@ -12,8 +12,5 @@ namespace sge
         return _mro;
     }
 
-    bool BodyNode::is_colliding() const
-    {
-        return colliding;
-    }
+    void BodyNode::colliding(const Manifold &manifold) {}
 }

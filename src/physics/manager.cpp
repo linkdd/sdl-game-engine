@@ -60,6 +60,7 @@ namespace sge
                                 Manifold m;
                                 m.a = node;
                                 m.b = onode;
+                                m.mtv = Vector(0, 0);
 
                                 manifolds.push_back(m);
                                 overlap = true;
@@ -76,7 +77,7 @@ namespace sge
             }
         }
 
-        for (auto manifold : manifolds)
+        for (auto &manifold : manifolds)
         {
             auto a_snodes = manifold.a->find_children_by_type({"CollisionShapeNode"});
             auto b_snodes = manifold.b->find_children_by_type({"CollisionShapeNode"});
@@ -91,10 +92,11 @@ namespace sge
                 {
                     auto b_shapenode = static_pointer_cast<CollisionShapeNode>(b_snode);
                     Shape b_s = b_shapenode->get_shape();
+                    Vector mtv;
 
-                    if (a_s.overlap(b_s))
+                    if (a_s.overlap(b_s, mtv))
                     {
-                        // TODO: get contact points
+                        manifold.mtv = manifold.mtv + mtv;
                         collision = true;
                     }
                 }
@@ -102,7 +104,8 @@ namespace sge
 
             if (collision)
             {
-                // TODO: notify collision
+                auto body = static_pointer_cast<BodyNode>(manifold.a);
+                body->colliding(manifold);
             }
         }
     }

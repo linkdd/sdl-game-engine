@@ -7,18 +7,11 @@
 
 namespace sge
 {
-    struct Contact
-    {
-        Vector position;
-        Vector normal;
-        float penetration;
-    };
-
     struct Manifold
     {
         std::shared_ptr<Node> a;
         std::shared_ptr<Node> b;
-        std::vector<Contact> contacts;
+        Vector mtv;
     };
 }
 
