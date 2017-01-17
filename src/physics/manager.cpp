@@ -54,7 +54,7 @@ namespace sge
                             b_absbox.y = opos.y;
                             b_absbox.w = obox.x;
                             b_absbox.h = obox.y;
-                            
+
                             if (SDL_HasIntersection(&a_absbox, &b_absbox))
                             {
                                 Manifold m;

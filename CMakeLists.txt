@@ -69,6 +69,7 @@ set(
     ${sge_SOURCE_DIR}/src/mainloop.cpp
     ${sge_SOURCE_DIR}/src/node.cpp
     ${sge_SOURCE_DIR}/src/scenemgr.cpp
+    ${sge_SOURCE_DIR}/src/physics/shape.cpp
     ${sge_SOURCE_DIR}/src/physics/manager.cpp
     ${sge_SOURCE_DIR}/src/nodes/position.cpp
     ${sge_SOURCE_DIR}/src/nodes/sprite.cpp
