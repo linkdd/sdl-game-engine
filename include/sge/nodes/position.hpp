@@ -16,10 +16,15 @@ namespace sge
             void set_pos(const SDL_Point &pos);
             void set_pos(int x, int y);
 
+            int get_rotation() const;
+            void set_rotation(int angle);
+
             SDL_Point get_absolute_pos();
+            int get_absolute_rotation();
 
         private:
             SDL_Point _pos;
+            int _angle;
     };
 }
 

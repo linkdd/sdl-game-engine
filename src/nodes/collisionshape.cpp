@@ -14,15 +14,14 @@ namespace sge
 
     void CollisionShapeNode::set_shape(const Shape &shape)
     {
+        _shape = shape;
+    }
+
+    Shape CollisionShapeNode::get_shape()
+    {
         Vector pos(get_pos());
         Vector abspos(get_absolute_pos());
 
-        _shape = shape;
-        _shape.translate(abspos - pos);
-    }
-
-    Shape CollisionShapeNode::get_shape() const
-    {
-        return _shape;
+        return _shape.translate(abspos - pos).rotate(get_absolute_rotation());
     }
 }

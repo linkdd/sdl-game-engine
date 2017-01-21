@@ -1,8 +1,10 @@
 #include <sge/nodes/position.hpp>
 
+using namespace std;
+
 namespace sge
 {
-    std::vector<std::string> PositionNode::mro() const
+    vector<string> PositionNode::mro() const
     {
         auto _mro = Node::mro();
         _mro.push_back("PositionNode");
@@ -26,17 +28,27 @@ namespace sge
         _pos.y = y;
     }
 
+    int PositionNode::get_rotation() const
+    {
+        return _angle;
+    }
+
+    void PositionNode::set_rotation(int angle)
+    {
+        _angle = (_angle + angle) % 360;
+    }
+
     SDL_Point PositionNode::get_absolute_pos()
     {
         SDL_Point abs_pos = {0, 0};
 
-        std::shared_ptr<Node> node = shared_from_this();
+        shared_ptr<Node> node = shared_from_this();
 
         while (node != nullptr)
         {
             if (node->is_of("PositionNode"))
             {
-                auto pnode = std::static_pointer_cast<PositionNode>(node);
+                auto pnode = static_pointer_cast<PositionNode>(node);
                 SDL_Point pos = pnode->get_pos();
                 abs_pos.x += pos.x;
                 abs_pos.y += pos.y;
@@ -46,5 +58,25 @@ namespace sge
         }
 
         return abs_pos;
+    }
+
+    int PositionNode::get_absolute_rotation()
+    {
+        int abs_angle = 0;
+
+        shared_ptr<Node> node = shared_from_this();
+
+        while (node != nullptr)
+        {
+            if (node->is_of("PositionNode"))
+            {
+                auto pnode = static_pointer_cast<PositionNode>(node);
+                abs_angle += pnode->get_rotation();
+            }
+
+            node = node->get_parent();
+        }
+
+        return abs_angle % 360;
     }
 }
