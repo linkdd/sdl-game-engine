@@ -7,7 +7,7 @@ namespace sge
 {
     Shape::Shape() {}
 
-    Shape::Shape(const vector<Vector> &vertices) : vertices(vertices)
+    Shape::Shape(const vector<Vector> &_vertices) : vertices(_vertices)
     {
         Vector barycenter(0, 0);
 
@@ -32,15 +32,15 @@ namespace sge
 
         barycenter = barycenter / (float) vertices.size();
 
-        for (auto &vertex : vertices)
+        for (auto it = vertices.begin(); it != vertices.end(); it++)
         {
-            vertex = vertex - barycenter;
+            *it = *it - barycenter;
         }
 
-        for (auto &edge : edges)
+        for (auto it = edges.begin(); it != edges.end(); it++)
         {
-            edge.start = edge.start - barycenter;
-            edge.end = edge.end - barycenter;
+            (*it).start = (*it).start - barycenter;
+            (*it).end = (*it).end - barycenter;
         }
     }
 

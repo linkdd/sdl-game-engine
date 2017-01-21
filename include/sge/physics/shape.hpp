@@ -23,7 +23,7 @@ namespace sge
     {
         public:
             Shape();
-            Shape(const std::vector<Vector> &vertices);
+            Shape(const std::vector<Vector> &_vertices);
 
             Shape translate(const Vector &v) const;
             Shape rotate(float angle) const;
