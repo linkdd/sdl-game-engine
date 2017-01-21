@@ -24,7 +24,7 @@ namespace sge
 
         private:
             SDL_Point _pos;
-            int _angle;
+            int _angle = 0;
     };
 }
 

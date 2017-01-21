@@ -14,12 +14,14 @@ namespace sge
             virtual std::vector<std::string> mro() const;
 
             void set_sprite(const std::string &assetname);
+            void flip(SDL_RendererFlip flip);
 
             virtual void ready();
             virtual void draw();
 
         private:
             std::shared_ptr<Image> sprite;
+            SDL_RendererFlip _flip = SDL_FLIP_NONE;
     };
 }
 

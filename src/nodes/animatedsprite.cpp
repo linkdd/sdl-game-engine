@@ -45,6 +45,11 @@ namespace sge
         }
     }
 
+    void AnimatedSpriteNode::flip(SDL_RendererFlip flip)
+    {
+        _flip = (SDL_RendererFlip) (_flip | flip);
+    }
+
     void AnimatedSpriteNode::ready()
     {
         current_frame = 0;
@@ -88,6 +93,7 @@ namespace sge
 
         json &nfo = info->asset();
         SDL_Point pos = get_absolute_pos();
+        int angle = get_absolute_rotation();
         SDL_Texture *t = SDL_CreateTextureFromSurface(engine.renderer(), spritesheet->asset());
         bool error = false;
 
@@ -115,7 +121,7 @@ namespace sge
             dest.w = sw;
             dest.h = sh;
 
-            if (SDL_RenderCopy(engine.renderer(), t, &src, &dest) != 0)
+            if (SDL_RenderCopyEx(engine.renderer(), t, &src, &dest, angle, &pos, _flip) != 0)
             {
                 error = true;
             }

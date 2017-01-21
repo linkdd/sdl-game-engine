@@ -15,14 +15,16 @@ namespace sge
             virtual std::vector<std::string> mro() const;
 
             void set_animation(const std::string &assetname);
+            void flip(SDL_RendererFlip flip);
 
             virtual void ready();
             virtual void process(Uint32 delta);
             virtual void draw();
 
         private:
-            int current_frame;
-            Uint32 elapsed;
+            SDL_RendererFlip _flip = SDL_FLIP_NONE;
+            int current_frame = 0;
+            Uint32 elapsed = 0;
             std::shared_ptr<Image> spritesheet;
             std::shared_ptr<JSON> info;
     };

@@ -2,16 +2,18 @@
 #include <sge/engine.hpp>
 #include <iostream>
 
+using namespace std;
+
 namespace sge
 {
-    std::vector<std::string> SpriteNode::mro() const
+    vector<string> SpriteNode::mro() const
     {
         auto _mro = PositionNode::mro();
         _mro.push_back("SpriteNode");
         return _mro;
     }
 
-    void SpriteNode::set_sprite(const std::string &assetname)
+    void SpriteNode::set_sprite(const string &assetname)
     {
         ImageDescriptor d(assetname);
 
@@ -24,6 +26,11 @@ namespace sge
             sprite.reset();
             sprite = engine.assets().load<Image>(d);
         }
+    }
+
+    void SpriteNode::flip(SDL_RendererFlip flip)
+    {
+        _flip = (SDL_RendererFlip) (_flip | flip);
     }
 
     void SpriteNode::ready()
@@ -43,7 +50,8 @@ namespace sge
 
         if (t != NULL)
         {
-            SDL_Point pos = get_pos();
+            SDL_Point pos = get_absolute_pos();
+            int angle = get_absolute_rotation();
             SDL_Rect dest;
 
             int w = sprite->asset()->w;
@@ -54,7 +62,7 @@ namespace sge
             dest.w = w;
             dest.h = h;
 
-            if (SDL_RenderCopy(engine.renderer(), t, NULL, &dest) != 0)
+            if (SDL_RenderCopyEx(engine.renderer(), t, NULL, &dest, angle, &pos, _flip) != 0)
             {
                 error = true;
             }
@@ -68,7 +76,7 @@ namespace sge
 
         if (error)
         {
-            std::cerr << "[SpriteNode][ERROR] SDL: " << SDL_GetError() << std::endl;
+            cerr << "[SpriteNode][ERROR] SDL: " << SDL_GetError() << endl;
         }
     }
 }
