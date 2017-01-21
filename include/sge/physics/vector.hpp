@@ -52,6 +52,14 @@ namespace sge
             return v * (dot(v) / v.magnitude_squared());
         }
 
+        Vector rotate(float angle) const
+        {
+            return Vector(
+                x * cos(angle) - y * sin(angle),
+                x * sin(angle) + y * cos(angle)
+            );
+        }
+
         Vector operator+(const Vector &other) const
         {
             return Vector(x + other.x, y + other.y);

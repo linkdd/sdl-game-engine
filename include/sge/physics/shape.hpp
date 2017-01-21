@@ -26,6 +26,7 @@ namespace sge
             Shape(const std::vector<Vector> &vertices);
 
             Shape translate(const Vector &v) const;
+            Shape rotate(float angle) const;
             std::vector<float> projection(const Vector &v) const;
             bool overlap(const Shape &other, Vector &mtv) const;
 

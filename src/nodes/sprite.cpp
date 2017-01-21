@@ -46,10 +46,13 @@ namespace sge
             SDL_Point pos = get_pos();
             SDL_Rect dest;
 
-            dest.x = pos.x;
-            dest.y = pos.y;
-            dest.w = sprite->asset()->w;
-            dest.h = sprite->asset()->h;
+            int w = sprite->asset()->w;
+            int h = sprite->asset()->h;
+
+            dest.x = pos.x - w / 2;
+            dest.y = pos.y - h / 2;
+            dest.w = w;
+            dest.h = h;
 
             if (SDL_RenderCopy(engine.renderer(), t, NULL, &dest) != 0)
             {

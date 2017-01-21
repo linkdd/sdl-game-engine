@@ -46,19 +46,26 @@ namespace sge
 
     Shape Shape::translate(const Vector &v) const
     {
-        Shape result;
+        vector<Vector> t_vertices;
 
         for (auto vertex : vertices)
         {
-            result.vertices.push_back(vertex + v);
+            t_vertices.push_back(vertex + v);
         }
 
-        for (auto edge : edges)
+        return Shape(t_vertices);
+    }
+
+    Shape Shape::rotate(float angle) const
+    {
+        vector<Vector> r_vertices;
+
+        for (auto vertex : vertices)
         {
-            result.edges.push_back(Edge(edge.start + v, edge.end + v));
+            r_vertices.push_back(vertex.rotate(angle));
         }
 
-        return result;
+        return Shape(r_vertices);
     }
 
     vector<float> Shape::projection(const Vector &v) const

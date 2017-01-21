@@ -38,8 +38,8 @@ namespace sge
                         SDL_Point box = a_bbnode->get_box();
 
                         SDL_Rect a_absbox;
-                        a_absbox.x = pos.x;
-                        a_absbox.y = pos.y;
+                        a_absbox.x = pos.x - box.x / 2;
+                        a_absbox.y = pos.y - box.y / 2;
                         a_absbox.w = box.x;
                         a_absbox.h = box.y;
 
@@ -50,8 +50,8 @@ namespace sge
                             SDL_Point obox = b_bbnode->get_box();
 
                             SDL_Rect b_absbox;
-                            b_absbox.x = opos.x;
-                            b_absbox.y = opos.y;
+                            b_absbox.x = opos.x - obox.x / 2;
+                            b_absbox.y = opos.y - obox.y / 2;
                             b_absbox.w = obox.x;
                             b_absbox.h = obox.y;
 

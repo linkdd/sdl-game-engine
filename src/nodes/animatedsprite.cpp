@@ -110,8 +110,8 @@ namespace sge
             src.h = sh;
 
             SDL_Rect dest;
-            dest.x = pos.x;
-            dest.y = pos.y;
+            dest.x = pos.x - sw / 2;
+            dest.y = pos.y - sh / 2;
             dest.w = sw;
             dest.h = sh;
 
