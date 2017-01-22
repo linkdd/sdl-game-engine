@@ -45,7 +45,7 @@ namespace sge
         return root;
     }
 
-    shared_ptr<Node> Node::get_parent()
+    shared_ptr<Node> Node::get_parent() const
     {
         return parent.lock();
     }
@@ -112,7 +112,7 @@ namespace sge
         }
     }
 
-    vector<shared_ptr<Node>> Node::find_children_by_type(const vector<string> &types)
+    vector<shared_ptr<Node>> Node::find_children_by_type(const vector<string> &types) const
     {
         vector<shared_ptr<Node>> result;
 

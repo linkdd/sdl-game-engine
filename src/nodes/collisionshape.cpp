@@ -17,11 +17,12 @@ namespace sge
         _shape = shape;
     }
 
-    Shape CollisionShapeNode::get_shape()
+    Shape CollisionShapeNode::get_shape() const
     {
         Vector pos(get_pos());
         Vector abspos(get_absolute_pos());
+        Vector barycenter = _shape.barycenter();
 
-        return _shape.translate(abspos - pos).rotate(get_absolute_rotation());
+        return _shape.rotate(get_absolute_rotation()).translate(abspos - pos - barycenter);
     }
 }

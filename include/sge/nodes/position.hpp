@@ -19,8 +19,8 @@ namespace sge
             int get_rotation() const;
             void set_rotation(int angle);
 
-            SDL_Point get_absolute_pos();
-            int get_absolute_rotation();
+            SDL_Point get_absolute_pos() const;
+            int get_absolute_rotation() const;
 
         private:
             SDL_Point _pos;

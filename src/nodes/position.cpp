@@ -38,17 +38,17 @@ namespace sge
         _angle = (_angle + angle) % 360;
     }
 
-    SDL_Point PositionNode::get_absolute_pos()
+    SDL_Point PositionNode::get_absolute_pos() const
     {
         SDL_Point abs_pos = {0, 0};
 
-        shared_ptr<Node> node = shared_from_this();
+        shared_ptr<const Node> node = shared_from_this();
 
         while (node != nullptr)
         {
             if (node->is_of("PositionNode"))
             {
-                auto pnode = static_pointer_cast<PositionNode>(node);
+                auto pnode = static_pointer_cast<const PositionNode>(node);
                 SDL_Point pos = pnode->get_pos();
                 abs_pos.x += pos.x;
                 abs_pos.y += pos.y;
@@ -60,17 +60,17 @@ namespace sge
         return abs_pos;
     }
 
-    int PositionNode::get_absolute_rotation()
+    int PositionNode::get_absolute_rotation() const
     {
         int abs_angle = 0;
 
-        shared_ptr<Node> node = shared_from_this();
+        shared_ptr<const Node> node = shared_from_this();
 
         while (node != nullptr)
         {
             if (node->is_of("PositionNode"))
             {
-                auto pnode = static_pointer_cast<PositionNode>(node);
+                auto pnode = static_pointer_cast<const PositionNode>(node);
                 abs_angle += pnode->get_rotation();
             }
 
