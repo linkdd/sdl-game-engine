@@ -34,7 +34,7 @@ namespace sge
                         bool overlap = false;
 
                         auto a_bbnode = static_pointer_cast<BoundingBoxNode>(bbnode);
-                        SDL_Point pos = a_bbnode->get_absolute_pos();
+                        SDL_Point pos = a_bbnode->get_absolute_pos().as_point();
                         SDL_Point box = a_bbnode->get_box();
 
                         SDL_Rect a_absbox;
@@ -46,7 +46,7 @@ namespace sge
                         for (auto obbnode : b_bbnodes)
                         {
                             auto b_bbnode = static_pointer_cast<BoundingBoxNode>(obbnode);
-                            SDL_Point opos = b_bbnode->get_absolute_pos();
+                            SDL_Point opos = b_bbnode->get_absolute_pos().as_point();
                             SDL_Point obox = b_bbnode->get_box();
 
                             SDL_Rect b_absbox;

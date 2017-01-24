@@ -2,7 +2,7 @@
 #define __SGE_COLLISION_SHAPE_NODE_HPP
 
 #include <sge/nodes/position.hpp>
-#include <sge/physics/shape.hpp>
+#include <sge/utils/shape.hpp>
 
 namespace sge
 {

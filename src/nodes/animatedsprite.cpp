@@ -92,48 +92,32 @@ namespace sge
         }
 
         json &nfo = info->asset();
-        SDL_Point pos = get_absolute_pos();
-        int angle = get_absolute_rotation();
-        SDL_Texture *t = SDL_CreateTextureFromSurface(engine.renderer(), spritesheet->asset());
-        bool error = false;
+        SDL_Point pos = get_absolute_pos().as_point();
+        float angle = get_absolute_rotation();
 
-        if (t != NULL)
-        {
-            ostringstream spath;
-            spath << "/frames/" << current_frame;
-            string path = spath.str();
+        ostringstream spath;
+        spath << "/frames/" << current_frame;
+        string path = spath.str();
 
-            int sx = nfo[json::json_pointer(path + "/0")];
-            int sy = nfo[json::json_pointer(path + "/1")];
-            int sw = nfo["/spritesheet/width"_json_pointer];
-            int sh = nfo["/spritesheet/height"_json_pointer];
-            int ss = nfo["/spritesheet/spacing"_json_pointer];
+        int sx = nfo[json::json_pointer(path + "/0")];
+        int sy = nfo[json::json_pointer(path + "/1")];
+        int sw = nfo["/spritesheet/width"_json_pointer];
+        int sh = nfo["/spritesheet/height"_json_pointer];
+        int ss = nfo["/spritesheet/spacing"_json_pointer];
 
-            SDL_Rect src;
-            src.x = sx * (sw + ss);
-            src.y = sy * (sh + ss);
-            src.w = sw;
-            src.h = sh;
+        SDL_Rect src;
+        src.x = sx * (sw + ss);
+        src.y = sy * (sh + ss);
+        src.w = sw;
+        src.h = sh;
 
-            SDL_Rect dest;
-            dest.x = pos.x - sw / 2;
-            dest.y = pos.y - sh / 2;
-            dest.w = sw;
-            dest.h = sh;
+        SDL_Rect dest;
+        dest.x = pos.x - sw / 2;
+        dest.y = pos.y - sh / 2;
+        dest.w = sw;
+        dest.h = sh;
 
-            if (SDL_RenderCopyEx(engine.renderer(), t, &src, &dest, angle, &pos, _flip) != 0)
-            {
-                error = true;
-            }
-
-            SDL_DestroyTexture(t);
-        }
-        else
-        {
-            error = true;
-        }
-
-        if (error)
+        if (!engine.renderer().draw_image(spritesheet, src, dest, angle, pos, _flip))
         {
             cerr << "[AnimatedSpriteNode][ERROR] SDL: " << SDL_GetError() << endl;
         }

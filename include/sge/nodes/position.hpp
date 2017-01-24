@@ -2,6 +2,8 @@
 #define __SGE_POSITION_NODE_HPP
 
 #include <sge/node.hpp>
+#include <sge/utils/matrix.hpp>
+#include <sge/utils/vector.hpp>
 
 namespace sge
 {
@@ -12,19 +14,28 @@ namespace sge
         public:
             virtual std::vector<std::string> mro() const;
 
-            SDL_Point get_pos() const;
-            void set_pos(const SDL_Point &pos);
+            Vector get_pos() const;
+            void set_pos(const Vector &pos);
             void set_pos(int x, int y);
 
-            int get_rotation() const;
-            void set_rotation(int angle);
+            float get_rotation() const;
+            void set_rotation(float angle);
 
-            SDL_Point get_absolute_pos() const;
-            int get_absolute_rotation() const;
+            Vector get_absolute_pos() const;
+            float get_absolute_rotation() const;
+
+            Matrix<3,3> get_pm_transform() const;
 
         private:
-            SDL_Point _pos;
-            int _angle = 0;
+            void pre_multiply_transform();
+
+        private:
+            Vector _pos;
+            float _angle = 0;
+
+            Matrix<3,3> translation;
+            Matrix<3,3> rotation;
+            Matrix<3,3> pm_transform;
     };
 }
 

@@ -31,13 +31,15 @@ set(
     ${sge_SOURCE_DIR}/include/sge/engine.hpp
     ${sge_SOURCE_DIR}/include/sge/error.hpp
     ${sge_SOURCE_DIR}/include/sge/init.hpp
+    ${sge_SOURCE_DIR}/include/sge/renderer.hpp
     ${sge_SOURCE_DIR}/include/sge/mainloop.hpp
     ${sge_SOURCE_DIR}/include/sge/node.hpp
     ${sge_SOURCE_DIR}/include/sge/scenemgr.hpp
-    ${sge_SOURCE_DIR}/include/sge/physics/manager.hpp
-    ${sge_SOURCE_DIR}/include/sge/physics/vector.hpp
-    ${sge_SOURCE_DIR}/include/sge/physics/shape.hpp
     ${sge_SOURCE_DIR}/include/sge/physics/manifold.hpp
+    ${sge_SOURCE_DIR}/include/sge/physics/manager.hpp
+    ${sge_SOURCE_DIR}/include/sge/utils/vector.hpp
+    ${sge_SOURCE_DIR}/include/sge/utils/matrix.hpp
+    ${sge_SOURCE_DIR}/include/sge/utils/shape.hpp
     ${sge_SOURCE_DIR}/include/sge/sge.hpp
     ${sge_SOURCE_DIR}/include/sge/timer.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/position.hpp
@@ -66,11 +68,13 @@ set(
     ${sge_SOURCE_DIR}/src/engine.cpp
     ${sge_SOURCE_DIR}/src/init.cpp
     ${sge_SOURCE_DIR}/src/initializers
+    ${sge_SOURCE_DIR}/src/renderer.cpp
     ${sge_SOURCE_DIR}/src/mainloop.cpp
     ${sge_SOURCE_DIR}/src/node.cpp
     ${sge_SOURCE_DIR}/src/scenemgr.cpp
-    ${sge_SOURCE_DIR}/src/physics/shape.cpp
     ${sge_SOURCE_DIR}/src/physics/manager.cpp
+    ${sge_SOURCE_DIR}/src/utils/vector.cpp
+    ${sge_SOURCE_DIR}/src/utils/shape.cpp
     ${sge_SOURCE_DIR}/src/nodes/position.cpp
     ${sge_SOURCE_DIR}/src/nodes/sprite.cpp
     ${sge_SOURCE_DIR}/src/nodes/animatedsprite.cpp

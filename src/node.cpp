@@ -20,7 +20,7 @@ namespace sge
         return {"Node"};
     }
 
-    bool Node::is_of(const std::string &nodetype) const
+    bool Node::is_of(const string &nodetype) const
     {
         for (auto &_nodetype : mro())
         {
@@ -136,6 +136,24 @@ namespace sge
         }
 
         return result;
+    }
+    
+    shared_ptr<Node> Node::find_first_ancestor_by_type(const string &type) const
+    {
+        shared_ptr<Node> result = get_parent();
+
+        if (result == nullptr)
+        {
+            return nullptr;
+        }
+        else if (result->is_of(type))
+        {
+            return result;
+        }
+        else
+        {
+            return result->find_first_ancestor_by_type(type);
+        }
     }
 
     void Node::add_child(shared_ptr<Node> child, bool reparent)

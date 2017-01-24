@@ -2,7 +2,7 @@
 #define __SGE_MANIFOLD_HPP
 
 #include <sge/node.hpp>
-#include <sge/physics/vector.hpp>
+#include <sge/utils/vector.hpp>
 #include <SDL.h>
 
 namespace sge

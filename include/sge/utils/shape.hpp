@@ -1,7 +1,7 @@
 #ifndef __SGE_SHAPE_HPP
 #define __SGE_SHAPE_HPP
 
-#include <sge/physics/vector.hpp>
+#include <sge/utils/vector.hpp>
 #include <vector>
 
 namespace sge
@@ -30,6 +30,8 @@ namespace sge
             Shape rotate(float angle) const;
             std::vector<float> projection(const Vector &v) const;
             bool overlap(const Shape &other, Vector &mtv) const;
+
+            std::vector<Edge> get_edges() const;
 
         private:
             std::vector<Vector> vertices;

@@ -45,36 +45,19 @@ namespace sge
             return;
         }
 
-        SDL_Texture *t = SDL_CreateTextureFromSurface(engine.renderer(), sprite->asset());
-        bool error = false;
+        SDL_Point pos = get_absolute_pos().as_point();
+        int angle = get_absolute_rotation();
+        SDL_Rect dest;
 
-        if (t != NULL)
-        {
-            SDL_Point pos = get_absolute_pos();
-            int angle = get_absolute_rotation();
-            SDL_Rect dest;
+        int w = sprite->asset()->w;
+        int h = sprite->asset()->h;
 
-            int w = sprite->asset()->w;
-            int h = sprite->asset()->h;
+        dest.x = pos.x - w / 2;
+        dest.y = pos.y - h / 2;
+        dest.w = w;
+        dest.h = h;
 
-            dest.x = pos.x - w / 2;
-            dest.y = pos.y - h / 2;
-            dest.w = w;
-            dest.h = h;
-
-            if (SDL_RenderCopyEx(engine.renderer(), t, NULL, &dest, angle, &pos, _flip) != 0)
-            {
-                error = true;
-            }
-
-            SDL_DestroyTexture(t);
-        }
-        else
-        {
-            error = true;
-        }
-
-        if (error)
+        if (!engine.renderer().draw_image(sprite, dest, angle, pos, _flip))
         {
             cerr << "[SpriteNode][ERROR] SDL: " << SDL_GetError() << endl;
         }

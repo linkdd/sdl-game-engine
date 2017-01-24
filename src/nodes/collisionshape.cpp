@@ -19,10 +19,9 @@ namespace sge
 
     Shape CollisionShapeNode::get_shape() const
     {
-        Vector pos(get_pos());
         Vector abspos(get_absolute_pos());
         Vector barycenter = _shape.barycenter();
 
-        return _shape.rotate(get_absolute_rotation()).translate(abspos - pos - barycenter);
+        return _shape.translate(-barycenter).rotate(get_absolute_rotation()).translate(abspos);
     }
 }

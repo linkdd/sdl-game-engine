@@ -15,6 +15,14 @@ namespace sge
         Vector(float x, float y) : x(x), y(y) {}
         Vector(SDL_Point p) : x(p.x), y(p.y) {}
 
+        SDL_Point as_point() const
+        {
+            SDL_Point result;
+            result.x = x;
+            result.y = y;
+            return result;
+        }
+
         Vector &operator=(const Vector &other)
         {
             x = other.x;
@@ -80,6 +88,10 @@ namespace sge
             return Vector(x / n, y / n);
         }
     };
+
+    Vector operator*(int i, const Vector &v);
+    Vector operator*(float f, const Vector &v);
+    Vector operator-(const Vector &v);
 }
 
 #endif /* __SGE_VECTOR_HPP */

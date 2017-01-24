@@ -1,4 +1,4 @@
-#include <sge/physics/shape.hpp>
+#include <sge/utils/shape.hpp>
 #include <algorithm>
 
 using namespace std;
@@ -121,5 +121,10 @@ namespace sge
         }
 
         return true;
+    }
+
+    vector<Edge> Shape::get_edges() const
+    {
+        return edges;
     }
 }

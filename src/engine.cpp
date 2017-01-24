@@ -39,6 +39,8 @@ namespace sge
             throw e;
         }
 
+        _renderer.set_renderer(_sdl_window_init->renderer());
+
         _assets.register_locator(_asset_file_locator);
         _assets.register_loader(_asset_font_loader, {"ttf"});
         _assets.register_loader(_asset_json_loader, {"json"});
@@ -64,9 +66,9 @@ namespace sge
         _mloop.add_event_watcher([&](SDL_Event *evt) { return _scmgr.event_handler(evt); });
         _mloop.queue_process_handler([&](Uint32 delta) { _scmgr.process_handler(delta); });
         _mloop.queue_process_handler([&](Uint32 delta) { _pmgr.process_handler(delta); });
-        _mloop.queue_draw_handler([&]() { SDL_RenderClear(renderer()); });
+        _mloop.queue_draw_handler([&]() { renderer().clear(); });
         _mloop.queue_draw_handler([&]() { _scmgr.draw_handler(); });
-        _mloop.queue_draw_handler([&]() { SDL_RenderPresent(renderer()); });
+        _mloop.queue_draw_handler([&]() { renderer().present(); });
     }
 
     Engine::~Engine()
@@ -114,8 +116,8 @@ namespace sge
         return _sdl_window_init->window();
     }
 
-    SDL_Renderer *Engine::renderer() const
+    Renderer &Engine::renderer()
     {
-        return _sdl_window_init->renderer();
+        return _renderer;
     }
 }

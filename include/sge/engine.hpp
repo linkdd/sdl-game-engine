@@ -9,6 +9,7 @@
 #include <sge/initializers/sdl-fonts.hpp>
 #include <sge/initializers/sdl-window.hpp>
 
+#include <sge/renderer.hpp>
 #include <sge/mainloop.hpp>
 #include <sge/actionmgr.hpp>
 #include <sge/scenemgr.hpp>
@@ -39,7 +40,7 @@ namespace sge
             PhysicManager &physics();
 
             SDL_Window *window() const;
-            SDL_Renderer *renderer() const;
+            Renderer &renderer();
 
         private:
             Configuration _configuration;
@@ -50,6 +51,7 @@ namespace sge
             std::shared_ptr<SDLFontsInitializer> _sdl_fonts_init;
             std::shared_ptr<SDLWindowInitializer> _sdl_window_init;
 
+            Renderer _renderer;
             MainLoop _mloop;
             ActionManager _amgr;
             SceneManager _scmgr;

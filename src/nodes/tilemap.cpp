@@ -85,70 +85,58 @@ namespace sge
             return;
         }
 
-        SDL_Surface *tset = tileset->asset();
         json &tmap = tilemap->asset();
 
-        SDL_Texture *tex = SDL_CreateTextureFromSurface(engine.renderer(), tset);
+        SDL_Point pos = get_absolute_pos().as_point();
 
-        if (tex != NULL)
+        int mw = tmap["/map/width"_json_pointer];
+        int mh = tmap["/map/height"_json_pointer];
+        int tw = tmap["/tileset/width"_json_pointer];
+        int th = tmap["/tileset/height"_json_pointer];
+        int ts = tmap["/tileset/spacing"_json_pointer];
+
+        SDL_Rect tileviewport;
+        tileviewport.w = min(mw, viewport.w / tw + (viewport.w % tw ? 1 : 0));
+        tileviewport.h = min(mh, viewport.h / th + (viewport.h % th ? 1 : 0));
+        tileviewport.x = min(mw - tileviewport.w, max(0, viewport.x / tw));
+        tileviewport.y = min(mh - tileviewport.h, max(0, viewport.y / th));
+
+        for (int x = 0; x < tileviewport.w; x++)
         {
-            SDL_Point pos = get_absolute_pos();
-
-            int mw = tmap["/map/width"_json_pointer];
-            int mh = tmap["/map/height"_json_pointer];
-            int tw = tmap["/tileset/width"_json_pointer];
-            int th = tmap["/tileset/height"_json_pointer];
-            int ts = tmap["/tileset/spacing"_json_pointer];
-
-            SDL_Rect tileviewport;
-            tileviewport.w = min(mw, viewport.w / tw + (viewport.w % tw ? 1 : 0));
-            tileviewport.h = min(mh, viewport.h / th + (viewport.h % th ? 1 : 0));
-            tileviewport.x = min(mw - tileviewport.w, max(0, viewport.x / tw));
-            tileviewport.y = min(mh - tileviewport.h, max(0, viewport.y / th));
-
-            for(int x = 0; x < tileviewport.w; x++)
+            for (int y = 0; y < tileviewport.h; y++)
             {
-                for(int y = 0; y < tileviewport.h; y++)
+                ostringstream spath;
+                spath << "/map/tiles/" << (y + tileviewport.y) << "/" << (x + tileviewport.x);
+                string path = spath.str();
+
+                string tile = tmap[json::json_pointer(path)];
+
+                if (!tile.empty())
                 {
-                    ostringstream spath;
-                    spath << "/map/tiles/" << (y + tileviewport.y) << "/" << (x + tileviewport.x);
-                    string path = spath.str();
+                    path = "/tiles/" + tile + "/0";
+                    int tilex = tmap[json::json_pointer(path)];
 
-                    string tile = tmap[json::json_pointer(path)];
+                    path = "/tiles/" + tile + "/1";
+                    int tiley = tmap[json::json_pointer(path)];
 
-                    if (!tile.empty())
+                    SDL_Rect src;
+                    src.x = tilex * (ts + tw);
+                    src.y = tiley * (ts + th);
+                    src.w = tw;
+                    src.h = th;
+
+                    SDL_Rect dest;
+                    dest.x = pos.x + x * tw;
+                    dest.y = pos.y + y * th;
+                    dest.w = tw;
+                    dest.h = th;
+
+                    if (!engine.renderer().draw_image(tileset, src, dest))
                     {
-                        path = "/tiles/" + tile + "/0";
-                        int tilex = tmap[json::json_pointer(path)];
-
-                        path = "/tiles/" + tile + "/1";
-                        int tiley = tmap[json::json_pointer(path)];
-
-                        SDL_Rect src;
-                        src.x = tilex * (ts + tw);
-                        src.y = tiley * (ts + th);
-                        src.w = tw;
-                        src.h = th;
-
-                        SDL_Rect dest;
-                        dest.x = pos.x + x * tw;
-                        dest.y = pos.y + y * th;
-                        dest.w = tw;
-                        dest.h = th;
-
-                        if (SDL_RenderCopy(engine.renderer(), tex, &src, &dest) != 0)
-                        {
-                            cerr << "[TileMapNode][ERROR] SDL: " << SDL_GetError() << endl; 
-                        }
+                        cerr << "[TileMapNode][ERROR] SDL: " << SDL_GetError() << endl; 
                     }
                 }
             }
-
-            SDL_DestroyTexture(tex);
-        }
-        else
-        {
-            cerr << "[TileMapNode][ERROR] SDL: " << SDL_GetError() << endl;
         }
     }
 }
