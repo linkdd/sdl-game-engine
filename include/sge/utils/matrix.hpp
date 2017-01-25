@@ -234,6 +234,34 @@ namespace sge
 
                 return result;
             }
+
+            template <int BROWS, int BCOLS>
+            bool operator==(const Matrix<BROWS, BCOLS> &m) const
+            {
+                if (ROWS == BROWS && COLS == BCOLS)
+                {
+                    for (int i = 0; i < ROWS; i++)
+                    {
+                        for (int j = 0; j < COLS; j++)
+                        {
+                            if (coefs[i][j] != m(i, j))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            template <int BROWS, int BCOLS>
+            bool operator!=(const Matrix<BROWS, BCOLS> &m) const
+            {
+                return !(*this == m);
+            }
     };
 
     template <int ROWS, int COLS>

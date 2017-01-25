@@ -17,7 +17,7 @@ namespace sge
         _shape = shape;
     }
 
-    Shape CollisionShapeNode::get_shape() const
+    Shape CollisionShapeNode::get_shape()
     {
         Vector abspos(get_absolute_pos());
         Vector barycenter = _shape.barycenter();

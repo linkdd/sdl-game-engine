@@ -21,13 +21,13 @@ namespace sge
             float get_rotation() const;
             void set_rotation(float angle);
 
-            Vector get_absolute_pos() const;
+            Vector get_absolute_pos();
             float get_absolute_rotation() const;
 
             Matrix<3,3> get_pm_transform() const;
 
         private:
-            void pre_multiply_transform();
+            void premultiply_pos();
 
         private:
             Vector _pos;
@@ -35,7 +35,9 @@ namespace sge
 
             Matrix<3,3> translation;
             Matrix<3,3> rotation;
-            Matrix<3,3> pm_transform;
+            Matrix<3,3> local_pm_transform;
+            Matrix<3,3> parent_pm_transform;
+            Vector pm_pos;
     };
 }
 

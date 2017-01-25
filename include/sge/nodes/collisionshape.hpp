@@ -14,7 +14,7 @@ namespace sge
             virtual std::vector<std::string> mro() const;
 
             void set_shape(const Shape &shape);
-            Shape get_shape() const;
+            Shape get_shape();
 
         private:
             Shape _shape;

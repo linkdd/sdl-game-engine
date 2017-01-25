@@ -33,7 +33,8 @@ namespace sge
             {0.0, 0.0, 1.0}
         };
 
-        pre_multiply_transform();
+        local_pm_transform = translation * rotation;
+        premultiply_pos();
     }
 
     float PositionNode::get_rotation() const
@@ -51,36 +52,45 @@ namespace sge
             {0.0, 0.0, 1.0}
         };
 
-        pre_multiply_transform();
+        local_pm_transform = translation * rotation;
+        premultiply_pos();
     }
 
     Matrix<3,3> PositionNode::get_pm_transform() const
     {
-        return pm_transform;
+        return local_pm_transform;
     }
 
-    void PositionNode::pre_multiply_transform()
-    {
-        pm_transform = rotation * translation;
-        auto parent = find_first_ancestor_by_type("PositionNode");
-
-        if (parent != nullptr)
-        {
-            auto pnode = static_pointer_cast<PositionNode>(parent);
-            pm_transform = pnode->get_pm_transform() * pm_transform;
-        }
-    }
-
-    Vector PositionNode::get_absolute_pos() const
+    void PositionNode::premultiply_pos()
     {
         Matrix<3,1> origin = {
             {0.0},
             {0.0},
             {1.0}
         };
-        Matrix<3,1> transformed = pm_transform * origin;
+        Matrix<3,1> transformed = parent_pm_transform * local_pm_transform * origin;
+        pm_pos = Vector(transformed(0, 0), transformed(1, 0));
+    }
 
-        return Vector(transformed(0, 0), transformed(1, 0));
+    Vector PositionNode::get_absolute_pos()
+    {
+        Matrix<3,3> current_parent_pm_transform;
+
+        auto parent = find_first_ancestor_by_type("PositionNode");
+
+        if (parent != nullptr)
+        {
+            auto pnode = static_pointer_cast<PositionNode>(parent);
+            current_parent_pm_transform = pnode->get_pm_transform();
+        }
+
+        if (current_parent_pm_transform != parent_pm_transform)
+        {
+            parent_pm_transform = current_parent_pm_transform;
+            premultiply_pos();
+        }
+
+        return pm_pos;
     }
 
     float PositionNode::get_absolute_rotation() const
