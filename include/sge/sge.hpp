@@ -9,5 +9,7 @@
 #include <sge/nodes/animatedsprite.hpp>
 #include <sge/nodes/tilemap.hpp>
 #include <sge/nodes/boundingbox.hpp>
+#include <sge/nodes/collisionshape.hpp>
+#include <sge/nodes/body.hpp>
 
 #endif /* __SGE_HPP */
