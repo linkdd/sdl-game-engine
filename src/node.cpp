@@ -209,7 +209,7 @@ namespace sge
                 get_parent()->add_child(shared_from_this(), false);
             }
 
-            if (is_in_tree())
+            if (!is_in_tree())
             {
                 send_enter_tree();
             }
