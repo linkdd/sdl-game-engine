@@ -185,21 +185,27 @@ namespace sge
 
     void Node::reparent(shared_ptr<Node> newparent, bool remove, bool add)
     {
-        if (remove && get_parent() != nullptr)
+        if (get_parent() != nullptr)
         {
             if (is_in_tree())
             {
                 send_exit_tree();
             }
 
-            get_parent()->remove_child(shared_from_this(), false);
+            if (remove)
+            {
+                get_parent()->remove_child(shared_from_this(), false);
+            }
         }
 
         parent = newparent;
 
-        if (add && get_parent() != nullptr)
+        if (get_parent() != nullptr)
         {
-            get_parent()->add_child(shared_from_this(), false);
+            if (add)
+            {
+                get_parent()->add_child(shared_from_this(), false);
+            }
 
             if (is_in_tree())
             {
