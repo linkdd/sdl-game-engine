@@ -83,21 +83,28 @@ namespace sge
             auto b_snodes = manifold.b->find_children_by_type({"CollisionShapeNode"});
             bool collision = false;
 
-            for (auto a_snode : a_snodes)
+            if (a_snodes.empty() || b_snodes.empty())
             {
-                auto a_shapenode = static_pointer_cast<CollisionShapeNode>(a_snode);
-                Shape a_s = a_shapenode->get_shape();
-
-                for (auto b_snode : b_snodes)
+                collision = true;
+            }
+            else
+            {
+                for (auto a_snode : a_snodes)
                 {
-                    auto b_shapenode = static_pointer_cast<CollisionShapeNode>(b_snode);
-                    Shape b_s = b_shapenode->get_shape();
-                    Vector mtv;
+                    auto a_shapenode = static_pointer_cast<CollisionShapeNode>(a_snode);
+                    Shape a_s = a_shapenode->get_shape();
 
-                    if (a_s.overlap(b_s, mtv))
+                    for (auto b_snode : b_snodes)
                     {
-                        manifold.mtv = manifold.mtv + mtv;
-                        collision = true;
+                        auto b_shapenode = static_pointer_cast<CollisionShapeNode>(b_snode);
+                        Shape b_s = b_shapenode->get_shape();
+                        Vector mtv;
+
+                        if (a_s.overlap(b_s, mtv))
+                        {
+                            manifold.mtv = manifold.mtv + mtv;
+                            collision = true;
+                        }
                     }
                 }
             }
