@@ -13,7 +13,7 @@ namespace sge
 {
     PhysicManager::PhysicManager(Engine &engine) : engine(engine) {}
 
-    void PhysicManager::process_handler(Uint32 delta)
+    void PhysicManager::process_handler(Uint32)
     {
         auto root_node = engine.scenes().get_scene_node();
         auto nodes = root_node->find_children_by_type({"BodyNode"});

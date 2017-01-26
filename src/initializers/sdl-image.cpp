@@ -9,7 +9,7 @@ namespace sge
 
     void SDLImageInitializer::do_initialize()
     {
-        if (IMG_Init(IMG_INIT_EVERYTHING) & IMG_INIT_EVERYTHING != IMG_INIT_EVERYTHING)
+        if ((IMG_Init(IMG_INIT_EVERYTHING) & IMG_INIT_EVERYTHING) != IMG_INIT_EVERYTHING)
         {
             throw InitError("SDL_image", IMG_GetError());
         }

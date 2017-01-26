@@ -48,7 +48,7 @@ namespace sge
         }
     }
 
-    void JSONLoader::unload(BaseAsset *asset)
+    void JSONLoader::unload(BaseAsset *)
     {
         ;
     }

@@ -20,8 +20,7 @@ namespace sge
             }
             else
             {
-                it++;
-                end = *it;
+                end = *next(it);
             }
 
             edges.push_back(Edge(start, end));

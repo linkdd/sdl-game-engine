@@ -8,7 +8,9 @@ using namespace std;
 
 namespace sge
 {
-    Node::Node(const string &name, Engine &engine) : name(name), engine(engine), input_enabled(false), process_enabled(false), draw_enabled(false), in_tree(false) {}
+    Node::Node(const string &name, Engine &engine) : name(name), engine(engine)
+    {
+    }
 
     const char *Node::get_name() const
     {
@@ -137,7 +139,7 @@ namespace sge
 
         return result;
     }
-    
+
     shared_ptr<Node> Node::find_first_ancestor_by_type(const string &type) const
     {
         shared_ptr<Node> result = get_parent();
@@ -241,7 +243,10 @@ namespace sge
         return result;
     }
 
-    bool Node::input(SDL_Event *event) {}
+    bool Node::input(SDL_Event *)
+    {
+        return true;
+    }
 
     bool Node::has_process() const
     {
@@ -266,7 +271,7 @@ namespace sge
         }
     }
 
-    void Node::process(Uint32 delta) {}
+    void Node::process(Uint32) {}
 
     bool Node::has_draw() const
     {

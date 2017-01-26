@@ -14,7 +14,7 @@ namespace sge
         return (*pa) == (*pb);
     }
 
-    MainLoop::MainLoop(int fps) : running(false), fps(fps)
+    MainLoop::MainLoop(int fps) : fps(fps), running(false)
     {}
 
     void MainLoop::add_event_watcher(EventHandler handler)

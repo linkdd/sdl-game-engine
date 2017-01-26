@@ -19,7 +19,7 @@ class TestScene : public Scene
             root_node = tmap;
         }
 
-        virtual void unload(Engine &engine)
+        virtual void unload(Engine &)
         {
             root_node.reset();
         }
@@ -44,7 +44,7 @@ int main()
         engine.actions().register_keyboard_action("ui_quit", SDLK_ESCAPE);
 
         engine.mainloop().queue_process_handler(
-            [&](Uint32 delta)
+            [&](Uint32)
             {
                 if (engine.actions().is_action_pressed("ui_quit"))
                 {
