@@ -90,9 +90,10 @@ namespace sge
         return success;
     }
 
-    bool Renderer::draw_filled_shape(const Shape &shape, const SDL_Color &color)
+    bool Renderer::draw_filled_shape(const Shape &, const SDL_Color &)
     {
         // TODO
+        return true;
     }
 
     bool Renderer::draw_image(shared_ptr<Image> asset, const SDL_Rect &dest)

@@ -53,10 +53,10 @@ namespace sge
             bool is_in_tree() const;
 
         private:
-            bool input_enabled;
-            bool process_enabled;
-            bool draw_enabled;
-            bool in_tree;
+            bool input_enabled{false};
+            bool process_enabled{false};
+            bool draw_enabled{false};
+            bool in_tree{false};
 
             std::string name;
 
