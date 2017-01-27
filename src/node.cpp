@@ -235,9 +235,12 @@ namespace sge
             result = result && input(event);
         }
 
-        for (auto &child : children)
+        if (is_in_tree())
         {
-            result = result && child->send_input(event);
+            for (auto &child : children)
+            {
+                result = result && child->send_input(event);
+            }
         }
 
         return result;
@@ -265,9 +268,12 @@ namespace sge
             process(delta);
         }
 
-        for (auto &child : children)
+        if (is_in_tree())
         {
-            child->send_process(delta);
+            for (auto &child : children)
+            {
+                child->send_process(delta);
+            }
         }
     }
 
@@ -290,9 +296,12 @@ namespace sge
             draw();
         }
 
-        for (auto &child : children)
+        if (is_in_tree())
         {
-            child->send_draw();
+            for (auto &child : children)
+            {
+                child->send_draw();
+            }
         }
     }
 
