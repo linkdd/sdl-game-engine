@@ -15,6 +15,7 @@ namespace sge
             std::shared_ptr<NodeType> create(const std::string &nodename)
             {
                 std::shared_ptr<NodeType> node = std::make_shared<NodeType>(nodename, engine);
+                node->init();
                 nodes[node] = false;
                 return node;
             }
