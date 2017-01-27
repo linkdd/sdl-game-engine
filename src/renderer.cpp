@@ -34,7 +34,7 @@ namespace sge
         return success;
     }
 
-    bool Renderer::draw_line(const Vector &pos, const SDL_Color &color)
+    bool Renderer::draw_point(const Vector &pos, const SDL_Color &color)
     {
         return draw_with_color(
             [&]()

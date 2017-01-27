@@ -63,8 +63,8 @@ namespace sge
         Vector rotate(float angle) const
         {
             return Vector(
-                x * cos(angle) - y * sin(angle),
-                x * sin(angle) + y * cos(angle)
+                x * cos(angle) + y * sin(angle),
+                - x * sin(angle) + y * cos(angle)
             );
         }
 

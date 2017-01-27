@@ -20,7 +20,7 @@ namespace sge
             bool clear();
             void present();
 
-            bool draw_line(const Vector &pos, const SDL_Color &color);
+            bool draw_point(const Vector &pos, const SDL_Color &color);
             bool draw_line(const Vector &start, const Vector &end, const SDL_Color &color);
             bool draw_rect(const SDL_Rect &r, const SDL_Color &color);
             bool draw_filled_rect(const SDL_Rect &r, const SDL_Color &color);
