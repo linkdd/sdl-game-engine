@@ -15,12 +15,15 @@ namespace sge
         public:
             Node(const std::string &name, Engine &engine);
 
+            virtual void init();
+
             const char *get_name() const;
             virtual std::vector<std::string> mro() const;
             bool is_of(const std::string &nodetype) const;
 
             std::shared_ptr<Node> get_root();
             std::shared_ptr<Node> get_parent() const;
+            std::vector<std::shared_ptr<Node>> get_children() const;
             std::shared_ptr<Node> get_node(const std::string &path);
             std::vector<std::shared_ptr<Node>> find_children_by_type(const std::vector<std::string> &types) const;
             std::shared_ptr<Node> find_first_ancestor_by_type(const std::string &type) const;

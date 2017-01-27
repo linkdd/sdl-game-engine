@@ -12,6 +12,10 @@ namespace sge
     {
     }
 
+    void Node::init()
+    {
+    }
+
     const char *Node::get_name() const
     {
         return name.c_str();
@@ -50,6 +54,11 @@ namespace sge
     shared_ptr<Node> Node::get_parent() const
     {
         return parent.lock();
+    }
+
+    vector<shared_ptr<Node>> Node::get_children() const
+    {
+        return children;
     }
 
     shared_ptr<Node> Node::get_node(const string &path)
@@ -235,12 +244,9 @@ namespace sge
             result = result && input(event);
         }
 
-        if (is_in_tree())
+        for (auto &child : children)
         {
-            for (auto &child : children)
-            {
-                result = result && child->send_input(event);
-            }
+            result = result && child->send_input(event);
         }
 
         return result;
@@ -268,12 +274,9 @@ namespace sge
             process(delta);
         }
 
-        if (is_in_tree())
+        for (auto &child : children)
         {
-            for (auto &child : children)
-            {
-                child->send_process(delta);
-            }
+            child->send_process(delta);
         }
     }
 
@@ -296,12 +299,9 @@ namespace sge
             draw();
         }
 
-        if (is_in_tree())
+        for (auto &child : children)
         {
-            for (auto &child : children)
-            {
-                child->send_draw();
-            }
+            child->send_draw();
         }
     }
 

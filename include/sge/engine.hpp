@@ -13,6 +13,7 @@
 #include <sge/mainloop.hpp>
 #include <sge/actionmgr.hpp>
 #include <sge/scenemgr.hpp>
+#include <sge/nodemgr.hpp>
 #include <sge/physics/manager.hpp>
 
 #include <sge/assets/manager.hpp>
@@ -37,6 +38,7 @@ namespace sge
             ActionManager &actions();
             AssetManager &assets();
             SceneManager &scenes();
+            NodeManager &nodes();
             PhysicManager &physics();
 
             SDL_Window *window() const;
@@ -55,6 +57,7 @@ namespace sge
             MainLoop _mloop;
             ActionManager _amgr;
             SceneManager _scmgr;
+            NodeManager _nodemgr;
             PhysicManager _pmgr;
 
             AssetManager _assets;

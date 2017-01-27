@@ -11,7 +11,7 @@ class TestScene : public Scene
     public:
         virtual void load(Engine &engine)
         {
-            shared_ptr<TileMapNode> tmap = make_shared<TileMapNode>("tmap"s, engine);
+            shared_ptr<TileMapNode> tmap = engine.nodes().create<TileMapNode>("tmap"s);
             tmap->set_tilemap("rsrc/map.json");
             tmap->set_pos(50, 50);
             tmap->set_viewport(-10, 10, 70, 70);

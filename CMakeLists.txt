@@ -35,6 +35,7 @@ set(
     ${sge_SOURCE_DIR}/include/sge/mainloop.hpp
     ${sge_SOURCE_DIR}/include/sge/node.hpp
     ${sge_SOURCE_DIR}/include/sge/scenemgr.hpp
+    ${sge_SOURCE_DIR}/include/sge/nodemgr.hpp
     ${sge_SOURCE_DIR}/include/sge/physics/manifold.hpp
     ${sge_SOURCE_DIR}/include/sge/physics/manager.hpp
     ${sge_SOURCE_DIR}/include/sge/utils/vector.hpp
@@ -70,8 +71,9 @@ set(
     ${sge_SOURCE_DIR}/src/initializers
     ${sge_SOURCE_DIR}/src/renderer.cpp
     ${sge_SOURCE_DIR}/src/mainloop.cpp
-    ${sge_SOURCE_DIR}/src/node.cpp
     ${sge_SOURCE_DIR}/src/scenemgr.cpp
+    ${sge_SOURCE_DIR}/src/node.cpp
+    ${sge_SOURCE_DIR}/src/nodemgr.cpp
     ${sge_SOURCE_DIR}/src/physics/manager.cpp
     ${sge_SOURCE_DIR}/src/utils/vector.cpp
     ${sge_SOURCE_DIR}/src/utils/shape.cpp
