@@ -11,17 +11,30 @@ namespace sge
     {
         for (auto it = nodes.begin(); it != nodes.end(); it++)
         {
-            it->second = false;
+            it->second.second = false;
         }
 
-        auto root = engine.scenes().get_scene_node();
-        mark(root);
+        mark(engine.scenes().get_scene_node());
+        sweep();
+    }
 
-        vector<map<shared_ptr<Node>, bool>::iterator> iterators;
+    void NodeManager::mark(shared_ptr<Node> root)
+    {
+        nodes[root].second = true;
+
+        for (auto child : root->get_children())
+        {
+            mark(child);
+        }
+    }
+
+    void NodeManager::sweep()
+    {
+        vector<NodeMap::iterator> iterators;
 
         for (auto it = nodes.begin(); it != nodes.end(); it++)
         {
-            if (!it->second)
+            if (!it->second.second)
             {
                 iterators.push_back(it);
             }
@@ -30,16 +43,6 @@ namespace sge
         for (auto it : iterators)
         {
             nodes.erase(it);
-        }
-    }
-
-    void NodeManager::mark(shared_ptr<Node> root)
-    {
-        nodes[root] = true;
-
-        for (auto child : root->get_children())
-        {
-            mark(child);
         }
     }
 }

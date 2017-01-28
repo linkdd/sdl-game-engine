@@ -2,10 +2,14 @@
 #define __SGE_NODE_MANAGER_HPP
 
 #include <sge/node.hpp>
+#include <utility>
 #include <map>
 
 namespace sge
 {
+    using NodeMapEntry = std::pair<std::shared_ptr<Node>, bool>;
+    using NodeMap = std::map<std::shared_ptr<Node>, NodeMapEntry>;
+
     class NodeManager
     {
         public:
@@ -16,7 +20,7 @@ namespace sge
             {
                 std::shared_ptr<NodeType> node = std::make_shared<NodeType>(nodename, engine);
                 node->init();
-                nodes[node] = false;
+                nodes[node] = NodeMapEntry(node, false);
                 return node;
             }
 
@@ -24,10 +28,11 @@ namespace sge
 
         private:
             void mark(std::shared_ptr<Node> root);
+            void sweep();
 
         private:
             Engine &engine;
-            std::map<std::shared_ptr<Node>, bool> nodes;
+            NodeMap nodes;
 
     };
 }
