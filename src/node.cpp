@@ -244,7 +244,7 @@ namespace sge
             result = result && input(event);
         }
 
-        for (auto &child : children)
+        for (auto &child : get_children())
         {
             result = result && child->send_input(event);
         }
@@ -274,7 +274,7 @@ namespace sge
             process(delta);
         }
 
-        for (auto &child : children)
+        for (auto &child : get_children())
         {
             child->send_process(delta);
         }
@@ -311,7 +311,7 @@ namespace sge
     {
         enter_tree();
 
-        for (auto &child : children)
+        for (auto &child : get_children())
         {
             child->send_enter_tree();
         }
@@ -326,7 +326,7 @@ namespace sge
 
     void Node::send_exit_tree()
     {
-        for (auto &child : children)
+        for (auto &child : get_children())
         {
             child->send_exit_tree();
         }
