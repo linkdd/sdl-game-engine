@@ -22,9 +22,9 @@ namespace sge
             virtual void draw();
 
         private:
-            SDL_RendererFlip _flip = SDL_FLIP_NONE;
-            int current_frame = 0;
-            Uint32 elapsed = 0;
+            SDL_RendererFlip _flip{SDL_FLIP_NONE};
+            int current_frame{0};
+            Uint32 elapsed{0};
             std::shared_ptr<Image> spritesheet;
             std::shared_ptr<JSON> info;
     };

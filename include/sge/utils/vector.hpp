@@ -89,6 +89,8 @@ namespace sge
         }
     };
 
+    Vector VectorPolar(float angle, float r);
+
     Vector operator*(int i, const Vector &v);
     Vector operator*(float f, const Vector &v);
     Vector operator-(const Vector &v);

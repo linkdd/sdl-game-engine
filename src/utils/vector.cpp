@@ -2,6 +2,14 @@
 
 namespace sge
 {
+    Vector VectorPolar(float angle, float r)
+    {
+        return Vector(
+            r * cos(angle),
+            r * sin(angle)
+        );
+    }
+
     Vector operator*(int i, const Vector &v)
     {
         return v * i;
