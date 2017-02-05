@@ -44,8 +44,10 @@ set(
     ${sge_SOURCE_DIR}/include/sge/sge.hpp
     ${sge_SOURCE_DIR}/include/sge/timer.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/position.hpp
+    ${sge_SOURCE_DIR}/include/sge/nodes/canvas.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/sprite.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/animatedsprite.hpp
+    ${sge_SOURCE_DIR}/include/sge/nodes/label.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/tilemap.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/collisionshape.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/boundingbox.hpp
@@ -73,13 +75,14 @@ set(
     ${sge_SOURCE_DIR}/src/mainloop.cpp
     ${sge_SOURCE_DIR}/src/scenemgr.cpp
     ${sge_SOURCE_DIR}/src/node.cpp
-    ${sge_SOURCE_DIR}/src/nodemgr.cpp
     ${sge_SOURCE_DIR}/src/physics/manager.cpp
     ${sge_SOURCE_DIR}/src/utils/vector.cpp
     ${sge_SOURCE_DIR}/src/utils/shape.cpp
     ${sge_SOURCE_DIR}/src/nodes/position.cpp
+    ${sge_SOURCE_DIR}/src/nodes/canvas.cpp
     ${sge_SOURCE_DIR}/src/nodes/sprite.cpp
     ${sge_SOURCE_DIR}/src/nodes/animatedsprite.cpp
+    ${sge_SOURCE_DIR}/src/nodes/label.cpp
     ${sge_SOURCE_DIR}/src/nodes/tilemap.cpp
     ${sge_SOURCE_DIR}/src/nodes/collisionshape.cpp
     ${sge_SOURCE_DIR}/src/nodes/boundingbox.cpp

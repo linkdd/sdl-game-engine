@@ -6,11 +6,10 @@
 #include <sge/utils/shape.hpp>
 
 #include <functional>
-#include <utility>
 
 namespace sge
 {
-    using DrawRequest = std::pair<std::function<void (SDL_Renderer *)>, SDL_Color>;
+    using CanvasDrawRequest = std::function<bool (Engine &)>;
 
     class CanvasNode : public PositionNode
     {
@@ -31,7 +30,7 @@ namespace sge
             void draw_filled_shape(const Shape &shape, SDL_Color color);
 
         private:
-            std::vector<DrawRequest> requests;
+            std::vector<CanvasDrawRequest> requests;
     };
 }
 

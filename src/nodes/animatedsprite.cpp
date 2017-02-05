@@ -119,7 +119,7 @@ namespace sge
 
         if (!engine.renderer().draw_image(spritesheet, src, dest, angle, pos, _flip))
         {
-            cerr << "[AnimatedSpriteNode][ERROR] SDL: " << SDL_GetError() << endl;
+            cerr << "[AnimatedSpriteNode][ERROR] " << engine.renderer().get_error() << endl;
         }
     }
 }

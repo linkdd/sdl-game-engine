@@ -11,7 +11,13 @@ namespace sge
 
     bool Renderer::clear()
     {
-        return SDL_RenderClear(renderer) == 0;
+        if (SDL_RenderClear(renderer) != 0)
+        {
+            set_error("SDL: "s + SDL_GetError());
+            return false;
+        }
+
+        return true;
     }
 
     void Renderer::present()
@@ -39,7 +45,13 @@ namespace sge
         return draw_with_color(
             [&]()
             {
-                return SDL_RenderDrawPoint(renderer, pos.x, pos.y) == 0;
+                if (SDL_RenderDrawPoint(renderer, pos.x, pos.y) != 0)
+                {
+                    set_error("SDL: "s + SDL_GetError());
+                    return false;
+                }
+
+                return true;
             },
             color
         );
@@ -50,7 +62,13 @@ namespace sge
         return draw_with_color(
             [&]()
             {
-                return SDL_RenderDrawLine(renderer, start.x, start.y, end.x, end.y) == 0;
+                if (SDL_RenderDrawLine(renderer, start.x, start.y, end.x, end.y) != 0)
+                {
+                    set_error("SDL: "s + SDL_GetError());
+                    return false;
+                }
+
+                return true;
             },
             color
         );
@@ -61,7 +79,13 @@ namespace sge
         return draw_with_color(
             [&]()
             {
-                return SDL_RenderDrawRect(renderer, &r) == 0;
+                if (SDL_RenderDrawRect(renderer, &r) != 0)
+                {
+                    set_error("SDL: "s + SDL_GetError());
+                    return false;
+                }
+
+                return true;
             },
             color
         );
@@ -72,7 +96,13 @@ namespace sge
         return draw_with_color(
             [&]()
             {
-                return SDL_RenderFillRect(renderer, &r) == 0;
+                if (SDL_RenderFillRect(renderer, &r) != 0)
+                {
+                    set_error("SDL: "s + SDL_GetError());
+                    return false;
+                }
+
+                return true;
             },
             color
         );
@@ -105,10 +135,16 @@ namespace sge
         {
             if (SDL_RenderCopy(renderer, t, NULL, &dest) != 0)
             {
+                set_error("SDL: "s + SDL_GetError());
                 success = false;
             }
 
             SDL_DestroyTexture(t);
+        }
+        else
+        {
+            set_error("SDL: "s + SDL_GetError());
+            success = false;
         }
 
         return success;
@@ -123,10 +159,16 @@ namespace sge
         {
             if (SDL_RenderCopy(renderer, t, &src, &dest) != 0)
             {
+                set_error("SDL: "s + SDL_GetError());
                 success = false;
             }
 
             SDL_DestroyTexture(t);
+        }
+        else
+        {
+            set_error("SDL: "s + SDL_GetError());
+            success = false;
         }
 
         return success;
@@ -141,10 +183,16 @@ namespace sge
         {
             if (SDL_RenderCopyEx(renderer, t, NULL, &dest, angle, &center, flip) != 0)
             {
+                set_error("SDL: "s + SDL_GetError());
                 success = false;
             }
 
             SDL_DestroyTexture(t);
+        }
+        else
+        {
+            set_error("SDL: "s + SDL_GetError());
+            success = false;
         }
 
         return success;
@@ -159,12 +207,70 @@ namespace sge
         {
             if (SDL_RenderCopyEx(renderer, t, &src, &dest, angle, &center, flip) != 0)
             {
+                set_error("SDL: "s + SDL_GetError());
                 success = false;
             }
 
             SDL_DestroyTexture(t);
         }
+        else
+        {
+            set_error("SDL: "s + SDL_GetError());
+            success = false;
+        }
 
         return success;
+    }
+
+    bool Renderer::draw_text(shared_ptr<Font> asset, const string &text, const Vector &pos, const SDL_Color &color)
+    {
+        SDL_Surface *txt = TTF_RenderText_Blended(asset->asset(), text.c_str(), color);
+        bool success = true;
+
+        if (txt != NULL)
+        {
+            SDL_Texture *t = SDL_CreateTextureFromSurface(renderer, txt);
+
+            if (t != NULL)
+            {
+                SDL_Rect dest;
+                dest.x = pos.x;
+                dest.y = pos.y;
+                dest.w = txt->w;
+                dest.h = txt->h;
+
+                if (SDL_RenderCopy(renderer, t, NULL, &dest) != 0)
+                {
+                    set_error("SDL: "s + SDL_GetError());
+                    success = false;
+                }
+
+                SDL_DestroyTexture(t);
+            }
+            else
+            {
+                set_error("SDL: "s + SDL_GetError());
+                success = false;
+            }
+
+            SDL_FreeSurface(txt);
+        }
+        else
+        {
+            set_error("TTF: "s + TTF_GetError());
+            success = false;
+        }
+
+        return success;
+    }
+
+    void Renderer::set_error(const string &text)
+    {
+        error = text;
+    }
+
+    string Renderer::get_error() const
+    {
+        return error;
     }
 }

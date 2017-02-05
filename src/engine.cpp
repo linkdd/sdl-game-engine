@@ -65,7 +65,6 @@ namespace sge
         _mloop.queue_event_handler(SDL_QUIT, [&](SDL_Event *) { _mloop.quit(); return true; });
         _mloop.add_event_watcher([&](SDL_Event *evt) { return _amgr.event_handler(evt); });
         _mloop.add_event_watcher([&](SDL_Event *evt) { return _scmgr.event_handler(evt); });
-        _mloop.queue_process_handler([&](Uint32 delta) { _nodemgr.garbage_collect(); });
         _mloop.queue_process_handler([&](Uint32 delta) { _scmgr.process_handler(delta); });
         _mloop.queue_process_handler([&](Uint32 delta) { _pmgr.process_handler(delta); });
         _mloop.queue_draw_handler([&]() { renderer().clear(); });

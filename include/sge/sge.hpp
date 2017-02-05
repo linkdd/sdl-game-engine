@@ -5,8 +5,10 @@
 #include <sge/engine.hpp>
 
 #include <sge/nodes/position.hpp>
+#include <sge/nodes/canvas.hpp>
 #include <sge/nodes/sprite.hpp>
 #include <sge/nodes/animatedsprite.hpp>
+#include <sge/nodes/label.hpp>
 #include <sge/nodes/tilemap.hpp>
 #include <sge/nodes/boundingbox.hpp>
 #include <sge/nodes/collisionshape.hpp>

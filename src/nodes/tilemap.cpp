@@ -133,7 +133,7 @@ namespace sge
 
                     if (!engine.renderer().draw_image(tileset, src, dest))
                     {
-                        cerr << "[TileMapNode][ERROR] SDL: " << SDL_GetError() << endl; 
+                        cerr << "[TileMapNode][ERROR] " << engine.renderer().get_error() << endl; 
                     }
                 }
             }

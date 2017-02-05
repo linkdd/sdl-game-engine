@@ -2,6 +2,7 @@
 #define __SGE_RENDERER_HPP
 
 #include <sge/assets/loaders/image.hpp>
+#include <sge/assets/loaders/font.hpp>
 #include <sge/utils/vector.hpp>
 #include <sge/utils/shape.hpp>
 
@@ -30,12 +31,17 @@ namespace sge
             bool draw_image(std::shared_ptr<Image> asset, const SDL_Rect &src, const SDL_Rect &dest);
             bool draw_image(std::shared_ptr<Image> asset, const SDL_Rect &dest, float angle, const SDL_Point &center, SDL_RendererFlip flip);
             bool draw_image(std::shared_ptr<Image> asset, const SDL_Rect &src, const SDL_Rect &dest, float angle, const SDL_Point &center, SDL_RendererFlip flip);
+            bool draw_text(std::shared_ptr<Font> asset, const std::string &text, const Vector &pos, const SDL_Color &color);
+
+            std::string get_error() const;
 
         private:
             bool draw_with_color(DrawRequest req, const SDL_Color &color);
+            void set_error(const std::string &text);
 
         private:
             SDL_Renderer *renderer;
+            std::string error;
     };
 }
 
