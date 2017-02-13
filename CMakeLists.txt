@@ -45,6 +45,7 @@ set(
     ${sge_SOURCE_DIR}/include/sge/utils/vector.hpp
     ${sge_SOURCE_DIR}/include/sge/utils/matrix.hpp
     ${sge_SOURCE_DIR}/include/sge/utils/shape.hpp
+    ${sge_SOURCE_DIR}/include/sge/utils/callback.hpp
     ${sge_SOURCE_DIR}/include/sge/sge.hpp
     ${sge_SOURCE_DIR}/include/sge/timer.hpp
     ${sge_SOURCE_DIR}/include/sge/nodes/position.hpp
