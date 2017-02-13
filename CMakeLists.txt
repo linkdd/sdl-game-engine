@@ -8,6 +8,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${sge_SOURCE_DIR}/cmake)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
+find_package(SDL2_mixer REQUIRED)
 
 set(
     HEADERS
@@ -19,13 +20,16 @@ set(
     ${sge_SOURCE_DIR}/include/sge/assets/manager.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/loaders/font.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/loaders/image.hpp
+    ${sge_SOURCE_DIR}/include/sge/assets/loaders/audio.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/loaders/json.hpp
     ${sge_SOURCE_DIR}/include/sge/assets/locators/file.hpp
     ${sge_SOURCE_DIR}/include/sge/initializers/sdl-fonts.hpp
     ${sge_SOURCE_DIR}/include/sge/initializers/sdl.hpp
     ${sge_SOURCE_DIR}/include/sge/initializers/sdl-image.hpp
+    ${sge_SOURCE_DIR}/include/sge/initializers/sdl-mixer.hpp
     ${sge_SOURCE_DIR}/include/sge/initializers/sdl-window.hpp
     ${sge_SOURCE_DIR}/include/sge/actionmgr.hpp
+    ${sge_SOURCE_DIR}/include/sge/audiomgr.hpp
     ${sge_SOURCE_DIR}/include/sge/config.hpp
     ${sge_SOURCE_DIR}/include/sge/engine-forward.hpp
     ${sge_SOURCE_DIR}/include/sge/engine.hpp
@@ -60,13 +64,16 @@ set(
     ${sge_SOURCE_DIR}/src/assets/manager.cpp
     ${sge_SOURCE_DIR}/src/assets/loaders/font.cpp
     ${sge_SOURCE_DIR}/src/assets/loaders/image.cpp
+    ${sge_SOURCE_DIR}/src/assets/loaders/audio.cpp
     ${sge_SOURCE_DIR}/src/assets/loaders/json.cpp
     ${sge_SOURCE_DIR}/src/assets/locators/file.cpp
     ${sge_SOURCE_DIR}/src/initializers/sdl.cpp
     ${sge_SOURCE_DIR}/src/initializers/sdl-fonts.cpp
     ${sge_SOURCE_DIR}/src/initializers/sdl-image.cpp
+    ${sge_SOURCE_DIR}/src/initializers/sdl-mixer.cpp
     ${sge_SOURCE_DIR}/src/initializers/sdl-window.cpp
     ${sge_SOURCE_DIR}/src/actionmgr.cpp
+    ${sge_SOURCE_DIR}/src/audiomgr.cpp
     ${sge_SOURCE_DIR}/src/config.cpp
     ${sge_SOURCE_DIR}/src/engine.cpp
     ${sge_SOURCE_DIR}/src/init.cpp
@@ -96,6 +103,7 @@ target_include_directories(
         ${SDL2_INCLUDE_DIRS}
         ${SDL2_IMAGE_INCLUDE_DIRS}
         ${SDL2_TTF_INCLUDE_DIRS}
+        ${SDL2_MIXER_INCLUDE_DIRS}
         $<BUILD_INTERFACE:${sge_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${sge_SOURCE_DIR}/lib/json/src>
 )
@@ -104,6 +112,7 @@ target_link_libraries(
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
+    ${SDL2_MIXER_LIBRARIES}
 )
 target_compile_definitions(sge PUBLIC SDL_MAIN_HANDLED)
 
@@ -119,6 +128,7 @@ target_include_directories(
         ${SDL2_INCLUDE_DIRS}
         ${SDL2_IMAGE_INCLUDE_DIRS}
         ${SDL2_TTF_INCLUDE_DIRS}
+        ${SDL2_MIXER_INCLUDE_DIRS}
         $<BUILD_INTERFACE:${sge_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${sge_SOURCE_DIR}/lib/json/src>
 )

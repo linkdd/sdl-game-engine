@@ -41,6 +41,8 @@ int main()
     {
         Engine engine(conf);
 
+        engine.init();
+
         engine.actions().register_keyboard_action("ui_quit", SDLK_ESCAPE);
 
         engine.mainloop().queue_process_handler(
