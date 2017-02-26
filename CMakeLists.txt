@@ -9,6 +9,7 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_mixer REQUIRED)
+find_package(SDL2_gfx REQUIRED)
 
 set(
     HEADERS
@@ -105,6 +106,7 @@ target_include_directories(
         ${SDL2_IMAGE_INCLUDE_DIRS}
         ${SDL2_TTF_INCLUDE_DIRS}
         ${SDL2_MIXER_INCLUDE_DIRS}
+        ${SDL2_GFX_INCLUDE_DIRS}
         $<BUILD_INTERFACE:${sge_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${sge_SOURCE_DIR}/lib/json/src>
 )
@@ -114,6 +116,7 @@ target_link_libraries(
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
     ${SDL2_MIXER_LIBRARIES}
+    ${SDL2_GFX_LIBRARIES}
 )
 target_compile_definitions(sge PUBLIC SDL_MAIN_HANDLED)
 
@@ -130,6 +133,7 @@ target_include_directories(
         ${SDL2_IMAGE_INCLUDE_DIRS}
         ${SDL2_TTF_INCLUDE_DIRS}
         ${SDL2_MIXER_INCLUDE_DIRS}
+        ${SDL2_GFX_INCLUDE_DIRS}
         $<BUILD_INTERFACE:${sge_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${sge_SOURCE_DIR}/lib/json/src>
 )

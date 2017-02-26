@@ -1,11 +1,11 @@
-# FindSDL2_ttf.cmake
-# ------------------
+# FindSDL2_mixer.cmake
+# --------------------
 #
-# Find SDL2_ttf library, this modules defines:
+# Find SDL2_mixer library, this modules defines:
 #
-# SDL2_TTF_INCLUDE_DIRS, where to find SDL_ttf.h
-# SDL2_TTF_LIBRARIES, where to find library
-# SDL2_TTF_FOUND, if it is found
+# SDL2_MIXER_INCLUDE_DIRS, where to find SDL_mixer.h
+# SDL2_MIXER_LIBRARIES, where to find library
+# SDL2_MIXER_FOUND, if it is found
 
 find_path(
     SDL2_MIXER_INCLUDE_DIR

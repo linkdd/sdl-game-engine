@@ -40,6 +40,76 @@ namespace sge
         return success;
     }
 
+    bool Renderer::draw_with_target(DrawRequest req)
+    {
+        SDL_Texture *old_target = SDL_GetRenderTarget(renderer);
+        Uint32 tgt_format = SDL_PIXELFORMAT_RGBA8888;
+        int tgt_access = SDL_TEXTUREACCESS_TARGET;
+        int tgt_w = 0;
+        int tgt_h = 0;
+
+        if (old_target == NULL)
+        {
+            SDL_RenderGetLogicalSize(renderer, &tgt_w, &tgt_h);
+
+            if (tgt_w == 0 || tgt_h == 0)
+            {
+                if (SDL_GetRendererOutputSize(renderer, &tgt_w, &tgt_h) != 0)
+                {
+                    set_error("SDL: "s + SDL_GetError());
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            if (SDL_QueryTexture(old_target, &tgt_format, &tgt_access, &tgt_w, &tgt_h) != 0)
+            {
+                set_error("SDL: "s + SDL_GetError());
+                return false;
+            }
+        }
+
+        SDL_Texture *target = SDL_CreateTexture(renderer, tgt_format, tgt_access, tgt_w, tgt_h);
+        bool success = true;
+
+        if (target == NULL)
+        {
+            set_error("SDL: "s + SDL_GetError());
+            return false;
+        }
+        else
+        {
+            if (SDL_SetRenderTarget(renderer, target) != 0)
+            {
+                set_error("SDL: "s + SDL_GetError());
+                success = false;
+            }
+            else
+            {
+                success = req();
+
+                if (SDL_SetRenderTarget(renderer, old_target) != 0)
+                {
+                    set_error("SDL: "s + SDL_GetError());
+                    success = false;
+                }
+                else
+                {
+                    if (SDL_RenderCopy(renderer, target, NULL, NULL) != 0)
+                    {
+                        set_error("SDL: "s + SDL_GetError());
+                        success = false;
+                    }
+                }
+            }
+
+            SDL_DestroyTexture(target);
+        }
+
+        return success;
+    }
+
     bool Renderer::draw_point(const Vector &pos, const SDL_Color &color)
     {
         return draw_with_color(
@@ -120,10 +190,32 @@ namespace sge
         return success;
     }
 
-    bool Renderer::draw_filled_shape(const Shape &, const SDL_Color &)
+    bool Renderer::draw_filled_shape(const Shape &shape, const SDL_Color &color)
     {
-        // TODO
-        return true;
+        bool success = true;
+
+        auto edges = shape.get_edges();
+        int n = edges.size();
+
+        Sint16 *vx = new Sint16[n];
+        Sint16 *vy = new Sint16[n];
+
+        for (int i = 0; i < n; i++)
+        {
+            vx[i] = edges[i].start.x;
+            vy[i] = edges[i].start.y;
+        }
+
+        if (!filledPolygonRGBA(renderer, vx, vy, n, color.r, color.g, color.b, color.a) != 0)
+        {
+            set_error("SDL_gfx: filledPolygonRGBA() error");
+            success = false;
+        }
+
+        delete[] vx;
+        delete[] vy;
+
+        return success;
     }
 
     bool Renderer::draw_image(shared_ptr<Image> asset, const SDL_Rect &dest)

@@ -7,6 +7,7 @@
 #include <sge/utils/shape.hpp>
 
 #include <SDL.h>
+#include <SDL2_gfxPrimitives.h>
 #include <functional>
 
 namespace sge
@@ -37,6 +38,7 @@ namespace sge
 
         private:
             bool draw_with_color(DrawRequest req, const SDL_Color &color);
+            bool draw_with_target(DrawRequest req);
             void set_error(const std::string &text);
 
         private:
