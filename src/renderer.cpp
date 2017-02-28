@@ -1,5 +1,5 @@
 #include <sge/renderer.hpp>
-
+#include <iostream>
 using namespace std;
 
 namespace sge
@@ -29,18 +29,21 @@ namespace sge
     {
         bool success = true;
         SDL_Color prev;
+        SDL_BlendMode mode;
 
+        SDL_GetRenderDrawBlendMode(renderer, &mode);
         SDL_GetRenderDrawColor(renderer, &prev.r, &prev.g, &prev.b, &prev.a);
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
         success = req();
 
         SDL_SetRenderDrawColor(renderer, prev.r, prev.g, prev.b, prev.a);
+        SDL_SetRenderDrawBlendMode(renderer, mode);
 
         return success;
     }
 
-    bool Renderer::draw_with_target(DrawRequest req)
+    bool Renderer::draw_with_target(DrawRequest req, float angle, const SDL_Point &rotcenter, SDL_RendererFlip flip)
     {
         SDL_Texture *old_target = SDL_GetRenderTarget(renderer);
         Uint32 tgt_format = SDL_PIXELFORMAT_RGBA8888;
@@ -96,7 +99,7 @@ namespace sge
                 }
                 else
                 {
-                    if (SDL_RenderCopy(renderer, target, NULL, NULL) != 0)
+                    if (SDL_RenderCopyEx(renderer, target, NULL, NULL, angle, &rotcenter, flip) != 0)
                     {
                         set_error("SDL: "s + SDL_GetError());
                         success = false;
@@ -161,6 +164,23 @@ namespace sge
         );
     }
 
+    bool Renderer::draw_rect(const SDL_Rect &r, float angle, const SDL_Color &color)
+    {
+        SDL_Point center;
+        center.x = r.x + r.w / 2;
+        center.y = r.y + r.h / 2;
+
+        return draw_with_target(
+            [&]()
+            {
+                return draw_rect(r, color);
+            },
+            angle,
+            center,
+            SDL_FLIP_NONE
+        );
+    }
+
     bool Renderer::draw_filled_rect(const SDL_Rect &r, const SDL_Color &color)
     {
         return draw_with_color(
@@ -178,6 +198,133 @@ namespace sge
         );
     }
 
+    bool Renderer::draw_filled_rect(const SDL_Rect &r, float angle, const SDL_Color &color)
+    {
+        SDL_Point center;
+        center.x = r.x + r.w / 2;
+        center.y = r.y + r.h / 2;
+
+        return draw_with_target(
+            [&]()
+            {
+                return draw_filled_rect(r, color);
+            },
+            angle,
+            center,
+            SDL_FLIP_NONE
+        );
+    }
+
+    bool Renderer::draw_circle(const Vector &center, int radius, const SDL_Color &color)
+    {
+        return draw_with_color(
+            [&]()
+            {
+                if (circleRGBA(renderer, center.x, center.y, radius, color.r, color.g, color.b, color.a) != 0)
+                {
+                    set_error("SDL_gfx: circleRGBA()");
+                    return false;
+                }
+
+                return true;
+            },
+            color
+        );
+    }
+
+    bool Renderer::draw_filled_circle(const Vector &center, int radius, const SDL_Color &color)
+    {
+        return draw_with_color(
+            [&]()
+            {
+                if (filledCircleRGBA(renderer, center.x, center.y, radius, color.r, color.g, color.b, color.a) != 0)
+                {
+                    set_error("SDL_gfx: filledCircleRGBA()");
+                    return false;
+                }
+
+                return true;
+            },
+            color
+        );
+    }
+
+    bool Renderer::draw_ellipse(const Vector &center, int hradius, int vradius, const SDL_Color &color)
+    {
+        return draw_ellipse(center, hradius, vradius, 0, SDL_FLIP_NONE, color);
+    }
+
+    bool Renderer::draw_ellipse(const Vector &center, int hradius, int vradius, float angle, const SDL_Color &color)
+    {
+        return draw_ellipse(center, hradius, vradius, angle, SDL_FLIP_NONE, color);
+    }
+
+    bool Renderer::draw_ellipse(const Vector &center, int hradius, int vradius, SDL_RendererFlip flip, const SDL_Color &color)
+    {
+        return draw_ellipse(center, hradius, vradius, 0, flip, color);
+    }
+
+    bool Renderer::draw_ellipse(const Vector &center, int hradius, int vradius, float angle, SDL_RendererFlip flip, const SDL_Color &color)
+    {
+        return draw_with_target(
+            [&]()
+            {
+                return draw_with_color(
+                    [&]()
+                    {
+                        if (!ellipseRGBA(renderer, center.x, center.y, hradius, vradius, color.r, color.g, color.b, color.a) != 0)
+                        {
+                            set_error("SDL_gfx: elipseRGBA()");
+                            return false;
+                        }
+                    },
+                    color
+                );
+            },
+            angle,
+            center.as_point(),
+            flip
+        );
+    }
+
+    bool Renderer::draw_filled_ellipse(const Vector &center, int hradius, int vradius, const SDL_Color &color)
+    {
+        return draw_filled_ellipse(center, hradius, vradius, 0, SDL_FLIP_NONE, color);
+    }
+
+    bool Renderer::draw_filled_ellipse(const Vector &center, int hradius, int vradius, float angle, const SDL_Color &color)
+    {
+        return draw_filled_ellipse(center, hradius, vradius, angle, SDL_FLIP_NONE, color);
+    }
+
+    bool Renderer::draw_filled_ellipse(const Vector &center, int hradius, int vradius, SDL_RendererFlip flip, const SDL_Color &color)
+    {
+        return draw_filled_ellipse(center, hradius, vradius, 0, flip, color);
+    }
+
+    bool Renderer::draw_filled_ellipse(const Vector &center, int hradius, int vradius, float angle, SDL_RendererFlip flip, const SDL_Color &color)
+    {
+        return draw_with_target(
+            [&]()
+            {
+                return draw_with_color(
+                    [&]()
+                    {
+                        if (!filledEllipseRGBA(renderer, center.x, center.y, hradius, vradius, color.r, color.g, color.b, color.a) != 0)
+                        {
+                            set_error("SDL_gfx: filledEllipseRGBA()");
+                            return false;
+                        }
+                    },
+                    color
+                );
+            },
+            angle,
+            center.as_point(),
+            flip
+        );
+    }
+
     bool Renderer::draw_shape(const Shape &shape, const SDL_Color &color)
     {
         bool success = true;
@@ -192,30 +339,33 @@ namespace sge
 
     bool Renderer::draw_filled_shape(const Shape &shape, const SDL_Color &color)
     {
-        bool success = true;
+        return draw_with_color(
+            [&]()
+            {
+                bool success = true;
 
-        auto edges = shape.get_edges();
-        int n = edges.size();
+                auto edges = shape.get_edges();
+                int n = edges.size();
 
-        Sint16 *vx = new Sint16[n];
-        Sint16 *vy = new Sint16[n];
+                vector<Sint16> vx;
+                vector<Sint16> vy;
 
-        for (int i = 0; i < n; i++)
-        {
-            vx[i] = edges[i].start.x;
-            vy[i] = edges[i].start.y;
-        }
+                for (int i = 0; i < n; i++)
+                {
+                    vx.push_back(edges[i].start.x);
+                    vy.push_back(edges[i].start.y);
+                }
 
-        if (!filledPolygonRGBA(renderer, vx, vy, n, color.r, color.g, color.b, color.a) != 0)
-        {
-            set_error("SDL_gfx: filledPolygonRGBA() error");
-            success = false;
-        }
+                if (filledPolygonRGBA(renderer, vx.data(), vy.data(), n, color.r, color.g, color.b, color.a) != 0)
+                {
+                    set_error("SDL_gfx: filledPolygonRGBA() error");
+                    success = false;
+                }
 
-        delete[] vx;
-        delete[] vy;
-
-        return success;
+                return success;
+            },
+            color
+        );
     }
 
     bool Renderer::draw_image(shared_ptr<Image> asset, const SDL_Rect &dest)
