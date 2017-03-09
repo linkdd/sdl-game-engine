@@ -56,6 +56,20 @@ namespace sge
         premultiply_pos();
     }
 
+    float PositionNode::get_zoom() const
+    {
+        return _zoom;
+    }
+
+    void PositionNode::set_zoom(float zoom)
+    {
+        _zoom = zoom;
+
+        translation = translation * zoom;
+        local_pm_transform = translation * rotation;
+        premultiply_pos();
+    }
+
     Matrix<3,3> PositionNode::get_pm_transform() const
     {
         return local_pm_transform;
@@ -111,5 +125,25 @@ namespace sge
         }
 
         return abs_angle;
+    }
+
+    float PositionNode::get_absolute_zoom() const
+    {
+        float abs_zoom = 1;
+
+        shared_ptr<const Node> node = shared_from_this();
+
+        while (node != nullptr)
+        {
+            if (node->is_of("PositionNode"))
+            {
+                auto pnode = static_pointer_cast<const PositionNode>(node);
+                abs_zoom *= pnode->get_zoom();
+            }
+
+            node = node->get_parent();
+        }
+
+        return abs_zoom;
     }
 }

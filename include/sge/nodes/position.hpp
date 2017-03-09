@@ -21,8 +21,12 @@ namespace sge
             float get_rotation() const;
             void set_rotation(float angle);
 
+            float get_zoom() const;
+            void set_zoom(float zoom);
+
             Vector get_absolute_pos();
             float get_absolute_rotation() const;
+            float get_absolute_zoom() const;
 
             Matrix<3,3> get_pm_transform() const;
 
@@ -32,6 +36,7 @@ namespace sge
         private:
             Vector _pos;
             float _angle = 0;
+            float _zoom = 0;
 
             Matrix<3,3> translation;
             Matrix<3,3> rotation;
