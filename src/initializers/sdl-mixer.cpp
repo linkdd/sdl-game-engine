@@ -13,17 +13,18 @@ namespace sge
 
     void SDLMixerInitializer::do_initialize()
     {
+
+        if (Mix_OpenAudio(frequency, MIX_DEFAULT_FORMAT, channels, chunksize) != 0)
+        {
+            throw InitError("SDL_mixer", Mix_GetError());
+        }
+
         if ((Mix_Init(MIX_INIT_EVERYTHING) & MIX_INIT_EVERYTHING) != MIX_INIT_EVERYTHING)
         {
             throw InitError("SDL_mixer", Mix_GetError());
         }
 
         lib_initialized = true;
-
-        if (Mix_OpenAudio(frequency, MIX_DEFAULT_FORMAT, channels, chunksize) != 0)
-        {
-            throw InitError("SDL_mixer", Mix_GetError());
-        }
     }
 
     void SDLMixerInitializer::do_shutdown()

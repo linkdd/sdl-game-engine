@@ -1,6 +1,7 @@
 #include <sge/nodes/animatedsprite.hpp>
 #include <sge/engine.hpp>
 #include <iostream>
+#include <sstream>
 
 using namespace nlohmann;
 using namespace std;
